@@ -1,5 +1,4 @@
-/// <reference path="./bios/interface/NapicuBios.d.ts" />
-/// <reference path="./bios/bios.ts" />
+/// <reference path="./computer/VirtualComputer.ts" />
 import {Component, OnInit} from '@angular/core';
 
 @Component({
@@ -9,6 +8,6 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AppComponent implements OnInit{
   public ngOnInit() {
-    new NapicuBios.Bios().init();
+    NapicuVirtualComputer.VirtualComputer.start();
   }
 }
