@@ -12,4 +12,10 @@ export class SplashScreenComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  protected readonly enter_bios_configuration = (): void => {
+    //TODO Redirect to bios configuration
+  }
+
+
+
 }

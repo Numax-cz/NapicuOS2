@@ -13,20 +13,29 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
-    "module": "es2020",
+    "target": "es2022",
+    "module": "es2022",
     "lib": [
-      "es2020",
+      "es2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@Napicu/System/*": ["./src/app/system/*"],
+
+      "@Napicu/Bios": ["./src/app/bios/Bios.ts"],
+      "@Napicu/VirtualComputer": ["./src/app/computer/Computer.ts"],
+      "@Napicu/Config": ["./src/app/config/Config.ts"],
+      "@Napicu/Utils": ["./src/app/utils/Utils.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
 }
