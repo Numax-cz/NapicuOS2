@@ -1,47 +1,54 @@
-/// <reference path="./interface/NapicuBiosInformations.d.ts" />
-
-namespace NapicuBios{
-  export class Bios  {
-    protected static declare hardwareInformations: NapicuHardware.HardwareInformationInterface;
-    protected static declare biosConfiguration: NapicuBios.InformationInterface;
+import * as NapicuComputer from "@Napicu/VirtualComputer";
 
 
-    public static init(){
-      //TODO Redirect
+export class Bios  {
+  protected static declare hardwareInformations: NapicuHardware.HardwareInformationInterface;
+  protected static declare biosConfiguration: NapicuBios.InformationInterface;
 
-      this.biosConfiguration = NapicuVirtualComputer.VirtualComputer.get_hardware();
 
-      this.post();
-    }
+  public static init(){
+    //TODO Redirect
 
-    protected static post(): void {
-      //TODO Check Hardware
-      //TODO Check available bootable drive
-      //TODO Start Booting
-    }
+    this.biosConfiguration = NapicuComputer.VirtualComputer.get_hardware();
 
-    protected static load_bios_config(): void {
-      //TODO Read cookies
-    }
+    this.post();
+  }
 
-    public static get_cpu(): NapicuHardware.HardwareCPUInformationInterface {
-      return this.hardwareInformations.cpu;
-    }
+  protected static post(): void {
+    //TODO Check Hardware
+    //TODO Check available bootable drive
+    //TODO Start Booting
+  }
 
-    public static get_ram(): NapicuHardware.HardwareRAMInformationInterface[] {
-      return this.hardwareInformations.ram;
-    }
+  protected static load_bios_config(): void {
+    //TODO Read cookies
+  }
 
-    public static get_gpu(): NapicuHardware.HardwareGPUInformationInterface {
-      return this.hardwareInformations.gpu;
-    }
+  public static enter_bios_configuration(): void {
 
-    public static get_drv(): NapicuHardware.HardwareDRVInformationInterface[] {
-      return this.hardwareInformations.drv;
-    }
+  }
+
+
+  public static get_bios_config(): NapicuBios.InformationInterface{
+    return this.biosConfiguration;
+  }
+
+  public static get_cpu(): NapicuHardware.HardwareCPUInformationInterface {
+    return this.hardwareInformations.cpu;
+  }
+
+  public static get_ram(): NapicuHardware.HardwareRAMInformationInterface[] {
+    return this.hardwareInformations.ram;
+  }
+
+  public static get_gpu(): NapicuHardware.HardwareGPUInformationInterface {
+    return this.hardwareInformations.gpu;
+  }
+
+  public static get_drv(): NapicuHardware.HardwareDRVInformationInterface[] {
+    return this.hardwareInformations.drv;
   }
 }
-
 
 
 

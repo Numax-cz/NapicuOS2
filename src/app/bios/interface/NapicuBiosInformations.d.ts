@@ -1,5 +1,5 @@
 
-namespace NapicuBios{
+declare namespace NapicuBios{
 
   export interface InformationInterface{
 
