@@ -1,7 +1,7 @@
-import {Audio} from "./Audio";
+import {ComputerAudio} from "./Audio";
 import {VirtualComputer} from "./VirtualComputer";
 
 export {
-  Audio,
+  ComputerAudio,
   VirtualComputer
 }

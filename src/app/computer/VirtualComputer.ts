@@ -5,10 +5,11 @@ export class VirtualComputer {
   protected static readonly hardware: NapicuHardware.HardwareInformationInterface = NapicuConfig.VirtualComputer.HARDWARE;
 
   public static start(): void {
+    //TODO Check Cookies
     NapicuBios.Bios.init();
   }
 
-  protected static enter_bios_configuration(): void {
+  public static enter_bios_configuration(): void {
     NapicuBios.Bios.enter_bios_configuration()
   }
 

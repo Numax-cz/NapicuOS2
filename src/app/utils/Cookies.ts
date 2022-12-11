@@ -1,5 +1,5 @@
 import * as NapicuConfig from "@Napicu/Config";
-
+import * as NapicuUtils from "@Napicu/Utils";
 
 export class Cookies{
   /**
@@ -8,10 +8,12 @@ export class Cookies{
    * @param {string} value Value of cookies
    */
   public static setCookies<T>(name: string, value: T): void {
-    const date: Date = new Date();
-    date.setTime(date.getTime() + NapicuConfig.Web.WEB_COOKIES_LIFE_TIME);
-    document.cookie =
-      name + '=' + JSON.stringify(value) + '; expires=' + date.toUTCString() + '; path=/';
+    if(NapicuUtils.WebManager.get_cookies_permission()){
+      const date: Date = new Date();
+      date.setTime(date.getTime() + NapicuConfig.Web.WEB_COOKIES_LIFE_TIME);
+      document.cookie =
+        name + '=' + JSON.stringify(value) + '; expires=' + date.toUTCString() + '; path=/';
+    }
   }
   /**
    * Returns the value of the specified cookie name
@@ -19,11 +21,13 @@ export class Cookies{
    * @returns {any} value of cookies
    */
   public static getCookies<T>(name: string): T | null {
-    const value: string = '; ' + document.cookie;
-    const parts = value.split('; ' + name + '=');
-    if (parts.length == 2) {
-      let i = parts.pop()?.split(';').shift();
-      if (i) return JSON.parse(i);
+    if(NapicuUtils.WebManager.get_cookies_permission()){
+      const value: string = '; ' + document.cookie;
+      const parts = value.split('; ' + name + '=');
+      if (parts.length == 2) {
+        let i = parts.pop()?.split(';').shift();
+        if (i) return JSON.parse(i);
+      }
     }
     return null;
   }

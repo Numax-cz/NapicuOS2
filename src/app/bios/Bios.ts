@@ -1,14 +1,13 @@
 import * as NapicuComputer from "@Napicu/VirtualComputer";
-
+import * as NapicuUtils from "@Napicu/Utils";
+import * as NapicuConfig from "@Napicu/Config"
 
 export class Bios  {
   protected static declare hardwareInformations: NapicuHardware.HardwareInformationInterface;
-  protected static declare biosConfiguration: NapicuBios.InformationInterface;
+  protected static biosConfiguration: NapicuBios.InformationInterface | null = null;
 
 
   public static init(){
-    //TODO Redirect
-
     this.biosConfiguration = NapicuComputer.VirtualComputer.get_hardware();
 
     this.post();
@@ -21,7 +20,11 @@ export class Bios  {
   }
 
   protected static load_bios_config(): void {
-    //TODO Read cookies
+    this.biosConfiguration = this.get_bios_configuration();
+
+
+
+
   }
 
   public static enter_bios_configuration(): void {
@@ -29,7 +32,11 @@ export class Bios  {
   }
 
 
-  public static get_bios_config(): NapicuBios.InformationInterface{
+  public static get_bios_configuration(): NapicuBios.InformationInterface{
+    if (!this.biosConfiguration){
+      this.biosConfiguration = NapicuUtils.Cookies.
+      getCookies<NapicuBios.InformationInterface>(NapicuConfig.Web.BIOS_COOKIES_NAME) || NapicuConfig.Bios.DEFAULT_CONFIGURATION;
+    }
     return this.biosConfiguration;
   }
 
