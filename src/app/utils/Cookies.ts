@@ -1,5 +1,5 @@
 
-namespace NapicuScripts{
+namespace NapicuUtils{
   export class Cookies{
     public static setCookies<T>(cookies: T) {
 
