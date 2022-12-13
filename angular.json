@@ -47,10 +47,7 @@
                 }
               ],
               "fileReplacements": [
-                {
-                  "replace": "src/app/config/bios/Bios.ts",
-                  "with": "src/app/config/bios/Bios.prod.ts"
-                }
+
               ],
               "outputHashing": "all"
             },
