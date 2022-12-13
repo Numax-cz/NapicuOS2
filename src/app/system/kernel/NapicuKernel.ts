@@ -1,27 +1,32 @@
-namespace NapicuKernel{
-  export abstract class Kernel{
-    protected readonly abstract system_name: string;
-
-    protected running_process: NapicuKernel.Process[] = [];
+import {Process} from "@Napicu/System/kernel/core/Process";
 
 
-    protected abstract main(): void;
+abstract class Kernel{
+  protected readonly abstract system_name: string;
+
+  protected running_process: Process[] = [];
 
 
-
-    public init(): void {
-
-      //Init NapicuKernel
-    }
+  protected abstract main(): void;
 
 
 
+  public init(): void {
 
-
-    public get_system_name(): string{
-      return this.system_name;
-    }
+    //Init NapicuKernel
   }
 
+
+
+
+
+  public get_system_name(): string{
+    return this.system_name;
+  }
+}
+
+export {
+  Kernel,
+  Process
 }
 

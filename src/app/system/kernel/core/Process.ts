@@ -1,8 +1,6 @@
-namespace NapicuKernel{
+export class Process{
+  protected pid: number = 0;
 
-  export class Process{
-    public main(): void {
 
-    }
-  }
+
 }
