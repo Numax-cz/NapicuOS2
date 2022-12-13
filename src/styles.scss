@@ -2,3 +2,15 @@
   font-family: 'DosVGA';
   src: url('assets/fonts/Perfect DOS VGA 437.ttf') format('truetype');
 }
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.NapicuFontDosVGA{
+  font-family: 'DosVGA';
+
+}

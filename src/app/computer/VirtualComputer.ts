@@ -4,6 +4,7 @@ import * as NapicuBios from "@Napicu/Bios";
 export class VirtualComputer {
   protected static readonly hardware: NapicuHardware.HardwareInformationInterface = NapicuConfig.VirtualComputer.HARDWARE;
 
+
   public static start(): void {
     //TODO Check Cookies
     NapicuBios.Bios.init();

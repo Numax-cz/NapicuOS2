@@ -28,14 +28,13 @@ export class Bios  {
   }
 
   public static enter_bios_configuration(): void {
-
+    NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_CONFIGURATION_ROOT_PATH, NapicuConfig.Bios.ENTER_BIOS_TIME_DELAY);
   }
-
 
   public static get_bios_configuration(): NapicuBios.InformationInterface{
     if (!this.biosConfiguration){
-      this.biosConfiguration = NapicuUtils.Cookies.
-      getCookies<NapicuBios.InformationInterface>(NapicuConfig.Web.BIOS_COOKIES_NAME) || NapicuConfig.Bios.DEFAULT_CONFIGURATION;
+      this.biosConfiguration = NapicuUtils.Cookies.getCookies
+        <NapicuBios.InformationInterface>(NapicuConfig.Web.BIOS_COOKIES_NAME) || NapicuConfig.Bios.DEFAULT_CONFIGURATION;
     }
     return this.biosConfiguration;
   }
