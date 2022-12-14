@@ -1,3 +1,5 @@
+import {NapicuHardware} from "../../computer/interface/NapicuHardware";
+
 export namespace VirtualComputer{
   export const HARDWARE: NapicuHardware.HardwareInformationInterface = {
     cpu: {

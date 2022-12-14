@@ -1,5 +1,6 @@
 import * as NapicuConfig from "@Napicu/Config";
 import * as NapicuBios from "@Napicu/Bios";
+import * as NapicuHardware from "@Napicu/VirtualComputer";
 
 export class VirtualComputer {
   protected static readonly hardware: NapicuHardware.HardwareInformationInterface = NapicuConfig.VirtualComputer.HARDWARE;
