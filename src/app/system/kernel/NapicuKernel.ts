@@ -24,6 +24,14 @@ abstract class Kernel{
   public get_system_name(): string{
     return this.system_name;
   }
+
+  public creat_new_partition(name: string): void { //TODO NoVoid
+
+  }
+
+  public get_partition(name: string): void { //TODO NoVoid
+
+  }
 }
 
 export {

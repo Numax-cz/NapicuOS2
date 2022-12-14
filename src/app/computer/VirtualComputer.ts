@@ -7,7 +7,6 @@ export class VirtualComputer {
 
 
   public static start(): void {
-    //TODO Check Cookies
     NapicuBios.Bios.init();
   }
 

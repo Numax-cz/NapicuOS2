@@ -1,9 +1,11 @@
 
-declare namespace NapicuBios{
 
-  export interface InformationInterface{
+export interface InformationInterface{
 
-  }
+  selected_drive: number;
+
 
 
 }
+
+
