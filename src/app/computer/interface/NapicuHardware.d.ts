@@ -1,3 +1,5 @@
+import * as NapicuKernel from "@Napicu/System/Kernel";
+
 declare namespace NapicuHardware {
 
   export interface HardwareCPUInformationInterface{
@@ -10,6 +12,7 @@ declare namespace NapicuHardware {
     name: string;
     speed: number;
     capacity: number;
+    data: DriveDataStructureInterface;
   }
 
   export interface HardwareGPUInformationInterface{
@@ -30,4 +33,14 @@ declare namespace NapicuHardware {
     gpu: HardwareGPUInformationInterface;
     drv: HardwareDRVInformationInterface[];
   }
+
+  export interface DrivePartitionInterface{
+
+  }
+
+  export interface DriveDataStructureInterface{
+    partitions: { [index: string]: DrivePartitionInterface }
+  }
+
+
 }

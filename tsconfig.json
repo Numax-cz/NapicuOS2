@@ -24,7 +24,7 @@
       "dom"
     ],
     "paths": {
-      "@Napicu/System/*": ["./src/app/system/*"],
+      "@Napicu/System/Kernel": ["./src/app/system/kernel/NapicuKernel.ts"],
 
       "@Napicu/Bios": ["./src/app/bios/Bios.ts"],
       "@Napicu/VirtualComputer": ["./src/app/computer/Computer.ts"],

@@ -1,6 +1,7 @@
 import * as NapicuComputer from "@Napicu/VirtualComputer";
 import * as NapicuUtils from "@Napicu/Utils";
 import * as NapicuConfig from "@Napicu/Config"
+import {NapicuHardware} from "../computer/interface/NapicuHardware"; //TODO
 
 export class Bios  {
   protected static declare hardwareInformations: NapicuHardware.HardwareInformationInterface;

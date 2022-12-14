@@ -1,5 +1,6 @@
-import {Process} from "@Napicu/System/kernel/core/Process";
-
+import { Process } from "./core/Process";
+import {SystemDataDriveInterface} from "./interface/Kernel";
+import {SystemFileStructure} from "./interface/Drive";
 
 abstract class Kernel{
   protected readonly abstract system_name: string;
@@ -27,6 +28,9 @@ abstract class Kernel{
 
 export {
   Kernel,
-  Process
+  Process,
+  SystemDataDriveInterface,
+  SystemFileStructure
+
 }
 
