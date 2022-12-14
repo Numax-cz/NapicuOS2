@@ -1,4 +1,5 @@
-import {NapicuHardware} from "../../computer/interface/NapicuHardware";
+import * as NapicuHardware from "@Napicu/VirtualComputer";
+
 
 export namespace VirtualComputer{
   export const HARDWARE: NapicuHardware.HardwareInformationInterface = {
