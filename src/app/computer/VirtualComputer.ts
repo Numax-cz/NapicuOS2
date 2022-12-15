@@ -3,7 +3,7 @@ import * as NapicuBios from "@Napicu/Bios";
 import * as NapicuComputer from "@Napicu/VirtualComputer";
 
 export class VirtualComputer {
-  protected static readonly hardware: NapicuComputer.NapicuHardware.HardwareInformationInterface = NapicuConfig.VirtualComputer.HARDWARE;
+  protected static readonly hardware: NapicuComputer.Hardware.HardwareInformationInterface = NapicuConfig.VirtualComputer.HARDWARE;
 
 
   public static start(): void {
@@ -14,23 +14,23 @@ export class VirtualComputer {
     NapicuBios.Bios.enter_bios_configuration()
   }
 
-  public static get_hardware(): NapicuComputer.NapicuHardware.HardwareInformationInterface{
+  public static get_hardware(): NapicuComputer.Hardware.HardwareInformationInterface{
     return this.hardware;
   }
 
-  protected static get_cpu(): NapicuComputer.NapicuHardware.HardwareCPUInformationInterface {
+  protected static get_cpu(): NapicuComputer.Hardware.HardwareCPUInformationInterface {
     return this.hardware.cpu;
   }
 
-  protected static get_ram(): NapicuComputer.NapicuHardware.HardwareRAMInformationInterface[] {
+  protected static get_ram(): NapicuComputer.Hardware.HardwareRAMInformationInterface[] {
     return this.hardware.ram;
   }
 
-  protected static get_gpu(): NapicuComputer.NapicuHardware.HardwareGPUInformationInterface {
+  protected static get_gpu(): NapicuComputer.Hardware.HardwareGPUInformationInterface {
     return this.hardware.gpu;
   }
 
-  protected static get_drv(): NapicuComputer.NapicuHardware.HardwareDRVInformationInterface[] {
+  protected static get_drv(): NapicuComputer.Hardware.HardwareDRVInformationInterface[] {
     return this.hardware.drv;
   }
 }

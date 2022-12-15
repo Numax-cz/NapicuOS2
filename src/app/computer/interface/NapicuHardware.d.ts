@@ -1,5 +1,3 @@
-
-
 export interface HardwareCPUInformationInterface{
   name: string;
   speed: number;
@@ -10,7 +8,7 @@ export interface HardwareDRVInformationInterface{
   name: string;
   speed: number;
   capacity: number;
-  data: DriveDataStructureInterface;
+  data: DrivePartitionsStructureInterface;
 }
 
 export interface HardwareGPUInformationInterface{
@@ -24,7 +22,6 @@ export interface HardwareRAMInformationInterface{
   capacity: number;
 }
 
-
 export interface HardwareInformationInterface{
   cpu: HardwareCPUInformationInterface;
   ram: HardwareRAMInformationInterface[];
@@ -32,12 +29,30 @@ export interface HardwareInformationInterface{
   drv: HardwareDRVInformationInterface[];
 }
 
-export interface DriveDataStructureInterface {
-
+export interface DriveBaseFileStructureInterface<file_structure = any> {
+  file_name: string,
+  data: file_structure
 }
 
-export interface DriveDataStructureInterface{
-  partitions: { [index: string]: DriveDataStructureInterface }
+export interface DriveBaseFilesAndFoldersStructureInterface {
+  folders: DriveDataFoldersStructureInterface,
+  files: DriveDataFilesStructureInterface
+}
+
+export interface DriveDataFoldersStructureInterface {
+  data: {
+    [index: string]: DriveBaseFilesAndFoldersStructureInterface | undefined
+  }
+}
+
+export interface DriveDataFilesStructureInterface<file_structure = any> {
+  data: {
+    [index: string]: DriveBaseFileStructureInterface<file_structure> | undefined
+  }
+}
+
+export interface DrivePartitionsStructureInterface{
+  partitions: { [index: string]: DriveDataFoldersStructureInterface | undefined }
 }
 
 
