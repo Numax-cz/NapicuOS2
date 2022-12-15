@@ -1,9 +1,9 @@
-import * as NapicuHardware from "@Napicu/VirtualComputer";
+import * as NapicuComputer from "@Napicu/VirtualComputer";
 import * as NapicuKernel from "@Napicu/System/Kernel";
 
 
 
-const disk_1: NapicuHardware.HardwareDRVInformationInterface = {
+const disk_1: NapicuComputer.NapicuHardware.HardwareDRVInformationInterface = {
   name: "Samsung SSD 860 EVO 250GB",
   capacity: 250,
   speed: 500,
@@ -16,7 +16,7 @@ const disk_1: NapicuHardware.HardwareDRVInformationInterface = {
 }
 
 export namespace VirtualComputer{
-  export const HARDWARE: NapicuHardware.HardwareInformationInterface = {
+  export const HARDWARE: NapicuComputer.NapicuHardware.HardwareInformationInterface = {
     cpu: {
       name: "CPU",
       tdp: 0,

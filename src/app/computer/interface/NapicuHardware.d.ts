@@ -32,12 +32,12 @@ export interface HardwareInformationInterface{
   drv: HardwareDRVInformationInterface[];
 }
 
-export interface DrivePartitionInterface{
+export interface DriveDataStructureInterface {
 
 }
 
 export interface DriveDataStructureInterface{
-  partitions: { [index: string]: DrivePartitionInterface }
+  partitions: { [index: string]: DriveDataStructureInterface }
 }
 
 

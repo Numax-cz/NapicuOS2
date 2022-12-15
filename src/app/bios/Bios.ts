@@ -1,11 +1,10 @@
-import * as NapicuComputer from "@Napicu/VirtualComputer";
 import * as NapicuUtils from "@Napicu/Utils";
 import * as NapicuConfig from "@Napicu/Config"
-import * as NapicuHardware from "@Napicu/VirtualComputer"
+import * as NapicuComputer from "@Napicu/VirtualComputer"
 import {InformationInterface} from "./interface/NapicuBiosInformations";
 
 class Bios  {
-  protected static declare hardwareInformations: NapicuHardware.HardwareInformationInterface;
+  protected static declare hardwareInformations: NapicuComputer.NapicuHardware.HardwareInformationInterface;
   protected static declare biosConfiguration: InformationInterface;
 
 
@@ -39,23 +38,23 @@ class Bios  {
     return this.biosConfiguration;
   }
 
-  public static get_cpu(): NapicuHardware.HardwareCPUInformationInterface {
+  public static get_cpu(): NapicuComputer.NapicuHardware.HardwareCPUInformationInterface {
     return this.hardwareInformations.cpu;
   }
 
-  public static get_ram(): NapicuHardware.HardwareRAMInformationInterface[] {
+  public static get_ram(): NapicuComputer.NapicuHardware.HardwareRAMInformationInterface[] {
     return this.hardwareInformations.ram;
   }
 
-  public static get_gpu(): NapicuHardware.HardwareGPUInformationInterface {
+  public static get_gpu(): NapicuComputer.NapicuHardware.HardwareGPUInformationInterface {
     return this.hardwareInformations.gpu;
   }
 
-  public static get_drv(): NapicuHardware.HardwareDRVInformationInterface[] {
+  public static get_drv(): NapicuComputer.NapicuHardware.HardwareDRVInformationInterface[] {
     return this.hardwareInformations.drv;
   }
 
-  public static get_selected_drv(): NapicuHardware.HardwareDRVInformationInterface {
+  public static get_selected_drv(): NapicuComputer.NapicuHardware.HardwareDRVInformationInterface {
     return this.hardwareInformations.drv[this.biosConfiguration.selected_drive];
   }
 }
