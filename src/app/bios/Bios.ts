@@ -2,7 +2,7 @@ import * as NapicuUtils from "@Napicu/Utils";
 import * as NapicuConfig from "@Napicu/Config"
 import * as NapicuComputer from "@Napicu/VirtualComputer"
 import {InformationInterface} from "./interface/NapicuBiosInformations";
-
+import {BiosPostExceptionCodes} from "./enums/BiosException";
 
 class Bios  {
   protected static declare hardwareInformations: NapicuComputer.Hardware.HardwareInformationInterface;
@@ -16,20 +16,42 @@ class Bios  {
 
   }
 
-  protected static post(): void {
+  protected static async post(): Promise<void> {
     //TODO Check Hardware
     //TODO Check available bootable drive
     //TODO Start Booting
+    return new Promise<void>(async () => {
 
-    const ckb: NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface | undefined =
-      this.get_selected_drv().data.partitions?.["sda"]?.data["boot"];
+      await this.check_hardware();
 
-    if(!ckb) this.no_bootable_device_error();
-    else {
-
-    }
+      await this.check_bootable_drive();
 
 
+
+    });
+
+
+
+
+
+  }
+
+  protected static check_hardware(): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+
+    })
+  }
+
+  protected static check_bootable_drive(): Promise<BiosPostExceptionCodes> { //TODO Promise
+    return new Promise<BiosPostExceptionCodes>((resolve, reject) => {
+      const ckb: NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface | undefined =
+        this.get_selected_drv().data.partitions?.["sda"]?.data["boot"];
+      if(!ckb) reject(BiosPostExceptionCodes.no_bootable_device);
+      else {
+        //TODO Load NapicuGrub
+
+      }
+    })
   }
 
   protected static load_bios_config(): void {
