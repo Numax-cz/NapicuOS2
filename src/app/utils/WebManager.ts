@@ -17,6 +17,10 @@ export class WebManager{
     return this.angular_router;
   }
 
+  public static get_angular_router_path(): string | null{
+    return this.angular_router?.url || null;
+  }
+
   public static navigate_angular_router(path: string, time_out: number = 0): void {
     setTimeout(() => {
       if(this.angular_router){
@@ -26,8 +30,4 @@ export class WebManager{
       } else NapicuUtils.Console.print_error("web router does not exist");
     }, time_out);
   }
-
-
-
-
 }
