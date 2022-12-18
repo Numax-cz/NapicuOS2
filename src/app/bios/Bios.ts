@@ -47,6 +47,7 @@ class Bios  {
               '',
               'Press F1 to reboot device.',
             ]);
+            this.add_cursor_to_end();
             break;
 
         }
@@ -69,6 +70,10 @@ class Bios  {
 
   public static print_error(text: string): void {
     TextScreenComponent.print(text);
+  }
+
+  public static add_cursor_to_end(): void {
+    TextScreenComponent.add_cursor_to_end();
   }
 
   public static print_lines(lines: string[]): void {

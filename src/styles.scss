@@ -1,7 +1,4 @@
-@font-face {
-  font-family: 'DosVGA';
-  src: url('assets/fonts/Perfect DOS VGA 437.ttf') format('truetype');
-}
+@import "./app/bios/styles";
 
 * {
   padding: 0;
@@ -10,7 +7,7 @@
   user-select: none;
 }
 
-.NapicuFontDosVGA{
-  font-family: 'DosVGA';
 
-}
+
+
+

@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'DosVGA';
+  src: url('../../assets/fonts/Perfect DOS VGA 437.ttf') format('truetype');
+}
+
+.NapicuFontDosVGA{
+  font-family: 'DosVGA';
+}
+
+
+@keyframes blink {
+  to{
+    visibility: hidden;
+  }
+}
+
+
+.cursor{
+  font-size: 2rem;
+  font-weight: bold;
+  animation: blink 1.5s steps(2, start) infinite;
+}
