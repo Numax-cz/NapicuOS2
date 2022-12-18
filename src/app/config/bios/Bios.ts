@@ -10,7 +10,8 @@ export namespace Bios{
   export const ENTER_BIOS_KEY_2: number = 113; //F2
 
   export const ENTER_BIOS_TIME_DELAY: number = 0;
-  export const EXIT_SPLASH_SCREEN_TIME_DELAY: number = 3500;
+  export const EXIT_BIOS_SPLASH_SCREEN_DELAY: number = 2000;
+
 
 
   export const DEFAULT_CONFIGURATION: NapicuBios.InformationInterface = {

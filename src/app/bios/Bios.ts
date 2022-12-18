@@ -12,7 +12,17 @@ class Bios  {
   public static init(){
     this.load_bios_config();
 
-    this.post();
+
+    setTimeout(() => {
+      this.clear_screen();
+
+      this.post();
+
+      // setTimeout(() => {
+      //
+      // }, 1000)
+
+    }, NapicuUtils.SpeedControl.calculate_hardware_speed(NapicuConfig.Bios.EXIT_BIOS_SPLASH_SCREEN_DELAY, this.get_cpu().speed));
 
   }
 
@@ -28,48 +38,44 @@ class Bios  {
       //await this.check_hardware();
 
       await this.check_bootable_drive().then((value: BiosPostExceptionCodes) => {}, (reason) => {
+        switch (reason as BiosPostExceptionCodes) {
+          case BiosPostExceptionCodes.no_bootable_device:
+            this.print_lines([
+              'No boot device available.',
+              'Current boot mode is set to BIOS.',
+              'Please reboot and select proper Boot device.',
+              '',
+              'Press F1 to reboot device.',
+            ]);
+            break;
 
-        console.log(reason)
-
-        if(reason === BiosPostExceptionCodes.no_bootable_device){
-          this.print_lines([
-            'No boot device available.',
-            'Current boot mode is set to BIOS.',
-            'Please reboot and select proper Boot device.',
-            '',
-            'Press F1 to reboot device.',
-          ]);
         }
+
+
 
       });
 
 
 
     });
-
-
-
-
-
   }
 
 
-  public static print_error(text: string): void {
+  public static clear_screen(): void {
     if(NapicuUtils.WebManager.get_angular_router_path() !== NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH){
       NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
     }
+  }
+
+  public static print_error(text: string): void {
     TextScreenComponent.print(text);
   }
 
   public static print_lines(lines: string[]): void {
-    if(NapicuUtils.WebManager.get_angular_router_path() !== NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH){
-      NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
-    }
     for (let i = 0; i < lines.length; i++){
       TextScreenComponent.print(lines[i]);
     }
   }
-
 
   protected static check_hardware(): Promise<any> {
     return new Promise<any>((resolve, reject)  => {
@@ -96,7 +102,6 @@ class Bios  {
   protected static no_bootable_device_error(): void {
     NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
   }
-
 
   public static enter_bios_configuration(): void {
     NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_CONFIGURATION_ROOT_PATH, NapicuConfig.Bios.ENTER_BIOS_TIME_DELAY);
