@@ -3,9 +3,9 @@ import * as NapicuConfig from "@Napicu/Config"
 import * as NapicuComputer from "@Napicu/VirtualComputer"
 import {InformationInterface} from "./interface/NapicuBiosInformations";
 import {BiosPostExceptionCodes} from "./enums/BiosException";
+import {TextScreenComponent} from "./components/text-screen/text-screen.component";
 
 class Bios  {
-  protected static declare hardwareInformations: NapicuComputer.Hardware.HardwareInformationInterface;
   protected static declare biosConfiguration: InformationInterface;
 
 
@@ -18,13 +18,30 @@ class Bios  {
 
   protected static async post(): Promise<void> {
     //TODO Check Hardware
+
+
+
     //TODO Check available bootable drive
     //TODO Start Booting
     return new Promise<void>(async () => {
 
-      await this.check_hardware();
+      //await this.check_hardware();
 
-      await this.check_bootable_drive();
+      await this.check_bootable_drive().then((value: BiosPostExceptionCodes) => {}, (reason) => {
+
+        console.log(reason)
+
+        if(reason === BiosPostExceptionCodes.no_bootable_device){
+          this.print_lines([
+            'No boot device available.',
+            'Current boot mode is set to BIOS.',
+            'Please reboot and select proper Boot device.',
+            '',
+            'Press F1 to reboot device.',
+          ]);
+        }
+
+      });
 
 
 
@@ -36,8 +53,26 @@ class Bios  {
 
   }
 
+
+  public static print_error(text: string): void {
+    if(NapicuUtils.WebManager.get_angular_router_path() !== NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH){
+      NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
+    }
+    TextScreenComponent.print(text);
+  }
+
+  public static print_lines(lines: string[]): void {
+    if(NapicuUtils.WebManager.get_angular_router_path() !== NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH){
+      NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
+    }
+    for (let i = 0; i < lines.length; i++){
+      TextScreenComponent.print(lines[i]);
+    }
+  }
+
+
   protected static check_hardware(): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+    return new Promise<any>((resolve, reject)  => {
 
     })
   }
@@ -59,7 +94,7 @@ class Bios  {
   }
 
   protected static no_bootable_device_error(): void {
-
+    NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
   }
 
 
@@ -76,23 +111,23 @@ class Bios  {
   }
 
   public static get_cpu(): NapicuComputer.Hardware.HardwareCPUInformationInterface {
-    return this.hardwareInformations.cpu;
+    return NapicuComputer.VirtualComputer.get_hardware().cpu;
   }
 
   public static get_ram(): NapicuComputer.Hardware.HardwareRAMInformationInterface[] {
-    return this.hardwareInformations.ram;
+    return NapicuComputer.VirtualComputer.get_hardware().ram;
   }
 
   public static get_gpu(): NapicuComputer.Hardware.HardwareGPUInformationInterface {
-    return this.hardwareInformations.gpu;
+    return NapicuComputer.VirtualComputer.get_hardware().gpu;
   }
 
   public static get_drv(): NapicuComputer.Hardware.HardwareDRVInformationInterface[] {
-    return this.hardwareInformations.drv;
+    return NapicuComputer.VirtualComputer.get_hardware().drv;
   }
 
   public static get_selected_drv(): NapicuComputer.Hardware.HardwareDRVInformationInterface {
-    return this.hardwareInformations.drv[this.biosConfiguration.selected_drive];
+    return NapicuComputer.VirtualComputer.get_hardware().drv[this.biosConfiguration.selected_drive];
   }
 }
 

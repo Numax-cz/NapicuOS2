@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 export class SplashScreenComponent implements OnInit, OnDestroy {
 
 
+
   constructor(router: Router) {
     //WebManager
     NapicuUtils.WebManager.set_angular_router(router);
@@ -19,11 +20,7 @@ export class SplashScreenComponent implements OnInit, OnDestroy {
     NapicuComputer.VirtualComputer.start();
   }
 
-
   public ngOnInit() {
-    //TODO
-
-
     window.addEventListener("keydown", this.onKeyDownEvent);
   }
 
@@ -31,15 +28,10 @@ export class SplashScreenComponent implements OnInit, OnDestroy {
     window.removeEventListener("keydown", this.onKeyDownEvent);
   }
 
-
   protected onKeyDownEvent = (e: KeyboardEvent) => {
     if (e.keyCode == NapicuConfig.Bios.ENTER_BIOS_KEY_1 ||
       e.keyCode == NapicuConfig.Bios.ENTER_BIOS_KEY_2) {
       NapicuComputer.VirtualComputer.enter_bios_configuration();
     }
   }
-
-
-
-
 }

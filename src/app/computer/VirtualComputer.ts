@@ -5,13 +5,24 @@ import * as NapicuComputer from "@Napicu/VirtualComputer";
 export class VirtualComputer {
   protected static readonly hardware: NapicuComputer.Hardware.HardwareInformationInterface = NapicuConfig.VirtualComputer.HARDWARE;
 
+  protected static isRunning: boolean = false;
 
   public static start(): void {
-    NapicuBios.Bios.init();
+    NapicuBios.Bios.init(); //TODO Promise
+    this.isRunning = true;
   }
+
+  public static reboot(): void {
+
+  }
+
 
   public static enter_bios_configuration(): void {
     NapicuBios.Bios.enter_bios_configuration()
+  }
+
+  public static get_is_running(): boolean{
+    return this.isRunning;
   }
 
   public static get_hardware(): NapicuComputer.Hardware.HardwareInformationInterface{
