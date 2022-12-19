@@ -40,45 +40,32 @@ class Bios  {
       await this.check_bootable_drive().then((value: BiosPostExceptionCodes) => {}, (reason) => {
         switch (reason as BiosPostExceptionCodes) {
           case BiosPostExceptionCodes.no_bootable_device:
-            this.print_lines([
+            TextScreenComponent.print_lines([
               'No boot device available.',
               'Current boot mode is set to BIOS.',
               'Please reboot and select proper Boot device.',
               '',
               'Press F1 to reboot device.',
             ]);
-            this.add_cursor_to_end();
+
+            TextScreenComponent.add_event("keydown", (ev: KeyboardEvent) => {
+              if(ev.keyCode == 112){
+                console.log("xd");
+              }
+            })
+
+            TextScreenComponent.add_cursor_to_end();
+
             break;
 
         }
-
-
-
       });
-
-
-
     });
   }
-
 
   public static clear_screen(): void {
     if(NapicuUtils.WebManager.get_angular_router_path() !== NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH){
       NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
-    }
-  }
-
-  public static print_error(text: string): void {
-    TextScreenComponent.print(text);
-  }
-
-  public static add_cursor_to_end(): void {
-    TextScreenComponent.add_cursor_to_end();
-  }
-
-  public static print_lines(lines: string[]): void {
-    for (let i = 0; i < lines.length; i++){
-      TextScreenComponent.print(lines[i]);
     }
   }
 
