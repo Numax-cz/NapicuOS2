@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 
 @Component({
   selector: 'app-text-screen',
@@ -7,7 +7,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 })
 export class TextScreenComponent implements OnDestroy{
   protected static text_screen_lines: string[] = [];
+
   protected static cursor_position: number = -1;
+
   protected static events: { name: any, fun: (this: Window, ev: any ) => void }[] = [];
 
   ngOnDestroy = () => TextScreenComponent.clear();
