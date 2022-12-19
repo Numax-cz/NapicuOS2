@@ -4,6 +4,7 @@ import * as NapicuComputer from "@Napicu/VirtualComputer"
 import {InformationInterface} from "./interface/NapicuBiosInformations";
 import {BiosPostExceptionCodes} from "./enums/BiosException";
 import {TextScreenComponent} from "./components/text-screen/text-screen.component";
+import {VirtualComputer} from "@Napicu/VirtualComputer";
 
 class Bios  {
   protected static declare biosConfiguration: InformationInterface;
@@ -37,7 +38,9 @@ class Bios  {
 
       //await this.check_hardware();
 
-      await this.check_bootable_drive().then((value: BiosPostExceptionCodes) => {}, (reason) => {
+      await this.check_bootable_drive().then((drive: NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface) => {
+        //TODO Load NapicuGrub
+      }, (reason) => {
         switch (reason as BiosPostExceptionCodes) {
           case BiosPostExceptionCodes.no_bootable_device:
             TextScreenComponent.print_lines([
@@ -49,9 +52,7 @@ class Bios  {
             ]);
 
             TextScreenComponent.add_event("keydown", (ev: KeyboardEvent) => {
-              if(ev.keyCode == 112){
-                console.log("xd");
-              }
+              if(ev.keyCode == 112) VirtualComputer.reboot();
             })
 
             TextScreenComponent.add_cursor_to_end();
@@ -75,15 +76,12 @@ class Bios  {
     })
   }
 
-  protected static check_bootable_drive(): Promise<BiosPostExceptionCodes> { //TODO Promise
-    return new Promise<BiosPostExceptionCodes>((resolve, reject) => {
+  protected static check_bootable_drive(): Promise<NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface> { //TODO Promise
+    return new Promise<NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface>((resolve, reject) => {
       const ckb: NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface | undefined =
         this.get_selected_drv().data.partitions?.["sda"]?.data["boot"];
       if(!ckb) reject(BiosPostExceptionCodes.no_bootable_device);
-      else {
-        //TODO Load NapicuGrub
-
-      }
+      else resolve(ckb);
     })
   }
 
