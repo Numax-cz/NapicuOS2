@@ -10,26 +10,20 @@ import {SpeedControl} from "./scripts/SpeedControl";
 class Bios  {
   protected static declare biosConfiguration: InformationInterface;
 
-
   public static init(){
     this.load_bios_config();
   }
 
   public static start_boot(): void {
       this.redirect_text_screen();
-
       this.post();
-
-
   }
 
   protected static async post(): Promise<void> {
     //TODO Check Hardware
-
-
-
     //TODO Check available bootable drive
     //TODO Start Booting
+
     return new Promise<void>(async () => {
 
       //await this.check_hardware();
@@ -56,21 +50,12 @@ class Bios  {
             TextScreenComponent.add_cursor_to_end();
 
             break;
-
         }
       });
     });
   }
 
-  public static redirect_text_screen(): void {
-    if(NapicuUtils.WebManager.get_angular_router_path() !== NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH){
-      NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
-    }
-  }
 
-  public static clear_text_screen(): void {
-    TextScreenComponent.clear();
-  }
 
   protected static check_hardware(): Promise<any> {
     return new Promise<any>((resolve, reject)  => {
@@ -97,6 +82,16 @@ class Bios  {
 
   public static enter_bios_configuration(): void {
     NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_CONFIGURATION_ROOT_PATH, NapicuConfig.Bios.ENTER_BIOS_TIME_DELAY);
+  }
+
+  public static redirect_text_screen(): void {
+    if(NapicuUtils.WebManager.get_angular_router_path() !== NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH){
+      NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
+    }
+  }
+
+  public static clear_text_screen(): void {
+    TextScreenComponent.clear();
   }
 
   public static get_bios_configuration(): InformationInterface{
