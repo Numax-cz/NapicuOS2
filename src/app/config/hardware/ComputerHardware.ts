@@ -9,7 +9,28 @@ const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
   speed: 500,
 
   data: {
-    partitions: {}
+    partitions: {
+      sda: {
+        files: {
+
+        },
+
+        folders: {
+          data: {
+            boot: {
+
+              files: {
+                grub: {data: null}
+              },
+
+              folders: {}
+            }
+          }
+        }
+
+
+      }
+    }
   }
 }
 

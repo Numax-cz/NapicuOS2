@@ -36,8 +36,11 @@ export interface HardwareInformationInterface{
 }
 
 export interface DriveBaseFileStructureInterface<file_structure = any> {
-  file_name: string,
   data: file_structure
+}
+
+export type DriveDataFoldersStructureDataType = {
+  [index: string]: DriveBaseFilesAndFoldersStructureInterface | undefined
 }
 
 export interface DriveBaseFilesAndFoldersStructureInterface {
@@ -46,19 +49,15 @@ export interface DriveBaseFilesAndFoldersStructureInterface {
 }
 
 export interface DriveDataFoldersStructureInterface {
-  data: {
-    [index: string]: DriveBaseFilesAndFoldersStructureInterface | undefined
-  }
+  data?: DriveDataFoldersStructureDataType
 }
 
 export interface DriveDataFilesStructureInterface<file_structure = any> {
-  data: {
-    [index: string]: DriveBaseFileStructureInterface<file_structure> | undefined
-  }
+  [index: string]: DriveBaseFileStructureInterface<file_structure> | undefined
 }
 
 export interface DrivePartitionsStructureInterface{
-  partitions: { [index: string]: DriveDataFoldersStructureInterface | undefined }
+  partitions: { [index: string]: DriveBaseFilesAndFoldersStructureInterface | undefined }
 }
 
 

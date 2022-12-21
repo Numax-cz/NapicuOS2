@@ -1,4 +1,5 @@
 import * as NapicuKernel from "@Napicu/System/Kernel";
+import {GrubBootFileInterface} from "./interface/BootFile";
 
 class Grub{
 
@@ -28,6 +29,8 @@ class Grub{
 
 
 export {
-  Grub
+  Grub,
+  GrubBootFileInterface
+
 }
 

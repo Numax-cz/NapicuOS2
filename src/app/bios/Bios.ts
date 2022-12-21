@@ -1,6 +1,8 @@
 import * as NapicuUtils from "@Napicu/Utils";
 import * as NapicuConfig from "@Napicu/Config"
 import * as NapicuComputer from "@Napicu/VirtualComputer"
+import * as NapicuGrub from "@Napicu/Grub";
+
 import {InformationInterface} from "./interface/NapicuBiosInformations";
 import {BiosPostExceptionCodes} from "./enums/BiosException";
 import {TextScreenComponent} from "./components/text-screen/text-screen.component";
@@ -28,8 +30,9 @@ class Bios  {
 
       //await this.check_hardware();
 
-      await this.check_bootable_drive().then((drive: NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface) => {
-        //TODO Load NapicuGrub
+      await this.get_bootable_file().then((bootable_file: NapicuComputer.Hardware.DriveBaseFileStructureInterface<NapicuGrub.GrubBootFileInterface>) => {
+
+
       }, (reason) => {
         switch (reason as BiosPostExceptionCodes) {
           case BiosPostExceptionCodes.no_bootable_device:
@@ -48,7 +51,6 @@ class Bios  {
             });
 
             TextScreenComponent.add_cursor_to_end();
-
             break;
         }
       });
@@ -63,12 +65,12 @@ class Bios  {
     })
   }
 
-  protected static check_bootable_drive(): Promise<NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface> { //TODO Promise
-    return new Promise<NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface>((resolve, reject) => {
+  protected static get_bootable_file(): Promise<NapicuComputer.Hardware.DriveBaseFileStructureInterface<NapicuGrub.GrubBootFileInterface>> { //TODO Promise
+    return new Promise<NapicuComputer.Hardware.DriveBaseFileStructureInterface<NapicuGrub.GrubBootFileInterface>>((resolve, reject) => {
       const ckb: NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface | undefined =
-        this.get_selected_drv().data.partitions?.["sda"]?.data["boot"];
-      if(!ckb) reject(BiosPostExceptionCodes.no_bootable_device);
-      else resolve(ckb);
+        this.get_selected_drv().data.partitions?.["sda"]?.folders.data?.["boot"];
+      if(!ckb || !ckb.files["grub"]?.data) reject(BiosPostExceptionCodes.no_bootable_device);
+      else resolve(ckb.files["grub"]);
     })
   }
 
