@@ -31,8 +31,7 @@ class Bios  {
       //await this.check_hardware();
 
       await this.get_bootable_file().then((bootable_file: NapicuComputer.Hardware.DriveBaseFileStructureInterface<NapicuGrub.GrubBootFileInterface>) => {
-
-
+        //TODO StartGrub
       }, (reason) => {
         switch (reason as BiosPostExceptionCodes) {
           case BiosPostExceptionCodes.no_bootable_device:

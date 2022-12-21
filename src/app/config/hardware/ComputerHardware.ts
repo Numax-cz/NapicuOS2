@@ -11,24 +11,20 @@ const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
   data: {
     partitions: {
       sda: {
-        files: {
-
-        },
+        files: {},
 
         folders: {
           data: {
+            //BootFIle
             boot: {
-
               files: {
                 grub: {data: null}
               },
-
               folders: {}
             }
+
           }
         }
-
-
       }
     }
   }
