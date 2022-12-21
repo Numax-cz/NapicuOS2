@@ -34,7 +34,7 @@ export class TextScreenComponent implements OnDestroy{
     window.addEventListener(type, listener);
   }
 
-  protected static clear(): void {
+  public static clear(): void {
     this.text_screen_lines = [];
     for (let i = 0; i < this.events.length; i++) {
       window.removeEventListener(this.events[i].name, this.events[i].fun);

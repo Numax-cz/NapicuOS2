@@ -13,7 +13,7 @@ export class VirtualComputer {
   }
 
   public static reboot(): void {
-
+    window.location.reload(); //TODO delay
   }
 
 

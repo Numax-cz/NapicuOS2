@@ -11,6 +11,11 @@ export interface HardwareDRVInformationInterface{
   data: DrivePartitionsStructureInterface;
 }
 
+export interface HardwareBRDInformationInterface{
+  name: string;
+  speed: number;
+}
+
 export interface HardwareGPUInformationInterface{
   name: string;
   speed: number;
@@ -27,6 +32,7 @@ export interface HardwareInformationInterface{
   ram: HardwareRAMInformationInterface[];
   gpu: HardwareGPUInformationInterface;
   drv: HardwareDRVInformationInterface[];
+  brd: HardwareBRDInformationInterface;
 }
 
 export interface DriveBaseFileStructureInterface<file_structure = any> {

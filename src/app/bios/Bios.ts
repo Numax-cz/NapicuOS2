@@ -5,6 +5,7 @@ import {InformationInterface} from "./interface/NapicuBiosInformations";
 import {BiosPostExceptionCodes} from "./enums/BiosException";
 import {TextScreenComponent} from "./components/text-screen/text-screen.component";
 import {VirtualComputer} from "@Napicu/VirtualComputer";
+import {SpeedControl} from "./scripts/SpeedControl";
 
 class Bios  {
   protected static declare biosConfiguration: InformationInterface;
@@ -12,18 +13,13 @@ class Bios  {
 
   public static init(){
     this.load_bios_config();
+  }
 
-
-    setTimeout(() => {
-      this.clear_screen();
+  public static start_boot(): void {
+      this.redirect_text_screen();
 
       this.post();
 
-      // setTimeout(() => {
-      //
-      // }, 1000)
-
-    }, NapicuUtils.SpeedControl.calculate_hardware_speed(NapicuConfig.Bios.EXIT_BIOS_SPLASH_SCREEN_DELAY, this.get_cpu().speed));
 
   }
 
@@ -49,9 +45,13 @@ class Bios  {
               'Press F1 to reboot device.',
             ]);
 
-            TextScreenComponent.add_event("keydown", (ev: KeyboardEvent) => {
-              if(ev.keyCode == 112) VirtualComputer.reboot();
-            })
+            TextScreenComponent.add_event("keydown", (e: KeyboardEvent) => {
+              if(e.keyCode == 112) {
+                this.clear_text_screen();
+                setTimeout(() => {VirtualComputer.reboot()}, SpeedControl.calculate_hardware_speed(NapicuConfig.Bios.BOOT_ERROR_REBOOT_TIME));
+                e.preventDefault();
+              }
+            });
 
             TextScreenComponent.add_cursor_to_end();
 
@@ -62,10 +62,14 @@ class Bios  {
     });
   }
 
-  public static clear_screen(): void {
+  public static redirect_text_screen(): void {
     if(NapicuUtils.WebManager.get_angular_router_path() !== NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH){
       NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
     }
+  }
+
+  public static clear_text_screen(): void {
+    TextScreenComponent.clear();
   }
 
   protected static check_hardware(): Promise<any> {
@@ -126,6 +130,7 @@ class Bios  {
 
 export {
   Bios,
-  InformationInterface
+  InformationInterface,
+  SpeedControl
 }
 

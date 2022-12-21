@@ -18,14 +18,21 @@ export namespace VirtualComputer{
     cpu: {
       name: "CPU",
       tdp: 0,
-      speed: 3
+      speed: 3000
     },
     drv: [disk_1],
     gpu: {
       name: "GPU",
-      speed: 1
+      speed: 1000
     },
-    ram: []
+    ram: [
+      {speed: 2000, capacity: 8, name: "RAM 1"},
+      {speed: 2000, capacity: 8, name: "RAM 2"}
+    ],
+    brd: {
+      name: "Board",
+      speed: 100
+    }
   };
 }
 

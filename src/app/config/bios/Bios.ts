@@ -12,6 +12,8 @@ export namespace Bios{
   export const ENTER_BIOS_TIME_DELAY: number = 0;
   export const EXIT_BIOS_SPLASH_SCREEN_DELAY: number = 2000;
 
+  export const BOOT_ERROR_REBOOT_TIME: number = 1500;
+
 
 
   export const DEFAULT_CONFIGURATION: NapicuBios.InformationInterface = {
