@@ -15,6 +15,8 @@ export namespace Bios{
   export const BOOT_ERROR_REBOOT_TIME: number = 1500;
 
 
+  //CONFIGURATOR
+
 
   export const DEFAULT_CONFIGURATION: NapicuBios.InformationInterface = {
     selected_drive: 0
