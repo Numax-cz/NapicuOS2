@@ -11,7 +11,7 @@ import { AdvancedComponent } from './components/configuration/components/advance
 import { BootComponent } from './components/configuration/components/boot/boot.component';
 import { ToolsComponent } from './components/configuration/components/tools/tools.component';
 import { ExitComponent } from './components/configuration/components/exit/exit.component';
-import {NgComponentOutlet, NgForOf} from "@angular/common";
+import {NgClass, NgComponentOutlet, NgForOf} from "@angular/common";
 
 const routes: Routes = [
   {path: NapicuConfig.Path.BIOS_CONFIGURATION_ROOT_PATH, component: ConfigurationComponent},
@@ -19,7 +19,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), NgComponentOutlet, NgForOf],
+  imports: [RouterModule.forRoot(routes), NgComponentOutlet, NgForOf, NgClass],
   exports: [RouterModule],
   declarations: [
     SplashScreenComponent,
