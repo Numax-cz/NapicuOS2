@@ -14,6 +14,7 @@ import * as NapicuComputer from "@Napicu/VirtualComputer";
   styleUrls: ['./configuration.component.scss']
 })
 export class ConfigurationComponent implements OnInit, OnDestroy{
+
   protected selected_option: number = 0;
 
   protected options: BiosConfigurationOptionsInterface[] = [
@@ -41,13 +42,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public ngOnInit(): void {
     window.addEventListener("keydown", this.onKeyDownEvent);
-
   }
 
   public ngOnDestroy() {
     window.removeEventListener("keydown", this.onKeyDownEvent);
   }
-
 
   protected onKeyDownEvent = (e: KeyboardEvent) => {
     if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_UP) this.up_option();
