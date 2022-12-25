@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-advanced',
   templateUrl: './advanced.component.html',
-  styleUrls: ['./advanced.component.scss']
+  styleUrls: ['../../configuration-style.scss']
 })
 export class AdvancedComponent {
 

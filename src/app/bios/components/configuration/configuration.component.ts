@@ -11,7 +11,8 @@ import * as NapicuComputer from "@Napicu/VirtualComputer";
 @Component({
   selector: 'app-configuration',
   templateUrl: './configuration.component.html',
-  styleUrls: ['./configuration.component.scss']
+  styleUrls: ['./configuration.component.scss',
+    "./configuration-style.scss"]
 })
 export class ConfigurationComponent implements OnInit, OnDestroy{
 

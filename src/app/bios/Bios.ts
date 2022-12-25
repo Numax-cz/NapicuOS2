@@ -85,6 +85,18 @@ class Bios  {
     NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_CONFIGURATION_ROOT_PATH, NapicuConfig.Bios.ENTER_BIOS_TIME_DELAY);
   }
 
+  public static exit_bios_configuration_with_save(): void {
+
+  }
+
+  public static exit_bios_configuration_without_save(): void {
+
+  }
+
+  public static load_default_bios_configuration(): void {
+    
+  }
+
   public static redirect_text_screen(): void {
     if(NapicuUtils.WebManager.get_angular_router_path() !== NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH){
       NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH);
