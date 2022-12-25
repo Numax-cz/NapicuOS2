@@ -1,1 +1,23 @@
-<p>configuration works!</p>
+<div class="Background NapicuFontDosVGA">
+
+  <section>
+
+    <!--Navigation bar-->
+
+    <nav class="OptionNavigationBar">
+      <div *ngFor="let i of get_options; let index = index" [ngClass]="{SelectedOption: index === get_selected_option_index}">
+        {{i.name}}
+      </div>
+    </nav>
+
+    <!-- Component view -->
+    <div>
+      <ng-container *ngComponentOutlet="get_selected_option_item.component"></ng-container>
+    </div>
+
+  </section>
+
+
+
+
+</div>

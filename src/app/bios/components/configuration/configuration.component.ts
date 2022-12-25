@@ -14,9 +14,9 @@ import * as NapicuComputer from "@Napicu/VirtualComputer";
   styleUrls: ['./configuration.component.scss']
 })
 export class ConfigurationComponent implements OnInit, OnDestroy{
-  protected static selected_option: number = 0;
+  protected selected_option: number = 0;
 
-  protected static options: BiosConfigurationOptionsInterface[] = [
+  protected options: BiosConfigurationOptionsInterface[] = [
     {
       name: "main",
       component: MainComponent
@@ -50,22 +50,27 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
 
   protected onKeyDownEvent = (e: KeyboardEvent) => {
-
+    if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_UP) this.up_option();
+    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_DOWN) this.down_option();
   }
 
-  public static up_option(): void {
-    if(this.selected_option < this.options.length) this.selected_option += 1;
+  public up_option(): void {
+    if(this.selected_option + 1 < this.options.length) this.selected_option += 1;
   }
 
-  public static down_option(): void {
+  public down_option(): void {
     if(this.selected_option > 0) this.selected_option -= 1;
   }
 
+  get get_options(): BiosConfigurationOptionsInterface[] {
+    return this.options;
+  }
+
   get get_selected_option_item(): BiosConfigurationOptionsInterface {
-    return ConfigurationComponent.options[ConfigurationComponent.selected_option];
+    return this.options[this.selected_option];
   }
 
   get get_selected_option_index(): number{
-    return ConfigurationComponent.selected_option;
+    return this.selected_option;
   }
 }
