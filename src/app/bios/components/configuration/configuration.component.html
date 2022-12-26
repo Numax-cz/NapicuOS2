@@ -2,8 +2,8 @@
 
   <section>
 
+    <div class="BiosTitle">NapicuBios SETUP</div>
     <!--Navigation bar-->
-
     <nav class="OptionNavigationBar">
       <div *ngFor="let i of get_options; let index = index" [ngClass]="{SelectedOption: index === get_selected_option_index}">
         {{i.name}}
@@ -11,7 +11,7 @@
     </nav>
 
     <!-- Component view -->
-    <div>
+    <div class="ComponentViewContainer">
       <ng-container *ngComponentOutlet="get_selected_option_item.component"></ng-container>
     </div>
 
