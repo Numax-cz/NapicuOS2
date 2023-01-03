@@ -12,6 +12,9 @@ import { BootComponent } from './components/configuration/components/boot/boot.c
 import { ToolsComponent } from './components/configuration/components/tools/tools.component';
 import { ExitComponent } from './components/configuration/components/exit/exit.component';
 import {NgClass, NgComponentOutlet, NgForOf} from "@angular/common";
+import { ButtonComponent } from './components/configuration/templates/button/button.component';
+import { InformationComponent } from './components/configuration/templates/information/information.component';
+import { OptionComponent } from './components/configuration/templates/option/option.component';
 
 const routes: Routes = [
   {path: NapicuConfig.Path.BIOS_CONFIGURATION_ROOT_PATH, component: ConfigurationComponent},
@@ -30,6 +33,9 @@ const routes: Routes = [
     BootComponent,
     ToolsComponent,
     ExitComponent,
+    ButtonComponent,
+    InformationComponent,
+    OptionComponent,
   ]
 })
 export class BiosModule { }
