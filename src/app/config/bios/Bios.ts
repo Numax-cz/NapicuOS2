@@ -21,6 +21,9 @@ export namespace Bios{
 
   //CONFIGURATOR
 
+  export const BIOS_VERSION: string = "v3.69_DEVELOPMENT";
+  export const BIOS_VERSION_COMPANY_NAME: string = "Napicu";
+  export const BIOS_VERSION_DATE: string = "1969 - 2023";
 
   export const DEFAULT_CONFIGURATION: NapicuBios.InformationInterface = {
     selected_drive: 0

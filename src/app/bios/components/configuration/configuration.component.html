@@ -1,7 +1,6 @@
 <div class="Background NapicuFontDosVGA">
 
   <section>
-
     <div class="BiosTitle">NapicuBios SETUP</div>
     <!--Navigation bar-->
     <nav class="OptionNavigationBar">
@@ -10,12 +9,16 @@
       </div>
     </nav>
 
-    <!-- Component view -->
+    <!--Component view -->
     <div class="ComponentViewContainer">
       <ng-container *ngComponentOutlet="get_selected_option_item.component"></ng-container>
     </div>
 
+    <!--Bottom bar-->
+    <div class="BiosBottomTitle">{{get_bios_version}}</div>
   </section>
+
+
 
 
 

@@ -1,3 +1,6 @@
+import * as NapicuConfig from "@Napicu/Config";
+import * as NapicuComputer from "@Napicu/VirtualComputer";
+import * as NapicuBios from "@Napicu/Bios";
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
 import {MainComponent} from "./components/main/main.component";
@@ -5,8 +8,7 @@ import {AdvancedComponent} from "./components/advanced/advanced.component";
 import {BootComponent} from "./components/boot/boot.component";
 import {ToolsComponent} from "./components/tools/tools.component";
 import {ExitComponent} from "./components/exit/exit.component";
-import * as NapicuConfig from "@Napicu/Config";
-import * as NapicuComputer from "@Napicu/VirtualComputer";
+
 
 @Component({
   selector: 'app-configuration',
@@ -18,9 +20,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected selected_option: number = 0;
 
-  protected options: BiosConfigurationOptionsInterface[] = [
+  protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
-      name: "main",
+      name: "Main",
       component: MainComponent
     },
     {
@@ -72,5 +74,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   get get_selected_option_index(): number{
     return this.selected_option;
+  }
+
+  get get_bios_version(): string {
+    return NapicuBios.Bios.get_bios_full_version();
   }
 }

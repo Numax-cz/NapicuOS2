@@ -94,7 +94,7 @@ class Bios  {
   }
 
   public static load_default_bios_configuration(): void {
-    
+
   }
 
   public static redirect_text_screen(): void {
@@ -106,6 +106,8 @@ class Bios  {
   public static clear_text_screen(): void {
     TextScreenComponent.clear();
   }
+
+
 
   public static get_bios_configuration(): InformationInterface{
     if (!this.biosConfiguration){
@@ -133,6 +135,22 @@ class Bios  {
 
   public static get_selected_drv(): NapicuComputer.Hardware.HardwareDRVInformationInterface {
     return NapicuComputer.VirtualComputer.get_hardware().drv[this.biosConfiguration.selected_drive];
+  }
+
+  public static get_bios_full_version(): string {
+    return `${this.get_bios_version()} ${this.get_bios_version_company_name()} ${this.get_bios_version_date()}`;
+  }
+
+  public static get_bios_version(): string {
+    return NapicuConfig.Bios.BIOS_VERSION;
+  }
+
+  public static get_bios_version_company_name(): string {
+    return NapicuConfig.Bios.BIOS_VERSION_COMPANY_NAME;
+  }
+
+  public static get_bios_version_date(): string {
+    return NapicuConfig.Bios.BIOS_VERSION_DATE;
   }
 }
 
