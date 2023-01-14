@@ -1,16 +1,8 @@
 import * as NapicuConfig from "@Napicu/Config";
-import * as NapicuComputer from "@Napicu/VirtualComputer";
 import * as NapicuBios from "@Napicu/Bios";
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
 import {biosOptionElement} from "./ConfigurationElements";
-import {BIOS_OPTIONS} from "../../../config/bios/Options";
-
-
-
-
-
-
 
 @Component({
   selector: 'app-configuration',
@@ -22,7 +14,38 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected selected_option_component: number = 0;
 
-  protected readonly options: BiosConfigurationOptionsInterface[] = BIOS_OPTIONS;
+  protected readonly options: BiosConfigurationOptionsInterface[] = [
+    {
+      name: "Main",
+      options: [
+        biosOptionElement("information", {
+          name: "NULL",
+          value: "NULL"
+        }),
+        biosOptionElement("action", {
+          name: "NULL",
+          valueTest: "NULL",
+          action: () => {}
+        })
+      ]
+    },
+    {
+      name: "Advanced",
+      options: []
+    },
+    {
+      name: "Boot",
+      options: []
+    },
+    {
+      name: "Tools",
+      options: []
+    },
+    {
+      name: "Exit",
+      options: []
+    }
+  ];
 
   public ngOnInit(): void {
     window.addEventListener("keydown", this.onKeyDownEvent);
