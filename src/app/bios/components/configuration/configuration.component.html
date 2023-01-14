@@ -12,10 +12,11 @@
     <!--Component view -->
     <div class="ComponentViewContainer">
       <div class="ComponentViewFrame">
-          <div *ngFor="let i of options[selected_option].options">
+          <div *ngFor="let i of options[selected_screen_option].options">
             <!--Information-->
             <ng-container *ngIf="i.type === 'information'">
-
+              <div>{{i.option.name}}</div>
+              <div></div>
             </ng-container>
 
             <!--Action-->

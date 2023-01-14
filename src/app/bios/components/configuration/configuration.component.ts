@@ -12,7 +12,10 @@ import {BiosOptionElement} from "./ConfigurationElements";
 })
 export class ConfigurationComponent implements OnInit, OnDestroy{
 
+  protected selected_screen_option: number = 0;
+
   protected selected_option: number = 0;
+
 
   protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
@@ -63,11 +66,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   public move_right_option(): void {
-    if(this.selected_option + 1 < this.options.length) this.selected_option += 1;
+    if(this.selected_screen_option + 1 < this.options.length) this.selected_screen_option += 1;
   }
 
   public move_left_option(): void {
-    if(this.selected_option > 0) this.selected_option -= 1;
+    if(this.selected_screen_option > 0) this.selected_screen_option -= 1;
   }
 
   public move_up_option(): void {
@@ -83,11 +86,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   get get_selected_option_item(): BiosConfigurationOptionsInterface {
-    return this.options[this.selected_option];
+    return this.options[this.selected_screen_option];
   }
 
   get get_selected_option_index(): number{
-    return this.selected_option;
+    return this.selected_screen_option;
   }
 
   get get_bios_version(): string {
