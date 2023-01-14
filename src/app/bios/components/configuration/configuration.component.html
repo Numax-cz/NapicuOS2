@@ -11,16 +11,28 @@
 
     <!--Component view -->
     <div class="ComponentViewContainer">
-      <ng-container *ngComponentOutlet="get_selected_option_item.component"></ng-container>
+      <div class="ComponentViewFrame">
+          <div *ngFor="let i of options[selected_option_component].options">
+            <!--Information-->
+            <ng-container *ngIf="i.type === 'information'">
+
+            </ng-container>
+
+            <!--Action-->
+            <ng-container *ngIf="i.type === 'action'">
+
+            </ng-container>
+
+            <!--Options-->
+            <ng-container *ngIf="i.type === 'options'">
+
+            </ng-container>
+          </div>
+          <!--<ng-container *ngComponentOutlet="get_selected_option_item.component"></ng-container>-->
+      </div>
     </div>
 
     <!--Bottom bar-->
     <div class="BiosBottomTitle">{{get_bios_version}}</div>
   </section>
-
-
-
-
-
-
 </div>
