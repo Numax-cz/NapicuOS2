@@ -9,8 +9,10 @@ export namespace Bios{
   export const EXIT_BOOT_ERROR_KEY: number = 113; //F2
   export const ENTER_BIOS_KEY_2: number = 113; //F2
 
-  export const BIOS_CONFIGURATION_MOVE_UP: number = 39; //ArrowRight
-  export const BIOS_CONFIGURATION_MOVE_DOWN: number = 37; //ArrowLeft
+  export const BIOS_CONFIGURATION_MOVE_RIGHT: number = 39; //ArrowRight
+  export const BIOS_CONFIGURATION_MOVE_LEFT: number = 37; //ArrowLeft
+  export const BIOS_CONFIGURATION_MOVE_UP: number = 38; //ArrowRight
+  export const BIOS_CONFIGURATION_MOVE_DOWN: number = 40; //ArrowLeft
 
   //TIMES
   export const ENTER_BIOS_TIME_DELAY: number = 0;

@@ -52,15 +52,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent) => {
-    if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_UP) this.up_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_DOWN) this.down_option();
+    if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_RIGHT) this.move_right_option();
+    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_LEFT) this.move_left_option();
   }
 
-  public up_option(): void {
+  public move_right_option(): void {
     if(this.selected_option + 1 < this.options.length) this.selected_option += 1;
   }
 
-  public down_option(): void {
+  public move_left_option(): void {
     if(this.selected_option > 0) this.selected_option -= 1;
   }
 
