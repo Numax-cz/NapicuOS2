@@ -11,18 +11,18 @@ export interface biosOptionTypeMap{
   "options": BiosOptionElementTypeOptionMenu,
 }
 
-interface BiosOptionElementTypeInformation{
+export interface BiosOptionElementTypeInformation{
   name: string,
   value: string
 }
 
-interface BiosOptionElementTypeAction{
+export interface BiosOptionElementTypeAction{
   name: string,
   valueTest: string,
   action: () => void
 }
 
-interface BiosOptionElementTypeOptionMenu {
+export interface BiosOptionElementTypeOptionMenu {
   name: string,
   value: string,
   selectedOption: 0,

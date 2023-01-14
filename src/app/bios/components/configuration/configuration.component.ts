@@ -1,8 +1,20 @@
 import * as NapicuConfig from "@Napicu/Config";
 import * as NapicuBios from "@Napicu/Bios";
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
 import {BiosOptionElement} from "./ConfigurationElements";
+import {
+  BiosOptionElementTypeAction,
+  BiosOptionElementTypeInformation,
+  BiosOptionElementTypeOptionMenu
+} from "./interface/ConfigurationElements";
+
+@Pipe({ name: 'as', pure: true })
+export class CastPipe implements PipeTransform {
+  transform<T>(input: unknown, baseItem: T | undefined): T {
+    return (input as unknown) as T;
+  }
+}
 
 @Component({
   selector: 'app-configuration',
@@ -12,9 +24,17 @@ import {BiosOptionElement} from "./ConfigurationElements";
 })
 export class ConfigurationComponent implements OnInit, OnDestroy{
 
+  public BiosOptionElementTypeInformation!: BiosOptionElementTypeInformation;
+
+  public BiosOptionElementTypeAction!: BiosOptionElementTypeAction;
+
+  public BiosOptionElementTypeOptionMenu!: BiosOptionElementTypeOptionMenu;
+
   protected selected_screen_option: number = 0;
 
   protected selected_option: number = 0;
+
+
 
 
   protected readonly options: BiosConfigurationOptionsInterface[] = [

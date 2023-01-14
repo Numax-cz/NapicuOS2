@@ -1,7 +1,7 @@
 import * as NapicuConfig from "@Napicu/Config";
 
 import {RouterModule, Routes} from "@angular/router";
-import {ConfigurationComponent} from "./components/configuration/configuration.component";
+import {CastPipe, ConfigurationComponent} from "./components/configuration/configuration.component";
 import {TextScreenComponent} from "./components/text-screen/text-screen.component";
 import {NgModule} from "@angular/core";
 import {BiosTextScreenGuard} from "./guards/text-screen.guard";
@@ -26,6 +26,7 @@ const routes: Routes = [
     ButtonComponent,
     InformationComponent,
     OptionComponent,
+    CastPipe
   ]
 })
 export class BiosModule { }

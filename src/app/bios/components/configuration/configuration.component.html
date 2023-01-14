@@ -1,5 +1,4 @@
 <div class="Background NapicuFontDosVGA">
-
   <section>
     <div class="BiosTitle">NapicuBios SETUP</div>
     <!--Navigation bar-->
@@ -15,8 +14,8 @@
           <div *ngFor="let i of options[selected_screen_option].options">
             <!--Information-->
             <ng-container *ngIf="i.type === 'information'">
-              <div>{{i.option.name}}</div>
-              <div></div>
+              <div>{{(i.option | as : BiosOptionElementTypeInformation).name}}</div>
+              <div>{{(i.option | as : BiosOptionElementTypeInformation).value}}</div>
             </ng-container>
 
             <!--Action-->
