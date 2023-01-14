@@ -2,7 +2,7 @@ import * as NapicuConfig from "@Napicu/Config";
 import * as NapicuBios from "@Napicu/Bios";
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
-import {biosOptionElement} from "./ConfigurationElements";
+import {BiosOptionElement} from "./ConfigurationElements";
 
 @Component({
   selector: 'app-configuration',
@@ -12,17 +12,17 @@ import {biosOptionElement} from "./ConfigurationElements";
 })
 export class ConfigurationComponent implements OnInit, OnDestroy{
 
-  protected selected_option_component: number = 0;
+  protected selected_option: number = 0;
 
   protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
       name: "Main",
       options: [
-        biosOptionElement("information", {
+        BiosOptionElement("information", {
           name: "NULL",
           value: "NULL"
         }),
-        biosOptionElement("action", {
+        BiosOptionElement("action", {
           name: "NULL",
           valueTest: "NULL",
           action: () => {}
@@ -63,11 +63,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   public move_right_option(): void {
-    if(this.selected_option_component + 1 < this.options.length) this.selected_option_component += 1;
+    if(this.selected_option + 1 < this.options.length) this.selected_option += 1;
   }
 
   public move_left_option(): void {
-    if(this.selected_option_component > 0) this.selected_option_component -= 1;
+    if(this.selected_option > 0) this.selected_option -= 1;
   }
 
   public move_up_option(): void {
@@ -83,11 +83,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   get get_selected_option_item(): BiosConfigurationOptionsInterface {
-    return this.options[this.selected_option_component];
+    return this.options[this.selected_option];
   }
 
   get get_selected_option_index(): number{
-    return this.selected_option_component;
+    return this.selected_option;
   }
 
   get get_bios_version(): string {
