@@ -1,12 +1,13 @@
 import * as NapicuConfig from "@Napicu/Config";
 import * as NapicuBios from "@Napicu/Bios";
+import * as NapicuUtils from "@Napicu/Utils"
 import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
 import {BiosOptionElement} from "./ConfigurationElements";
 import {
   BiosOptionElementTypeAction,
   BiosOptionElementTypeInformation,
-  BiosOptionElementTypeOptionMenu
+  BiosOptionElementTypeOptionMenu, biosOptionFunctionReturn, biosOptionTypeMap
 } from "./interface/ConfigurationElements";
 
 @Pipe({ name: 'as', pure: true })
@@ -19,8 +20,7 @@ export class CastPipe implements PipeTransform {
 @Component({
   selector: 'app-configuration',
   templateUrl: './configuration.component.html',
-  styleUrls: ['./configuration.component.scss',
-    "./configuration-style.scss"]
+  styleUrls: ['./configuration.component.scss']
 })
 export class ConfigurationComponent implements OnInit, OnDestroy{
 
@@ -35,8 +35,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   protected selected_option: number = 0;
 
 
-
-
   protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
       name: "Main",
@@ -47,9 +45,18 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
         }),
         BiosOptionElement("action", {
           name: "NULL",
-          valueTest: "NULL",
+          value: "NULL",
           action: () => {}
-        })
+        }),
+        BiosOptionElement("information", {
+          name: "NULL",
+          value: "NULL"
+        }),
+        BiosOptionElement("action", {
+          name: "NULL",
+          value: "NULL",
+          action: () => {}
+        }),
       ]
     },
     {
@@ -71,6 +78,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   ];
 
   public ngOnInit(): void {
+    this.reset_selected_option();
     window.addEventListener("keydown", this.onKeyDownEvent);
   }
 
@@ -83,30 +91,76 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_LEFT) this.move_left_option();
     else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_UP) this.move_up_option();
     else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_DOWN) this.move_down_option();
+    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_ON_ENTER) this.on_select_option();
   }
 
-  public move_right_option(): void {
-    if(this.selected_screen_option + 1 < this.options.length) this.selected_screen_option += 1;
+  protected on_select_option(): void {
+    let option;
+    let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+      this.options[this.selected_screen_option].options[this.selected_option];
+
+    switch (i.type) {
+      case "options":
+        option = i.option as biosOptionTypeMap["options"];
+
+        //TODO OPEN OPTION MENU
+        break;
+
+      case "action":
+        option = i.option as biosOptionTypeMap["action"];
+
+        option.action();
+        break;
+    }
   }
 
-  public move_left_option(): void {
-    if(this.selected_screen_option > 0) this.selected_screen_option -= 1;
+  protected reset_selected_option(): void {
+    this.selected_option = 0;
+    this.check_next_option();
   }
 
-  public move_up_option(): void {
-
+  protected check_next_option(): void {
+    for(let i = this.selected_option + 1; i < this.options[this.selected_screen_option].options.length; i++){
+      if(this.options[this.selected_screen_option].options?.[i].type !== "information"){
+        this.selected_option = i;
+        break;
+      }
+    }
   }
 
-  public move_down_option(): void {
+  protected check_previous_option(): void {
+    for(let i = this.selected_option - 1; i > 0; i--){
+      if(this.options[this.selected_screen_option].options?.[i].type !== "information"){
+        this.selected_option = i;
+        break;
+      }
+    }
+  }
 
+  protected move_right_option(): void {
+    if(this.selected_screen_option + 1 < this.options.length){
+      this.selected_screen_option += 1;
+      this.reset_selected_option();
+    }
+  }
+
+  protected move_left_option(): void {
+    if(this.selected_screen_option > 0){
+      this.selected_screen_option -= 1;
+      this.reset_selected_option();
+    }
+  }
+
+  protected move_up_option(): void {
+    if(this.selected_option > 0) this.check_previous_option();
+  }
+
+  protected move_down_option(): void {
+    if(this.selected_option + 1 < this.options[this.selected_screen_option].options.length) this.check_next_option();
   }
 
   get get_options(): BiosConfigurationOptionsInterface[] {
     return this.options;
-  }
-
-  get get_selected_option_item(): BiosConfigurationOptionsInterface {
-    return this.options[this.selected_screen_option];
   }
 
   get get_selected_option_index(): number{

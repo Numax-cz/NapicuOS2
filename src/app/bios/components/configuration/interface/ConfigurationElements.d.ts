@@ -18,13 +18,12 @@ export interface BiosOptionElementTypeInformation{
 
 export interface BiosOptionElementTypeAction{
   name: string,
-  valueTest: string,
+  value: string,
   action: () => void
 }
 
 export interface BiosOptionElementTypeOptionMenu {
   name: string,
-  value: string,
   selectedOption: 0,
   options: string[]
 }
