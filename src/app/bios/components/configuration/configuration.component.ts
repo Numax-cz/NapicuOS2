@@ -6,7 +6,7 @@ import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
 import {BiosOptionElement} from "./ConfigurationElements";
 import {
   BiosOptionElementTypeAction,
-  BiosOptionElementTypeInformation,
+  BiosOptionElementTypeInformation, BiosOptionElementTypeNumbers,
   BiosOptionElementTypeOptionMenu, biosOptionFunctionReturn, biosOptionTypeMap
 } from "./interface/ConfigurationElements";
 
@@ -30,12 +30,16 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public BiosOptionElementTypeOptionMenu!: BiosOptionElementTypeOptionMenu;
 
-  protected selected_screen_option: number = 0;
+  public BiosOptionElementTypeNumbers!: BiosOptionElementTypeNumbers;
 
-  protected selected_option: number = 0;
+  public selected_screen_option: number = 0;
+
+  public selected_option: number = 0;
+
+  public selected_in_numbers_option: number | null = null;
 
 
-  protected readonly options: BiosConfigurationOptionsInterface[] = [
+  protected options: BiosConfigurationOptionsInterface[] = [
     {
       name: "Main",
       title: "System Overview",
@@ -52,10 +56,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           name: "NULL",
           value: "NULL"
         }),
-        BiosOptionElement("action", {
+        BiosOptionElement("numbers", {
           name: "NULL",
-          value: "NULL",
-          action: () => {}
+          separator: "/",
+          numbers: [{value: 10}, {value: 10}, {value: 10}]
         }, "NULL"),
       ]
     },
@@ -111,11 +115,20 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
         option.action();
         break;
+      case "numbers":
+        option = i.option as biosOptionTypeMap["numbers"];
+
+        if(this.selected_in_numbers_option !== null) this.selected_in_numbers_option = null;
+        else this.selected_in_numbers_option = 0;
+
+
+        break;
     }
   }
 
   protected reset_selected_option(): void {
     this.selected_option = 0;
+    this.selected_in_numbers_option = null;
     this.check_next_option();
   }
 
@@ -138,6 +151,13 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected move_right_option(): void {
+    if(this.selected_in_numbers_option !== null){
+      let i: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
+      if(this.selected_in_numbers_option + 1 < i.numbers.length) this.selected_in_numbers_option++;
+
+      return;
+    }
+
     if(this.selected_screen_option + 1 < this.options.length){
       this.selected_screen_option += 1;
       this.reset_selected_option();
@@ -145,6 +165,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected move_left_option(): void {
+    if(this.selected_in_numbers_option !== null){
+      if(this.selected_in_numbers_option > 0) this.selected_in_numbers_option--;
+
+      return;
+    }
+
     if(this.selected_screen_option > 0){
       this.selected_screen_option -= 1;
       this.reset_selected_option();
@@ -152,10 +178,20 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected move_up_option(): void {
+    if(this.selected_in_numbers_option !== null){
+
+      return;
+    }
+
     if(this.selected_option > 0) this.check_previous_option();
   }
 
   protected move_down_option(): void {
+    if(this.selected_in_numbers_option !== null){
+
+      return;
+    }
+
     if(this.selected_option + 1 < this.options[this.selected_screen_option].options.length) this.check_next_option();
   }
 

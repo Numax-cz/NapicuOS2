@@ -79,7 +79,7 @@
       grid-template-columns: 60% 40%;
       padding: 3px 0;
 
-      span{
+      .BiosElementSeparator{
         float: right;
         margin-right: 10%;
       }
@@ -87,6 +87,10 @@
 
 
 
+  }
+
+  .BiosSelectedNumberElement{
+    background: black;
   }
 
   .BiosSelectedElement{

@@ -10,6 +10,7 @@ export interface biosOptionTypeMap{
   "information": BiosOptionElementTypeInformation,
   "action": BiosOptionElementTypeAction,
   "options": BiosOptionElementTypeOptionMenu,
+  "numbers": BiosOptionElementTypeNumbers
 }
 
 export interface BiosOptionElementTypeInformation{
@@ -28,3 +29,10 @@ export interface BiosOptionElementTypeOptionMenu {
   options: string[]
   selectedOption?: 0,
 }
+
+export interface BiosOptionElementTypeNumbers{
+  name: string,
+  separator: string
+  numbers: {value: number, min?: 0, max?: 100}[]
+}
+

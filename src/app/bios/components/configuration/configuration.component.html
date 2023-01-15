@@ -20,7 +20,7 @@
           <!--Options - Information-->
           <ng-container *ngIf="i.type === 'information'">
             <div class="BiosInformationElement">
-              <div>{{(i.option | as : BiosOptionElementTypeInformation).name}}<span>:</span></div>
+              <div>{{(i.option | as : BiosOptionElementTypeInformation).name}}<span class="BiosElementSeparator">:</span></div>
               <div>{{(i.option | as : BiosOptionElementTypeInformation).value}}</div>
             </div>
           </ng-container>
@@ -28,7 +28,7 @@
           <!--Options - Action-->
           <ng-container *ngIf="i.type === 'action'">
             <div class="BiosActionElement">
-              <div>{{(i.option | as : BiosOptionElementTypeAction).name}}<span>:</span></div>
+              <div>{{(i.option | as : BiosOptionElementTypeAction).name}}<span class="BiosElementSeparator">:</span></div>
               <div>{{(i.option | as : BiosOptionElementTypeAction).value}}</div>
             </div>
           </ng-container>
@@ -36,8 +36,18 @@
           <!--Options - Options-->
           <ng-container *ngIf="i.type === 'options'">
             <div class="BiosOptionsElement">
-              <div>{{(i.option | as : BiosOptionElementTypeOptionMenu).name}}<span>:</span></div>
+              <div>{{(i.option | as : BiosOptionElementTypeOptionMenu).name}}<span class="BiosElementSeparator">:</span></div>
               <div>[{{(i.option | as : BiosOptionElementTypeOptionMenu).options[(i.option | as : BiosOptionElementTypeOptionMenu)?.selectedOption || 0]}}]</div>
+            </div>
+          </ng-container>
+
+          <!--Options - Numbers-->
+          <ng-container *ngIf="i.type === 'numbers'">
+            <div class="BiosOptionsElement">
+              <div>{{(i.option | as : BiosOptionElementTypeNumbers).name}}<span class="BiosElementSeparator">:</span></div>
+              <div>[<span *ngFor="let number of (i.option | as : BiosOptionElementTypeNumbers).numbers; let index = index"
+              ><span *ngIf="index !== 0">{{(i.option | as : BiosOptionElementTypeNumbers).separator}}</span><span
+                [ngClass]="{'BiosSelectedNumberElement': index === selected_in_numbers_option && selected_in_numbers_option !== null}">{{number.value}}</span></span>]</div>
             </div>
           </ng-container>
         </div>
