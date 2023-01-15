@@ -38,6 +38,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
       name: "Main",
+      title: "System Overview",
       options: [
         BiosOptionElement("information", {
           name: "NULL",

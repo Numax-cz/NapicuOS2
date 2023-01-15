@@ -11,36 +11,43 @@
     <!--Component view -->
     <div class="ComponentViewContainer">
       <div class="ComponentViewFrame BiosElements">
-          <div *ngFor="let i of options[selected_screen_option].options; let index = index" [ngClass]="{BiosSelectedElement: index === selected_option}">
-            <!--Information-->
-            <ng-container *ngIf="i.type === 'information'">
-              <div class="BiosInformationElement">
-                <div>{{(i.option | as : BiosOptionElementTypeInformation).name}}</div>
-                <div>{{(i.option | as : BiosOptionElementTypeInformation).value}}</div>
-              </div>
-            </ng-container>
+        <!--Option Title -->
+        <ng-container *ngIf="options[selected_screen_option].title">
+          <div>{{options[selected_screen_option].title}}</div>
+        </ng-container>
+        <!--Options -->
+        <div *ngFor="let i of options[selected_screen_option].options; let index = index" [ngClass]="{BiosSelectedElement: index === selected_option}">
+          <!--Options - Information-->
+          <ng-container *ngIf="i.type === 'information'">
+            <div class="BiosInformationElement">
+              <div>{{(i.option | as : BiosOptionElementTypeInformation).name}}</div>
+              <div>{{(i.option | as : BiosOptionElementTypeInformation).value}}</div>
+            </div>
+          </ng-container>
 
-            <!--Action-->
-            <ng-container *ngIf="i.type === 'action'">
-              <div class="BiosActionElement">
-                <div>{{(i.option | as : BiosOptionElementTypeAction).name}}</div>
-                <div>{{(i.option | as : BiosOptionElementTypeAction).value}}</div>
-              </div>
-            </ng-container>
+          <!--Options - Action-->
+          <ng-container *ngIf="i.type === 'action'">
+            <div class="BiosActionElement">
+              <div>{{(i.option | as : BiosOptionElementTypeAction).name}}</div>
+              <div>{{(i.option | as : BiosOptionElementTypeAction).value}}</div>
+            </div>
+          </ng-container>
 
-            <!--Options-->
-            <ng-container *ngIf="i.type === 'options'">
-              <div class="BiosOptionsElement">
-                <div>{{(i.option | as : BiosOptionElementTypeOptionMenu).name}}</div>
-                <div>{{(i.option | as : BiosOptionElementTypeOptionMenu).options[(i.option | as : BiosOptionElementTypeOptionMenu).selectedOption]}}</div>
-              </div>
-            </ng-container>
-          </div>
-          <!--<ng-container *ngComponentOutlet="get_selected_option_item.component"></ng-container>-->
+          <!--Options - Options-->
+          <ng-container *ngIf="i.type === 'options'">
+            <div class="BiosOptionsElement">
+              <div>{{(i.option | as : BiosOptionElementTypeOptionMenu).name}}</div>
+              <div>{{(i.option | as : BiosOptionElementTypeOptionMenu).options[(i.option | as : BiosOptionElementTypeOptionMenu).selectedOption]}}</div>
+            </div>
+          </ng-container>
+        </div>
+        <!--<ng-container *ngComponentOutlet="get_selected_option_item.component"></ng-container>-->
       </div>
 
       <div class="ComponentDescriptionViewFrame">
-
+        <ng-container *ngIf="options[selected_screen_option].options[selected_option].description">
+          <div>{{options[selected_screen_option].options[selected_option].description}}</div>
+        </ng-container>
       </div>
     </div>
 

@@ -3,5 +3,6 @@ import {biosOptionFunctionReturn, biosOptionTypeMap} from "./ConfigurationElemen
 
 export declare interface BiosConfigurationOptionsInterface {
   name: string,
+  title?: string,
   options: biosOptionFunctionReturn[]
 }
