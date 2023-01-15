@@ -45,7 +45,7 @@
       </div>
 
       <div class="ComponentDescriptionViewFrame">
-        <ng-container *ngIf="options[selected_screen_option].options[selected_option].description">
+        <ng-container *ngIf="options[selected_screen_option].options[selected_option]?.description">
           <div>{{options[selected_screen_option].options[selected_option].description}}</div>
         </ng-container>
       </div>
