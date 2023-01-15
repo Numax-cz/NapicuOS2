@@ -3,7 +3,7 @@ import * as NapicuUtils from "@Napicu/Utils";
 export interface biosOptionFunctionReturn<T = NapicuUtils.ValueOf<biosOptionTypeMap>>{
   type: keyof biosOptionTypeMap,
   option: T,
-  description: string
+  description: string | null
 }
 
 export interface biosOptionTypeMap{
