@@ -47,7 +47,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           name: "NULL",
           value: "NULL",
           action: () => {}
-        }),
+        }, "NULL"),
         BiosOptionElement("information", {
           name: "NULL",
           value: "NULL"
@@ -56,7 +56,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           name: "NULL",
           value: "NULL",
           action: () => {}
-        }),
+        }, "NULL"),
       ]
     },
     {
