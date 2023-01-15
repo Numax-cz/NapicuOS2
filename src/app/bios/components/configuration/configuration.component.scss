@@ -35,6 +35,9 @@
   }
 }
 
+
+
+
 .ComponentViewContainer{
   background-color: #d3d3d3;
   width: 100%;
@@ -42,19 +45,54 @@
   display: grid;
   grid-template-columns: 60% 40%;
   padding: 20px 10px;
+  font-size: 1.7rem;
+  color: blue;
 
   .ComponentViewFrame{
     display: block;
     height: 100%;
     padding: 0 30px;
+    border-left: 4px solid blue;
+    border-right: 4px solid blue;
+    border-top: 2px solid blue;
+    border-bottom: 2px solid blue;
   }
-}
 
-.BiosSelectedElement{
-  background-color: gray;
-}
+  .ComponentDescriptionViewFrame{
+    border-right: 4px solid blue;
+    border-top: 2px solid blue;
+    border-bottom: 2px solid blue;
+  }
 
-.BiosElements{
+  .BiosOptionTitle{
+    font-size: 1.8rem !important;
+    padding: 20px;
+    color: #000;
+    font-weight: 700;
+  }
+
+  //Main Element
+  .BiosElement{
+    //Option
+    >div{
+      display: grid;
+      grid-template-columns: 60% 40%;
+      padding: 3px 0;
+
+      span{
+        float: right;
+        margin-right: 10%;
+      }
+    }
+
+
+
+  }
+
+  .BiosSelectedElement{
+    color: white;
+  }
+
   .BiosInformationElement{
     color: gray !important;
   }
@@ -67,5 +105,8 @@
 
   }
 }
+
+
+
 
 

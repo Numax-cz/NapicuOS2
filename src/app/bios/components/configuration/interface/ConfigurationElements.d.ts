@@ -25,6 +25,6 @@ export interface BiosOptionElementTypeAction{
 
 export interface BiosOptionElementTypeOptionMenu {
   name: string,
-  selectedOption: 0,
   options: string[]
+  selectedOption?: 0,
 }

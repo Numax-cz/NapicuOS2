@@ -10,17 +10,17 @@
 
     <!--Component view -->
     <div class="ComponentViewContainer">
-      <div class="ComponentViewFrame BiosElements">
+      <div class="ComponentViewFrame">
         <!--Option Title -->
         <ng-container *ngIf="options[selected_screen_option].title">
-          <div>{{options[selected_screen_option].title}}</div>
+          <div class="BiosOptionTitle">{{options[selected_screen_option].title}}</div>
         </ng-container>
         <!--Options -->
-        <div *ngFor="let i of options[selected_screen_option].options; let index = index" [ngClass]="{BiosSelectedElement: index === selected_option}">
+        <div *ngFor="let i of options[selected_screen_option].options; let index = index" class="BiosElement" [ngClass]="{BiosSelectedElement: index === selected_option}">
           <!--Options - Information-->
           <ng-container *ngIf="i.type === 'information'">
             <div class="BiosInformationElement">
-              <div>{{(i.option | as : BiosOptionElementTypeInformation).name}}</div>
+              <div>{{(i.option | as : BiosOptionElementTypeInformation).name}}<span>:</span></div>
               <div>{{(i.option | as : BiosOptionElementTypeInformation).value}}</div>
             </div>
           </ng-container>
@@ -28,7 +28,7 @@
           <!--Options - Action-->
           <ng-container *ngIf="i.type === 'action'">
             <div class="BiosActionElement">
-              <div>{{(i.option | as : BiosOptionElementTypeAction).name}}</div>
+              <div>{{(i.option | as : BiosOptionElementTypeAction).name}}<span>:</span></div>
               <div>{{(i.option | as : BiosOptionElementTypeAction).value}}</div>
             </div>
           </ng-container>
@@ -36,8 +36,8 @@
           <!--Options - Options-->
           <ng-container *ngIf="i.type === 'options'">
             <div class="BiosOptionsElement">
-              <div>{{(i.option | as : BiosOptionElementTypeOptionMenu).name}}</div>
-              <div>{{(i.option | as : BiosOptionElementTypeOptionMenu).options[(i.option | as : BiosOptionElementTypeOptionMenu).selectedOption]}}</div>
+              <div>{{(i.option | as : BiosOptionElementTypeOptionMenu).name}}<span>:</span></div>
+              <div>[{{(i.option | as : BiosOptionElementTypeOptionMenu).options[(i.option | as : BiosOptionElementTypeOptionMenu)?.selectedOption || 0]}}]</div>
             </div>
           </ng-container>
         </div>

@@ -44,10 +44,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           name: "NULL",
           value: "NULL"
         }),
-        BiosOptionElement("action", {
+        BiosOptionElement("options", {
           name: "NULL",
-          value: "NULL",
-          action: () => {}
+          options: ["NULL", "NULL"],
         }, "NULL"),
         BiosOptionElement("information", {
           name: "NULL",
