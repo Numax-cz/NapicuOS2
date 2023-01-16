@@ -12,7 +12,11 @@ export const BiosClockElement = (name: string, separator: string = "/", descript
     option: {
       name: name,
       separator: separator,
-      numbers: [{value: 0, min: 0, max: 24}, {value: 0, min: 0, max: 60}, {value: 0, min: 0, max: 100}]
+      numbers: [
+        {value: 0, min: 0, max: 24}, //Hours
+        {value: 0, min: 0, max: 60}, //Minutes
+        {value: 0, min: 0, max: 60} //Seconds
+      ]
     },
     description: description
   }
