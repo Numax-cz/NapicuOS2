@@ -3,6 +3,7 @@ import {AssetsCache} from "./AssetsCache";
 import {Console} from "./Console";
 import {Debug} from "./Debug";
 import {WebManager} from "./WebManager";
+import {CopyArray} from "./CopyArray";
 
 declare type ValueOf<T> = T[keyof T];
 
@@ -12,5 +13,6 @@ export {
   Console,
   Debug,
   WebManager,
-  ValueOf
+  ValueOf,
+  CopyArray
 }
