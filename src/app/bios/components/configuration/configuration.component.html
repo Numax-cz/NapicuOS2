@@ -45,9 +45,9 @@
           <ng-container *ngIf="i.type === 'numbers'">
             <div class="BiosOptionsElement">
               <div>{{(i.option | as : BiosOptionElementTypeNumbers).name}}<span class="BiosElementSeparator">:</span></div>
-              <div>[<span *ngFor="let number of (i.option | as : BiosOptionElementTypeNumbers).numbers; let index = index"
-              ><span *ngIf="index !== 0">{{(i.option | as : BiosOptionElementTypeNumbers).separator}}</span><span
-                [ngClass]="{'BiosSelectedNumberElement': index === selected_in_numbers_option && selected_in_numbers_option !== null}">{{number.value}}</span></span>]</div>
+              <div>[<span *ngFor="let number of (i.option | as : BiosOptionElementTypeNumbers).numbers; let number_index = index"
+              ><span *ngIf="number_index !== 0">{{(i.option | as : BiosOptionElementTypeNumbers).separator}}</span><span
+                [ngClass]="{'BiosSelectedNumberElement': number_index === selected_in_numbers_option && selected_in_numbers_option !== null && index === selected_option}">{{number.value}}</span></span>]</div>
             </div>
           </ng-container>
         </div>
