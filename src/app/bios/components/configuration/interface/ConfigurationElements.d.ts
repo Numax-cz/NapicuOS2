@@ -33,6 +33,6 @@ export interface BiosOptionElementTypeOptionMenu {
 export interface BiosOptionElementTypeNumbers{
   name: string,
   separator: string
-  numbers: {value: number, min?: 0, max?: 100}[]
+  numbers: {value: number, min: number , max: number}[]
 }
 

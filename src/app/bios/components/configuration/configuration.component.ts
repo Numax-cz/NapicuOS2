@@ -59,7 +59,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
         BiosOptionElement("numbers", {
           name: "NULL",
           separator: "/",
-          numbers: [{value: 10}, {value: 10}, {value: 10}]
+          numbers: [{value: 10, min: 0, max: 100}, {value: 10, min: 0, max: 100}, {value: 10, min: 0, max: 100}]
         }, "NULL"),
       ]
     },
@@ -179,7 +179,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected move_up_option(): void {
     if(this.selected_in_numbers_option !== null){
-
+      let numbers: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
+      let number = numbers.numbers[this.selected_in_numbers_option];
+      if(number.value < number.max) numbers.numbers[this.selected_in_numbers_option].value++;
       return;
     }
 
@@ -188,7 +190,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected move_down_option(): void {
     if(this.selected_in_numbers_option !== null){
-
+      let numbers: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
+      let number = numbers.numbers[this.selected_in_numbers_option];
+      if(number.value > number.min) numbers.numbers[this.selected_in_numbers_option].value--;
       return;
     }
 
