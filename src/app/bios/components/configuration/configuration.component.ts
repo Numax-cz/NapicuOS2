@@ -6,7 +6,7 @@ import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
 import {BiosOptionElement} from "./ConfigurationElements";
 import {
   BiosOptionElementTypeAction,
-  BiosOptionElementTypeInformation, BiosOptionElementTypeNumbers,
+  BiosOptionElementTypeInformation, BiosOptionElementTypeNumbers, BiosOptionElementTypeNumbersNumberInterface,
   BiosOptionElementTypeOptionMenu, biosOptionFunctionReturn, biosOptionTypeMap
 } from "./interface/ConfigurationElements";
 
@@ -37,6 +37,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   public selected_option: number = 0;
 
   public selected_in_numbers_option: number | null = null;
+
+  public numbers_option_cache: BiosOptionElementTypeNumbersNumberInterface[] | null = null;
 
 
   protected options: BiosConfigurationOptionsInterface[] = [
@@ -96,6 +98,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_UP) this.move_up_option();
     else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_DOWN) this.move_down_option();
     else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_ON_ENTER) this.on_select_option();
+    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_ON_ESC) this.on_esc();
   }
 
   protected on_select_option(): void {
@@ -119,10 +122,19 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
         option = i.option as biosOptionTypeMap["numbers"];
 
         if(this.selected_in_numbers_option !== null) this.selected_in_numbers_option = null;
-        else this.selected_in_numbers_option = 0;
-
-
+        else {
+          this.selected_in_numbers_option = 0;
+          this.numbers_option_cache = NapicuUtils.CopyArray(option.numbers);
+        }
         break;
+    }
+  }
+
+  protected on_esc(): void {
+    if(this.numbers_option_cache !== null){
+      (this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"]).numbers = this.numbers_option_cache || [];
+      this.numbers_option_cache = null;
+      this.selected_in_numbers_option = null
     }
   }
 

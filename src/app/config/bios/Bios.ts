@@ -14,6 +14,7 @@ export namespace Bios{
   export const BIOS_CONFIGURATION_MOVE_UP: number = 38; //ArrowRight
   export const BIOS_CONFIGURATION_MOVE_DOWN: number = 40; //ArrowLeft
   export const BIOS_CONFIGURATION_ON_ENTER: number = 13; //Enter
+  export const BIOS_CONFIGURATION_ON_ESC: number = 27; //ESC
 
   //TIMES
   export const ENTER_BIOS_TIME_DELAY: number = 0;
