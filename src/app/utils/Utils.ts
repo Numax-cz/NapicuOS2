@@ -6,6 +6,7 @@ import {WebManager} from "./WebManager";
 import {CopyArray} from "./CopyArray";
 
 declare type ValueOf<T> = T[keyof T];
+declare type ArrayOfMaxLength3<T> = readonly [T?, T?, T?];
 
 export {
   Cookies,
@@ -14,5 +15,6 @@ export {
   Debug,
   WebManager,
   ValueOf,
+  ArrayOfMaxLength3,
   CopyArray
 }

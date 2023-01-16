@@ -3,12 +3,14 @@ import * as NapicuBios from "@Napicu/Bios";
 import * as NapicuUtils from "@Napicu/Utils"
 import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
-import {BiosOptionElement} from "./ConfigurationElements";
+import {BiosClockElement, BiosOptionElement} from "./ConfigurationElements";
+
 import {
   BiosOptionElementTypeAction,
   BiosOptionElementTypeInformation, BiosOptionElementTypeNumbers, BiosOptionElementTypeNumbersNumberInterface,
   BiosOptionElementTypeOptionMenu, biosOptionFunctionReturn, biosOptionTypeMap
 } from "./interface/ConfigurationElements";
+import {min} from "rxjs";
 
 @Pipe({ name: 'as', pure: true })
 export class CastPipe implements PipeTransform {
@@ -40,6 +42,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public numbers_option_cache: BiosOptionElementTypeNumbersNumberInterface[] | null = null;
 
+  protected static clock_interval: number = 0;
+
+  public static clock_cache: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]>[] = [];
 
   protected options: BiosConfigurationOptionsInterface[] = [
     {
@@ -63,6 +68,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           separator: "/",
           numbers: [{value: 10, min: 0, max: 100}, {value: 10, min: 0, max: 100}, {value: 10, min: 0, max: 100}]
         }, "NULL"),
+        BiosClockElement("Time")
       ]
     },
     {
@@ -85,11 +91,36 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public ngOnInit(): void {
     this.reset_selected_option();
+    this.start_clock();
     window.addEventListener("keydown", this.onKeyDownEvent);
   }
 
   public ngOnDestroy() {
     window.removeEventListener("keydown", this.onKeyDownEvent);
+    clearInterval(ConfigurationComponent.clock_interval);
+  }
+
+  public start_clock(): void {
+    ConfigurationComponent.clock_interval = setInterval(() => {
+      ConfigurationComponent.clock_cache.forEach((value: biosOptionFunctionReturn<BiosOptionElementTypeNumbers>) => {
+        const hours: BiosOptionElementTypeNumbersNumberInterface = value.option.numbers[0];
+        const minutes: BiosOptionElementTypeNumbersNumberInterface = value.option.numbers[1];
+        const seconds: BiosOptionElementTypeNumbersNumberInterface = value.option.numbers[2];
+
+        if(seconds.value + 1 >= seconds.max){
+          seconds.value = seconds.min;
+          if(minutes.value + 1 >= minutes.max){
+            hours.value = hours.min;
+            minutes.value = minutes.min;
+            if(hours.value + 1 >= hours.max){
+              seconds.value = seconds.min;
+              hours.value = hours.min;
+              minutes.value = minutes.min;
+            } else value.option.numbers[0].value = hours.value + 1;
+          }else value.option.numbers[1].value = minutes.value + 1;
+        }else value.option.numbers[2].value = seconds.value + 1;
+      });
+    }, 1000);
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent) => {
