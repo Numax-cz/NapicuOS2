@@ -174,7 +174,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected on_esc(): void {
-    let option;
     let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
 
