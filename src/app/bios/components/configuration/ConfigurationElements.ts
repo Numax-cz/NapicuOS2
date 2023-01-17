@@ -7,7 +7,7 @@ export const BiosOptionElement = <T extends keyof biosOptionTypeMap>(type: T, ar
   return {type: type, option: array, description: description}
 }
 
-export const BiosClockElement = (name: string, separator: string = "/", description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> => {
+export const BiosClockElement = (name: string, separator: string = ":", description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> => {
   let i: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> = {
     type: "clock",
     option: {
