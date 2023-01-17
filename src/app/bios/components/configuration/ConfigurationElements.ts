@@ -1,3 +1,4 @@
+import * as NapicuUtils from "@Napicu/Utils"
 import {biosOptionFunctionReturn, biosOptionTypeMap} from "./interface/ConfigurationElements";
 import {ConfigurationComponent} from "./configuration.component";
 
@@ -8,7 +9,7 @@ export const BiosOptionElement = <T extends keyof biosOptionTypeMap>(type: T, ar
 
 export const BiosClockElement = (name: string, separator: string = "/", description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> => {
   let i: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> = {
-    type: "numbers",
+    type: "clock",
     option: {
       name: name,
       separator: separator,
@@ -20,8 +21,9 @@ export const BiosClockElement = (name: string, separator: string = "/", descript
     },
     description: description
   }
-  ConfigurationComponent.clock_cache.push(i);
-  return ConfigurationComponent.clock_cache[ConfigurationComponent.clock_cache.length - 1];
+  if(ConfigurationComponent.clock_cache) NapicuUtils.Console.print_error("bios clock already exists");
+  ConfigurationComponent.clock_cache = i;
+  return ConfigurationComponent.clock_cache;
 }
 
 

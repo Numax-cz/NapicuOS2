@@ -42,7 +42,7 @@
           </ng-container>
 
           <!--Options - Numbers-->
-          <ng-container *ngIf="i.type === 'numbers'">
+          <ng-container *ngIf="i.type === 'numbers' || i.type === 'clock'">
             <div class="BiosOptionsElement">
               <div>{{(i.option | as : BiosOptionElementTypeNumbers).name}}<span class="BiosElementSeparator">:</span></div>
               <div>[<span *ngFor="let number of (i.option | as : BiosOptionElementTypeNumbers).numbers; let number_index = index"

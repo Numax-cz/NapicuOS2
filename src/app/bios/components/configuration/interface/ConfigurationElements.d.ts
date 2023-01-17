@@ -10,7 +10,8 @@ export interface biosOptionTypeMap{
   "information": BiosOptionElementTypeInformation,
   "action": BiosOptionElementTypeAction,
   "options": BiosOptionElementTypeOptionMenu,
-  "numbers": BiosOptionElementTypeNumbers
+  "numbers": BiosOptionElementTypeNumbers,
+  "clock": BiosOptionElementTypeNumbers
 }
 
 export interface BiosOptionElementTypeInformation{

@@ -44,9 +44,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected static clock_interval: number = 0;
 
-  public static clock_cache: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]>[] = [];
+  public static clock_cache: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> | null = null;
 
-  protected options: BiosConfigurationOptionsInterface[] = [
+  protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
       name: "Main",
       title: "System Overview",
@@ -97,30 +97,37 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public ngOnDestroy() {
     window.removeEventListener("keydown", this.onKeyDownEvent);
-    clearInterval(ConfigurationComponent.clock_interval);
+    this.stop_clock();
   }
 
   public start_clock(): void {
     ConfigurationComponent.clock_interval = setInterval(() => {
-      ConfigurationComponent.clock_cache.forEach((value: biosOptionFunctionReturn<BiosOptionElementTypeNumbers>) => {
-        const hours: BiosOptionElementTypeNumbersNumberInterface = value.option.numbers[0];
-        const minutes: BiosOptionElementTypeNumbersNumberInterface = value.option.numbers[1];
-        const seconds: BiosOptionElementTypeNumbersNumberInterface = value.option.numbers[2];
+      if(!ConfigurationComponent.clock_cache) {
+        this.stop_clock();
+        return;
+      }
 
-        if(seconds.value + 1 >= seconds.max){
-          seconds.value = seconds.min;
-          if(minutes.value + 1 >= minutes.max){
+      const hours: BiosOptionElementTypeNumbersNumberInterface = ConfigurationComponent.clock_cache.option.numbers[0];
+      const minutes: BiosOptionElementTypeNumbersNumberInterface = ConfigurationComponent.clock_cache.option.numbers[1];
+      const seconds: BiosOptionElementTypeNumbersNumberInterface = ConfigurationComponent.clock_cache.option.numbers[2];
+
+      if(seconds.value + 1 >= seconds.max){
+        seconds.value = seconds.min;
+        if(minutes.value + 1 >= minutes.max){
+          hours.value = hours.min;
+          minutes.value = minutes.min;
+          if(hours.value + 1 >= hours.max){
+            seconds.value = seconds.min;
             hours.value = hours.min;
             minutes.value = minutes.min;
-            if(hours.value + 1 >= hours.max){
-              seconds.value = seconds.min;
-              hours.value = hours.min;
-              minutes.value = minutes.min;
-            } else value.option.numbers[0].value = hours.value + 1;
-          }else value.option.numbers[1].value = minutes.value + 1;
-        }else value.option.numbers[2].value = seconds.value + 1;
-      });
+          } else ConfigurationComponent.clock_cache.option.numbers[0].value = hours.value + 1;
+        }else ConfigurationComponent.clock_cache.option.numbers[1].value = minutes.value + 1;
+      }else ConfigurationComponent.clock_cache.option.numbers[2].value = seconds.value + 1;
     }, 1000);
+  }
+
+  protected stop_clock(): void {
+    clearInterval(ConfigurationComponent.clock_interval);
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent) => {
@@ -140,29 +147,38 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     switch (i.type) {
       case "options":
         option = i.option as biosOptionTypeMap["options"];
-
         //TODO OPEN OPTION MENU
         break;
-
       case "action":
         option = i.option as biosOptionTypeMap["action"];
-
         option.action();
+        break;
+      case "clock":
+        option = i.option as biosOptionTypeMap["numbers"];
+        if(this.selected_in_numbers_option !== null) this.start_clock();
+        else this.stop_clock();
+        this.select_numbers_option(option);
         break;
       case "numbers":
         option = i.option as biosOptionTypeMap["numbers"];
-
-        if(this.selected_in_numbers_option !== null) this.selected_in_numbers_option = null;
-        else {
-          this.selected_in_numbers_option = 0;
-          this.numbers_option_cache = NapicuUtils.CopyArray(option.numbers);
-        }
+        this.select_numbers_option(option);
         break;
+    }
+  }
+
+  protected select_numbers_option(option: biosOptionTypeMap["numbers"]): void {
+    if (this.selected_in_numbers_option !== null) this.selected_in_numbers_option = null;
+    else {
+      this.selected_in_numbers_option = 0;
+      this.numbers_option_cache = NapicuUtils.CopyArray(option.numbers);
     }
   }
 
   protected on_esc(): void {
     if(this.numbers_option_cache !== null){
+      if(this.selected_in_numbers_option !== null) this.start_clock();
+      else this.stop_clock();
+
       (this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"]).numbers = this.numbers_option_cache || [];
       this.numbers_option_cache = null;
       this.selected_in_numbers_option = null
