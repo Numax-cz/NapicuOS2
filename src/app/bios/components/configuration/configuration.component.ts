@@ -174,9 +174,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected on_esc(): void {
+    let option;
+    let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+      this.options[this.selected_screen_option].options[this.selected_option];
+
     if(this.numbers_option_cache !== null){
-      if(this.selected_in_numbers_option !== null) this.start_clock();
-      else this.stop_clock();
+      if(i.type === "clock"){
+        if(this.selected_in_numbers_option !== null) this.start_clock();
+        else this.stop_clock();
+      }
 
       (this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"]).numbers = this.numbers_option_cache || [];
       this.numbers_option_cache = null;
