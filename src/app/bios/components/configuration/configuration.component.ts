@@ -4,13 +4,12 @@ import * as NapicuUtils from "@Napicu/Utils"
 import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
 import {BiosClockElement, BiosOptionElement} from "./ConfigurationElements";
-
 import {
   BiosOptionElementTypeAction,
   BiosOptionElementTypeInformation, BiosOptionElementTypeNumbers, BiosOptionElementTypeNumbersNumberInterface,
   BiosOptionElementTypeOptionMenu, biosOptionFunctionReturn, biosOptionTypeMap
 } from "./interface/ConfigurationElements";
-import {min} from "rxjs";
+
 
 @Pipe({ name: 'as', pure: true })
 export class CastPipe implements PipeTransform {
