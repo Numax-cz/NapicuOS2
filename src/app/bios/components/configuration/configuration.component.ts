@@ -9,6 +9,7 @@ import {
   BiosOptionElementTypeInformation, BiosOptionElementTypeNumbers, BiosOptionElementTypeNumbersNumberInterface,
   BiosOptionElementTypeOptionMenu, biosOptionFunctionReturn, biosOptionTypeMap
 } from "./interface/ConfigurationElements";
+import {NapicuDate} from "napicuformatter";
 
 
 @Pipe({ name: 'as', pure: true })
@@ -45,6 +46,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public static clock_cache: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> | null = null;
 
+  public static date_cache: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> | null = null;
+
   protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
       name: "Main",
@@ -62,11 +65,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           name: "NULL",
           value: "NULL"
         }),
-        BiosOptionElement("numbers", {
-          name: "NULL",
-          separator: "/",
-          numbers: [{value: 10, min: 0, max: 100}, {value: 10, min: 0, max: 100}, {value: 10, min: 0, max: 100}]
-        }, "NULL"),
         BiosClockElement("Time")
       ]
     },
@@ -127,6 +125,13 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected stop_clock(): void {
     clearInterval(ConfigurationComponent.clock_interval);
+  }
+
+  protected update_max_days_in_month(): void {
+    if(ConfigurationComponent.date_cache){
+      ConfigurationComponent.date_cache.option.numbers[1].max = new NapicuDate(ConfigurationComponent.date_cache.option.numbers[2].value,
+        ConfigurationComponent.date_cache.option.numbers[0].value).getMaxDaysInCurrentMonth();
+    }
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent) => {
@@ -217,7 +222,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     if(this.selected_in_numbers_option !== null){
       let i: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
       if(this.selected_in_numbers_option + 1 < i.numbers.length) this.selected_in_numbers_option++;
-
       return;
     }
 
@@ -230,7 +234,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   protected move_left_option(): void {
     if(this.selected_in_numbers_option !== null){
       if(this.selected_in_numbers_option > 0) this.selected_in_numbers_option--;
-
       return;
     }
 
