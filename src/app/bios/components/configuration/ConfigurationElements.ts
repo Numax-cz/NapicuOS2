@@ -32,7 +32,7 @@ export const BiosDateElement = (name: string, separator: string = "/", descripti
   const date: NapicuDate = new NapicuDate(NapicuBios.Bios.get_bios_configuration().date);
 
   let i: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> = {
-    type: "clock",
+    type: "date",
     option: {
       name: name,
       separator: separator,

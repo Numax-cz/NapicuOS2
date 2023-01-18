@@ -3,7 +3,7 @@ import * as NapicuBios from "@Napicu/Bios";
 import * as NapicuUtils from "@Napicu/Utils"
 import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
-import {BiosClockElement, BiosOptionElement} from "./ConfigurationElements";
+import {BiosClockElement, BiosDateElement, BiosOptionElement} from "./ConfigurationElements";
 import {
   BiosOptionElementTypeAction,
   BiosOptionElementTypeInformation, BiosOptionElementTypeNumbers, BiosOptionElementTypeNumbersNumberInterface,
@@ -65,7 +65,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           name: "NULL",
           value: "NULL"
         }),
-        BiosClockElement("Time")
+        BiosClockElement("Time"),
+        BiosDateElement("Date")
       ]
     },
     {
@@ -131,6 +132,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     if(ConfigurationComponent.date_cache){
       ConfigurationComponent.date_cache.option.numbers[1].max = new NapicuDate(ConfigurationComponent.date_cache.option.numbers[2].value,
         ConfigurationComponent.date_cache.option.numbers[0].value).getMaxDaysInCurrentMonth();
+      if(ConfigurationComponent.date_cache.option.numbers[1].value > ConfigurationComponent.date_cache.option.numbers[1].max){
+        ConfigurationComponent.date_cache.option.numbers[1].value = ConfigurationComponent.date_cache.option.numbers[1].max
+      }
     }
   }
 
@@ -148,25 +152,22 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
 
-    switch (i.type) {
-      case "options":
-        option = i.option as biosOptionTypeMap["options"];
-        //TODO OPEN OPTION MENU
-        break;
-      case "action":
-        option = i.option as biosOptionTypeMap["action"];
-        option.action();
-        break;
-      case "clock":
-        option = i.option as biosOptionTypeMap["numbers"];
+
+    if(i.type === "options"){
+      option = i.option as biosOptionTypeMap["options"];
+      //TODO OPEN OPTION MENU
+    }else if (i.type === "action"){
+      option = i.option as biosOptionTypeMap["action"];
+      option.action();
+    }else if (i.type === "date" || i.type === "clock" || i.type === "numbers"){
+      option = i.option as biosOptionTypeMap["numbers"];
+
+      if(i.type === "clock"){
         if(this.selected_in_numbers_option !== null) this.start_clock();
         else this.stop_clock();
-        this.select_numbers_option(option);
-        break;
-      case "numbers":
-        option = i.option as biosOptionTypeMap["numbers"];
-        this.select_numbers_option(option);
-        break;
+      }
+
+      this.select_numbers_option(option);
     }
   }
 
@@ -245,7 +246,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected move_up_option(): void {
     if(this.selected_in_numbers_option !== null){
-      let numbers: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
+      let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+        this.options[this.selected_screen_option].options[this.selected_option];
+      if(i.type === "date") this.update_max_days_in_month();
+      let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
       let number = numbers.numbers[this.selected_in_numbers_option];
       if(number.value < number.max) numbers.numbers[this.selected_in_numbers_option].value++;
       return;
@@ -256,7 +260,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected move_down_option(): void {
     if(this.selected_in_numbers_option !== null){
-      let numbers: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
+      let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+        this.options[this.selected_screen_option].options[this.selected_option];
+      if(i.type === "date") this.update_max_days_in_month();
+      let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
       let number = numbers.numbers[this.selected_in_numbers_option];
       if(number.value > number.min) numbers.numbers[this.selected_in_numbers_option].value--;
       return;
