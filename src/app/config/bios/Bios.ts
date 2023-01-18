@@ -1,5 +1,6 @@
 
 import * as NapicuBios from "@Napicu/Bios"
+import {NapicuDate} from "napicuformatter";
 
 export namespace Bios{
   export const PRODUCTION_CONFIGURATION: boolean = false;
@@ -30,7 +31,9 @@ export namespace Bios{
   export const BIOS_VERSION_DATE: string = "1969 - 2023";
 
   export const DEFAULT_CONFIGURATION: NapicuBios.InformationInterface = {
-    selected_drive: 0
+    selected_drive: 0,
+    time: [0, 0, 0],
+    date: new NapicuDate(2020, 1, 1).getTimeStamp()
   }
 
 }

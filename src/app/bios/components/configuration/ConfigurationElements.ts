@@ -1,6 +1,8 @@
 import * as NapicuUtils from "@Napicu/Utils"
 import {biosOptionFunctionReturn, biosOptionTypeMap} from "./interface/ConfigurationElements";
 import {ConfigurationComponent} from "./configuration.component";
+import * as NapicuBios from "@Napicu/Bios";
+import {NapicuDate} from "napicuformatter";
 
 
 export const BiosOptionElement = <T extends keyof biosOptionTypeMap>(type: T, array: biosOptionTypeMap[T], description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap[T]> => {
@@ -14,9 +16,9 @@ export const BiosClockElement = (name: string, separator: string = ":", descript
       name: name,
       separator: separator,
       numbers: [
-        {value: 0, min: 0, max: 24}, //Hours
-        {value: 0, min: 0, max: 60}, //Minutes
-        {value: 0, min: 0, max: 60} //Seconds
+        {value: NapicuBios.Bios.get_bios_configuration().time[0], min: 0, max: 24}, //Hours
+        {value: NapicuBios.Bios.get_bios_configuration().time[1], min: 0, max: 60}, //Minutes
+        {value: NapicuBios.Bios.get_bios_configuration().time[2], min: 0, max: 60}  //Seconds
       ]
     },
     description: description
@@ -26,4 +28,24 @@ export const BiosClockElement = (name: string, separator: string = ":", descript
   return ConfigurationComponent.clock_cache;
 }
 
+export const BiosDateElement = (name: string, separator: string = "/", description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> => {
+  const date: NapicuDate = new NapicuDate(NapicuBios.Bios.get_bios_configuration().date);
+
+  let i: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> = {
+    type: "clock",
+    option: {
+      name: name,
+      separator: separator,
+      numbers: [
+        {value: date.getCurrentMonth(), min: 1, max: 12},    //Month
+        {value: date.getCurrentDate(), min: 1, max: 31},     //Day
+        {value: date.getCurrentYear(), min: 2000, max: 3000} //Year
+      ]
+    },
+    description: description
+  }
+  if(ConfigurationComponent.date_cache) NapicuUtils.Console.print_error("bios date already exists");
+  ConfigurationComponent.date_cache = i;
+  return ConfigurationComponent.date_cache;
+}
 
