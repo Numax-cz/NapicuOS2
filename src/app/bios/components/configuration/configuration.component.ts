@@ -274,6 +274,20 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     if(this.selected_option + 1 < this.options[this.selected_screen_option].options.length) this.check_next_option();
   }
 
+  public static get_time_stamp(): number {
+    if(this.date_cache && this.clock_cache){
+      return new NapicuDate(
+        this.date_cache.option.numbers[2].value,
+        this.date_cache.option.numbers[0].value,
+        this.date_cache.option.numbers[1].value,
+        this.clock_cache.option.numbers[0].value,
+        this.clock_cache.option.numbers[1].value,
+        this.clock_cache.option.numbers[2].value
+      ).getTimeStamp();
+    }
+    return new NapicuDate().getTimeStamp();
+  }
+
   get get_options(): BiosConfigurationOptionsInterface[] {
     return this.options;
   }
