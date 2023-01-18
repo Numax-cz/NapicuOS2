@@ -56,8 +56,6 @@ class Bios  {
     });
   }
 
-
-
   protected static check_hardware(): Promise<any> {
     return new Promise<any>((resolve, reject)  => {
 
@@ -106,8 +104,6 @@ class Bios  {
   public static clear_text_screen(): void {
     TextScreenComponent.clear();
   }
-
-
 
   public static get_bios_configuration(): InformationInterface{
     if (!this.biosConfiguration){
