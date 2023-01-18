@@ -252,6 +252,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
       let number = numbers.numbers[this.selected_in_numbers_option];
       if(number.value < number.max) numbers.numbers[this.selected_in_numbers_option].value++;
+      else number.value = number.min;
       return;
     }
 
@@ -266,6 +267,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
       let number = numbers.numbers[this.selected_in_numbers_option];
       if(number.value > number.min) numbers.numbers[this.selected_in_numbers_option].value--;
+      else number.value = number.max;
       return;
     }
 
