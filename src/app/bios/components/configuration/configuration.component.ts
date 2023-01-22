@@ -91,21 +91,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       options: [
         BiosOptionElement("action", {
           name: "Load Optimized Defaults",
-          action: () => {
-
-          }
+          action: () => NapicuBios.Bios.load_default_bios_configuration()
         }),
         BiosOptionElement("action", {
           name: "Save Changes & Reset",
-          action: () => {
-
-          }
+          action: () => NapicuBios.Bios.exit_bios_configuration_with_save()
         }),
         BiosOptionElement("action", {
           name: "Discard Changes & Exit",
-          action: () => {
-
-          }
+          action: () => NapicuBios.Bios.exit_bios_configuration_without_save()
         })
       ]
     }
@@ -331,20 +325,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       let i = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["options"];
       if(i.selectedOption + 1 <  i.options.length) i.selectedOption++
     }
-  }
-
-  public static get_time_stamp(): number {
-    if(this.date_cache && this.clock_cache){
-      return new NapicuDate(
-        this.date_cache.option.numbers[2].value,
-        this.date_cache.option.numbers[0].value,
-        this.date_cache.option.numbers[1].value,
-        this.clock_cache.option.numbers[0].value,
-        this.clock_cache.option.numbers[1].value,
-        this.clock_cache.option.numbers[2].value
-      ).getTimeStamp();
-    }
-    return new NapicuDate().getTimeStamp();
   }
 
   get get_options(): BiosConfigurationOptionsInterface[] {

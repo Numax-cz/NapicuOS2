@@ -73,8 +73,21 @@ class Bios  {
     })
   }
 
+  public static get_bios_configuration(): InformationInterface{
+    if (!this.biosConfiguration){
+      this.biosConfiguration = NapicuUtils.Cookies.getCookies
+        <InformationInterface>(NapicuConfig.Web.BIOS_COOKIES_NAME) || NapicuConfig.Bios.DEFAULT_CONFIGURATION;
+    }
+    return this.biosConfiguration;
+  }
+
   protected static load_bios_config(): void {
     this.biosConfiguration = this.get_bios_configuration();
+  }
+
+  protected static save_bios_config(): void {
+    this.load_time_from_configuration();
+    NapicuUtils.Cookies.setCookies<InformationInterface>(NapicuConfig.Web.BIOS_COOKIES_NAME, this.biosConfiguration);
   }
 
   protected static no_bootable_device_error(): void {
@@ -86,7 +99,7 @@ class Bios  {
   }
 
   public static exit_bios_configuration_with_save(): void {
-
+    this.save_bios_config();
   }
 
   public static exit_bios_configuration_without_save(): void {
@@ -94,7 +107,8 @@ class Bios  {
   }
 
   public static load_default_bios_configuration(): void {
-
+    this.biosConfiguration = NapicuConfig.Bios.DEFAULT_CONFIGURATION;
+    this.save_bios_config();
   }
 
   public static redirect_text_screen(): void {
@@ -107,13 +121,6 @@ class Bios  {
     TextScreenComponent.clear();
   }
 
-  public static get_bios_configuration(): InformationInterface{
-    if (!this.biosConfiguration){
-      this.biosConfiguration = NapicuUtils.Cookies.getCookies
-        <InformationInterface>(NapicuConfig.Web.BIOS_COOKIES_NAME) || NapicuConfig.Bios.DEFAULT_CONFIGURATION;
-    }
-    return this.biosConfiguration;
-  }
 
   public static get_cpu(): NapicuComputer.Hardware.HardwareCPUInformationInterface {
     return NapicuComputer.VirtualComputer.get_hardware().cpu;
@@ -151,8 +158,31 @@ class Bios  {
     return NapicuConfig.Bios.BIOS_VERSION_DATE;
   }
 
-  public static get_bios_time_stamp(): number {
-    return ConfigurationComponent.get_time_stamp();
+  protected static load_time_from_configuration(): void {
+    this.biosConfiguration.time = this.get_bios_configuration_time();
+    this.biosConfiguration.date = this.get_bios_configuration_date();
+  }
+
+  protected static get_bios_configuration_time(): NapicuUtils.ArrayOfMaxLength3<number> {
+    if(ConfigurationComponent.clock_cache){
+      return [
+        ConfigurationComponent.clock_cache.option.numbers[0].value,
+        ConfigurationComponent.clock_cache.option.numbers[1].value,
+        ConfigurationComponent.clock_cache.option.numbers[2].value
+      ];
+    }
+    return [0, 0, 0];
+  }
+
+  protected static get_bios_configuration_date(): NapicuUtils.ArrayOfMaxLength3<number> {
+    if(ConfigurationComponent.date_cache){
+      return [
+        ConfigurationComponent.date_cache.option.numbers[0].value,
+        ConfigurationComponent.date_cache.option.numbers[1].value,
+        ConfigurationComponent.date_cache.option.numbers[2].value
+      ];
+    }
+    return [0, 0, 0];
   }
 }
 
