@@ -22,7 +22,6 @@ export interface BiosOptionElementTypeInformation{
 
 export interface BiosOptionElementTypeAction{
   name: string,
-  value: string,
   action: () => void
 }
 

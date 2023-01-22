@@ -55,16 +55,16 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       name: "Main",
       title: "System Overview",
       options: [
-        BiosOptionElement("information", {
-          name: "NULL",
-          value: "NULL"
-        }),
+
         BiosOptionElement("options", {
           name: "NULL",
           options: ["TEST", "TES2", "TEST3", "TEST4"],
           selectedOption: 0
         }, "NULL"),
         BiosOptionElement("information", {
+          name: "NULL",
+          value: "NULL"
+        }),        BiosOptionElement("information", {
           name: "NULL",
           value: "NULL"
         }),
@@ -86,7 +86,26 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     },
     {
       name: "Exit",
-      options: []
+      options: [
+        BiosOptionElement("action", {
+          name: "Load Optimized Defaults",
+          action: () => {
+
+          }
+        }),
+        BiosOptionElement("action", {
+          name: "Save Changes & Reset",
+          action: () => {
+
+          }
+        }),
+        BiosOptionElement("action", {
+          name: "Discard Changes & Exit",
+          action: () => {
+
+          }
+        })
+      ]
     }
   ];
 
@@ -209,24 +228,24 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected reset_selected_option(): void {
-    this.selected_option = 0;
+    this.selected_option = -1;
     this.selected_in_numbers_option = null;
     this.check_next_option();
   }
 
   protected check_next_option(): void {
-    for(let i = this.selected_option + 1; i < this.options[this.selected_screen_option].options.length; i++){
-      if(this.options[this.selected_screen_option].options?.[i].type !== "information"){
-        this.selected_option = i;
+    for(let i = this.selected_option; i < this.options[this.selected_screen_option].options.length ; i++){
+      if(this.options[this.selected_screen_option].options?.[i + 1].type !== "information"){
+        this.selected_option = i + 1;
         break;
       }
     }
   }
 
   protected check_previous_option(): void {
-    for(let i = this.selected_option - 1; i > 0; i--){
-      if(this.options[this.selected_screen_option].options?.[i].type !== "information"){
-        this.selected_option = i;
+    for(let i = this.selected_option; i > 0; i--){
+      if(this.options[this.selected_screen_option].options?.[i - 1].type !== "information"){
+        this.selected_option = i - 1;
         break;
       }
     }
