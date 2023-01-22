@@ -12,9 +12,7 @@
     <div class="ComponentViewContainer">
       <div class="ComponentViewFrame">
         <!--Option Title -->
-        <ng-container *ngIf="options[selected_screen_option].title">
-          <div class="BiosOptionTitle">{{options[selected_screen_option].title}}</div>
-        </ng-container>
+        <div class="BiosOptionTitle">{{options[selected_screen_option].title}}</div>
         <!--Options -->
         <div *ngFor="let i of options[selected_screen_option].options; let index = index" class="BiosElement" [ngClass]="{BiosSelectedElement: index === selected_option}">
           <!--Options - Information-->
