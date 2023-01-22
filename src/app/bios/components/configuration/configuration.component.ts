@@ -48,7 +48,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public static date_cache: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> | null = null;
 
-  public selected_menu_option_cache: number | null = null
+  public static date_is_moved_day: boolean = false;
+
+  public selected_menu_option_cache: number | null = null;
 
   protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
@@ -141,8 +143,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
             hours.value = hours.min;
             minutes.value = minutes.min;
           } else ConfigurationComponent.clock_cache.option.numbers[0].value = hours.value + 1;
-        }else ConfigurationComponent.clock_cache.option.numbers[1].value = minutes.value + 1;
-      }else ConfigurationComponent.clock_cache.option.numbers[2].value = seconds.value + 1;
+        } else ConfigurationComponent.clock_cache.option.numbers[1].value = minutes.value + 1;
+      } else ConfigurationComponent.clock_cache.option.numbers[2].value = seconds.value + 1;
     }, 1000);
   }
 
@@ -154,8 +156,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     if(ConfigurationComponent.date_cache){
       ConfigurationComponent.date_cache.option.numbers[1].max = new NapicuDate(ConfigurationComponent.date_cache.option.numbers[2].value,
         ConfigurationComponent.date_cache.option.numbers[0].value).getMaxDaysInCurrentMonth();
-      if(ConfigurationComponent.date_cache.option.numbers[1].value > ConfigurationComponent.date_cache.option.numbers[1].max){
-        ConfigurationComponent.date_cache.option.numbers[1].value = ConfigurationComponent.date_cache.option.numbers[1].max
+      if(ConfigurationComponent.date_cache.option.numbers[1].value > ConfigurationComponent.date_cache.option.numbers[1].max || ConfigurationComponent.date_is_moved_day){
+        ConfigurationComponent.date_cache.option.numbers[1].value = ConfigurationComponent.date_cache.option.numbers[1].max;
+        ConfigurationComponent.date_is_moved_day = true;
       }
     }
   }
@@ -190,7 +193,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       if(i.type === "clock"){
         if(this.selected_in_numbers_option !== null) this.start_clock();
         else this.stop_clock();
+      }else if(i.type === "date"){
+          ConfigurationComponent.date_is_moved_day = false;
       }
+
 
       this.select_numbers_option(option);
     }
@@ -219,6 +225,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       if(i.type === "clock"){
         if(this.selected_in_numbers_option !== null) this.start_clock();
         else this.stop_clock();
+      }
+
+      if(i.type === "date"){
+        ConfigurationComponent.date_is_moved_day = false;
       }
 
       (this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"]).numbers = this.numbers_option_cache || [];
@@ -254,6 +264,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   protected move_right_option(): void {
     if(this.selected_menu_option_cache == null){
       if(this.selected_in_numbers_option !== null){
+        ConfigurationComponent.date_is_moved_day = false;
         let i: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
         if(this.selected_in_numbers_option + 1 < i.numbers.length) this.selected_in_numbers_option++;
         return;
@@ -269,6 +280,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   protected move_left_option(): void {
     if(this.selected_menu_option_cache == null) {
       if (this.selected_in_numbers_option !== null) {
+        ConfigurationComponent.date_is_moved_day = false;
         if (this.selected_in_numbers_option > 0) this.selected_in_numbers_option--;
         return;
       }
@@ -285,11 +297,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       if (this.selected_in_numbers_option !== null) {
         let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
           this.options[this.selected_screen_option].options[this.selected_option];
-        if (i.type === "date") this.update_max_days_in_month();
         let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
         let number = numbers.numbers[this.selected_in_numbers_option];
         if (number.value < number.max) numbers.numbers[this.selected_in_numbers_option].value++;
         else number.value = number.min;
+
+        if (i.type === "date") this.update_max_days_in_month();
         return;
       }
 
@@ -305,11 +318,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       if (this.selected_in_numbers_option !== null) {
         let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
           this.options[this.selected_screen_option].options[this.selected_option];
-        if (i.type === "date") this.update_max_days_in_month();
         let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
         let number = numbers.numbers[this.selected_in_numbers_option];
         if (number.value > number.min) numbers.numbers[this.selected_in_numbers_option].value--;
         else number.value = number.max;
+
+        if (i.type === "date") this.update_max_days_in_month();
         return;
       }
       if (this.selected_option + 1 < this.options[this.selected_screen_option].options.length) this.check_next_option();
