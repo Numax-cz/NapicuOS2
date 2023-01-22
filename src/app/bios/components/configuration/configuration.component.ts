@@ -48,6 +48,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public static date_cache: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> | null = null;
 
+  public selected_menu_option_cache: number | null = null
+
   protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
       name: "Main",
@@ -59,7 +61,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
         }),
         BiosOptionElement("options", {
           name: "NULL",
-          options: ["NULL", "NULL"],
+          options: ["TEST", "TES2", "TEST3", "TEST4"],
+          selectedOption: 0
         }, "NULL"),
         BiosOptionElement("information", {
           name: "NULL",
@@ -155,7 +158,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
     if(i.type === "options"){
       option = i.option as biosOptionTypeMap["options"];
-      //TODO OPEN OPTION MENU
+      if (this.selected_menu_option_cache === null) this.selected_menu_option_cache = option.selectedOption;
+      else this.selected_menu_option_cache = null;
+
+
     }else if (i.type === "action"){
       option = i.option as biosOptionTypeMap["action"];
       option.action();
@@ -180,6 +186,13 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected on_esc(): void {
+    if(this.selected_menu_option_cache !== null){
+      (this.options[this.selected_screen_option].options[this.selected_option].option as
+        biosOptionTypeMap["options"]).selectedOption = this.selected_menu_option_cache;
+      this.selected_menu_option_cache = null;
+      return;
+    }
+
     let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
 
@@ -220,58 +233,71 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected move_right_option(): void {
-    if(this.selected_in_numbers_option !== null){
-      let i: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
-      if(this.selected_in_numbers_option + 1 < i.numbers.length) this.selected_in_numbers_option++;
-      return;
-    }
+    if(this.selected_menu_option_cache == null){
+      if(this.selected_in_numbers_option !== null){
+        let i: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
+        if(this.selected_in_numbers_option + 1 < i.numbers.length) this.selected_in_numbers_option++;
+        return;
+      }
 
-    if(this.selected_screen_option + 1 < this.options.length){
-      this.selected_screen_option += 1;
-      this.reset_selected_option();
+      if(this.selected_screen_option + 1 < this.options.length){
+        this.selected_screen_option += 1;
+        this.reset_selected_option();
+      }
     }
   }
 
   protected move_left_option(): void {
-    if(this.selected_in_numbers_option !== null){
-      if(this.selected_in_numbers_option > 0) this.selected_in_numbers_option--;
-      return;
-    }
+    if(this.selected_menu_option_cache == null) {
+      if (this.selected_in_numbers_option !== null) {
+        if (this.selected_in_numbers_option > 0) this.selected_in_numbers_option--;
+        return;
+      }
 
-    if(this.selected_screen_option > 0){
-      this.selected_screen_option -= 1;
-      this.reset_selected_option();
+      if (this.selected_screen_option > 0) {
+        this.selected_screen_option -= 1;
+        this.reset_selected_option();
+      }
     }
   }
 
   protected move_up_option(): void {
-    if(this.selected_in_numbers_option !== null){
-      let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
-        this.options[this.selected_screen_option].options[this.selected_option];
-      if(i.type === "date") this.update_max_days_in_month();
-      let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
-      let number = numbers.numbers[this.selected_in_numbers_option];
-      if(number.value < number.max) numbers.numbers[this.selected_in_numbers_option].value++;
-      else number.value = number.min;
-      return;
-    }
+    if(this.selected_menu_option_cache == null) {
+      if (this.selected_in_numbers_option !== null) {
+        let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+          this.options[this.selected_screen_option].options[this.selected_option];
+        if (i.type === "date") this.update_max_days_in_month();
+        let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
+        let number = numbers.numbers[this.selected_in_numbers_option];
+        if (number.value < number.max) numbers.numbers[this.selected_in_numbers_option].value++;
+        else number.value = number.min;
+        return;
+      }
 
-    if(this.selected_option > 0) this.check_previous_option();
+      if (this.selected_option > 0) this.check_previous_option();
+    } else {
+      let i = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["options"];
+      if(i.selectedOption  > 0) i.selectedOption--
+    }
   }
 
   protected move_down_option(): void {
-    if(this.selected_in_numbers_option !== null){
-      let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
-        this.options[this.selected_screen_option].options[this.selected_option];
-      if(i.type === "date") this.update_max_days_in_month();
-      let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
-      let number = numbers.numbers[this.selected_in_numbers_option];
-      if(number.value > number.min) numbers.numbers[this.selected_in_numbers_option].value--;
-      else number.value = number.max;
-      return;
+    if(this.selected_menu_option_cache == null) {
+      if (this.selected_in_numbers_option !== null) {
+        let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+          this.options[this.selected_screen_option].options[this.selected_option];
+        if (i.type === "date") this.update_max_days_in_month();
+        let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
+        let number = numbers.numbers[this.selected_in_numbers_option];
+        if (number.value > number.min) numbers.numbers[this.selected_in_numbers_option].value--;
+        else number.value = number.max;
+        return;
+      }
+      if (this.selected_option + 1 < this.options[this.selected_screen_option].options.length) this.check_next_option();
+    } else {
+      let i = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["options"];
+      if(i.selectedOption + 1 <  i.options.length) i.selectedOption++
     }
-
-    if(this.selected_option + 1 < this.options[this.selected_screen_option].options.length) this.check_next_option();
   }
 
   public static get_time_stamp(): number {

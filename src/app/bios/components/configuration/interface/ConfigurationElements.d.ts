@@ -29,7 +29,7 @@ export interface BiosOptionElementTypeAction{
 export interface BiosOptionElementTypeOptionMenu {
   name: string,
   options: string[]
-  selectedOption?: 0,
+  selectedOption: number,
 }
 
 export interface BiosOptionElementTypeNumbersNumberInterface{
