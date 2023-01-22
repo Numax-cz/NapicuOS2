@@ -9,6 +9,7 @@ import {TextScreenComponent} from "./components/text-screen/text-screen.componen
 import {VirtualComputer} from "@Napicu/VirtualComputer";
 import {SpeedControl} from "./scripts/SpeedControl";
 import {NapicuDate} from "napicuformatter";
+import {ConfigurationComponent} from "./components/configuration/configuration.component";
 
 class Bios  {
   protected static declare biosConfiguration: InformationInterface;
@@ -151,8 +152,7 @@ class Bios  {
   }
 
   public static get_bios_time_stamp(): number {
-    const cfg = this.get_bios_configuration();
-    return new NapicuDate(cfg.date[2], cfg.date[1], cfg.date[0], cfg.time[0], cfg.time[1], cfg.time[2]).getTimeStamp();
+    return ConfigurationComponent.get_time_stamp();
   }
 }
 

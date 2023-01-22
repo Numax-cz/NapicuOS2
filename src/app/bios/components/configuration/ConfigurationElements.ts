@@ -30,14 +30,14 @@ export const BiosClockElement = (name: string, separator: string = ":", descript
 
 export const BiosDateElement = (name: string, separator: string = "/", description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> => {
   let i: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> = {
-    type: "clock",
+    type: "date",
     option: {
       name: name,
       separator: separator,
       numbers: [
-        {value: NapicuBios.Bios.get_bios_configuration().time[0], min: 1, max: 12},    //Month
-        {value: NapicuBios.Bios.get_bios_configuration().time[1], min: 1, max: 31},     //Day
-        {value: NapicuBios.Bios.get_bios_configuration().time[2], min: 2000, max: 3000} //Year
+        {value: NapicuBios.Bios.get_bios_configuration().date[0], min: 1, max: 12},    //Month
+        {value: NapicuBios.Bios.get_bios_configuration().date[1], min: 1, max: 31},     //Day
+        {value: NapicuBios.Bios.get_bios_configuration().date[2], min: 2000, max: 3000} //Year
       ]
     },
     description: description
