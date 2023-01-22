@@ -5,7 +5,7 @@ export interface InformationInterface {
   selected_drive: number;
 
   time: NapicuUtils.ArrayOfMaxLength3<number>,
-  date: number
+  date: NapicuUtils.ArrayOfMaxLength3<number>
 
 
 }

@@ -24,7 +24,7 @@ export namespace Bios{
     selected_drive: 0,
 
     time: [0, 0, 0],
-    date: new NapicuDate(2020, 1, 1).getTimeStamp()
+    date: [1, 1, 2023]
   }
 }
 

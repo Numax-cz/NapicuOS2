@@ -8,6 +8,7 @@ import {BiosPostExceptionCodes} from "./enums/BiosException";
 import {TextScreenComponent} from "./components/text-screen/text-screen.component";
 import {VirtualComputer} from "@Napicu/VirtualComputer";
 import {SpeedControl} from "./scripts/SpeedControl";
+import {NapicuDate} from "napicuformatter";
 
 class Bios  {
   protected static declare biosConfiguration: InformationInterface;
@@ -147,6 +148,11 @@ class Bios  {
 
   public static get_bios_version_date(): string {
     return NapicuConfig.Bios.BIOS_VERSION_DATE;
+  }
+
+  public static get_bios_time_stamp(): number {
+    const cfg = this.get_bios_configuration();
+    return new NapicuDate(cfg.date[2], cfg.date[1], cfg.date[0], cfg.time[0], cfg.time[1], cfg.time[2]).getTimeStamp();
   }
 }
 

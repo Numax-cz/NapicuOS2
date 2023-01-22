@@ -33,7 +33,7 @@ export namespace Bios{
   export const DEFAULT_CONFIGURATION: NapicuBios.InformationInterface = {
     selected_drive: 0,
     time: [0, 0, 0],
-    date: new NapicuDate(2020, 1, 1).getTimeStamp()
+    date: [1, 1, 2023]
   }
 
 }
