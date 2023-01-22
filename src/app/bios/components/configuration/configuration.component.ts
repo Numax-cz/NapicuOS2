@@ -239,7 +239,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected check_next_option(): void {
     for(let i = this.selected_option; i < this.options[this.selected_screen_option].options.length ; i++){
-      if(this.options[this.selected_screen_option].options?.[i + 1].type !== "information"){
+      if(this.options[this.selected_screen_option].options?.[i + 1]?.type !== "information"){
         this.selected_option = i + 1;
         break;
       }
@@ -248,7 +248,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected check_previous_option(): void {
     for(let i = this.selected_option; i > 0; i--){
-      if(this.options[this.selected_screen_option].options?.[i - 1].type !== "information"){
+      if(this.options[this.selected_screen_option].options?.[i - 1]?.type !== "information"){
         this.selected_option = i - 1;
         break;
       }
