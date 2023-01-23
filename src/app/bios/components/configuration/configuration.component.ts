@@ -1,6 +1,7 @@
 import * as NapicuConfig from "@Napicu/Config";
 import * as NapicuBios from "@Napicu/Bios";
-import * as NapicuUtils from "@Napicu/Utils"
+import * as NapicuUtils from "@Napicu/Utils";
+import * as NapicuComputer from "@Napicu/VirtualComputer";
 import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
 import {BiosClockElement, BiosDateElement, BiosOptionElement} from "./ConfigurationElements";
@@ -80,7 +81,13 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     },
     {
       name: "Boot",
-      options: []
+      options: [
+        BiosOptionElement("options", {
+          name: "Boot",
+          options: NapicuBios.Bios.get_drv().map((drv: NapicuComputer.Hardware.HardwareDRVInformationInterface) => {return drv.name}),
+          selectedOption: 0
+        })
+      ]
     },
     {
       name: "Tools",

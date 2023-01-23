@@ -4,8 +4,8 @@ import * as NapicuKernel from "@Napicu/System/Kernel";
 
 
 const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
-  name: "Samsung SSD 860 EVO 250GB",
-  capacity: 250,
+  name: "Samsung SSD 860 EVO 500GB",
+  capacity: 500,
   speed: 500,
 
   data: {
@@ -30,6 +30,26 @@ const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
   }
 }
 
+const disk_2: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
+  name: "Seagate BarraCuda 2.5 500GB",
+  capacity: 500,
+  speed: 10,
+
+  data: {
+    partitions: {}
+  }
+}
+
+const disk_3: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
+  name: "IBM 3330",
+  capacity: 0.100,
+  speed: 10,
+
+  data: {
+    partitions: {}
+  }
+}
+
 export namespace VirtualComputer{
   export const HARDWARE: NapicuComputer.Hardware.HardwareInformationInterface = {
     cpu: {
@@ -37,7 +57,7 @@ export namespace VirtualComputer{
       tdp: 0,
       speed: 3000
     },
-    drv: [disk_1],
+    drv: [disk_1, disk_2, disk_3],
     gpu: {
       name: "GPU",
       speed: 1000
