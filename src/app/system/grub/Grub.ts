@@ -1,4 +1,6 @@
 import * as NapicuKernel from "@Napicu/System/Kernel";
+import * as NapicuUtils from "@Napicu/Utils";
+import * as NapicuConfig from "@Napicu/Config";
 import {GrubBootFileInterface} from "./interface/BootFile";
 
 class Grub{
@@ -31,7 +33,7 @@ class Grub{
   }
 
   public show_grub_menu(): void {
-
+    NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.GRUB_MENU_PATH);
   }
 
 

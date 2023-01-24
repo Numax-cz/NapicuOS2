@@ -341,7 +341,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     for (const drv of NapicuBios.Bios.get_drv()) {
       let i: string | null = null;
       let grub = NapicuBios.Bios.get_bootable_file(drv);
-      if (grub?.grub) i = grub.grub.get_kernel().get_system_name();
+      if (grub) i = grub.get_kernel().get_system_name();
       d.push(i ? `${drv.name} (${i})` : drv.name);
     }
     return d;

@@ -8,9 +8,8 @@ import {BiosPostExceptionCodes} from "./enums/BiosException";
 import {TextScreenComponent} from "./components/text-screen/text-screen.component";
 import {VirtualComputer} from "@Napicu/VirtualComputer";
 import {SpeedControl} from "./scripts/SpeedControl";
-import {NapicuDate} from "napicuformatter";
 import {ConfigurationComponent} from "./components/configuration/configuration.component";
-import {readBooleanType} from "@angular/compiler-cli/src/ngtsc/metadata/src/util";
+
 
 class Bios  {
   protected static declare biosConfiguration: InformationInterface;
@@ -33,11 +32,13 @@ class Bios  {
 
       //await this.check_hardware();
 
-      await this.get_grub_file().then((bt_file: NapicuGrub.GrubBootFileInterface) => {
+      await this.get_grub_file().then((grub: NapicuGrub.Grub) => {
         //TODO StartGrub
 
-        if(bt_file.grub.get_available_kernels().length <= 0){
-          bt_file.grub.show_grub_menu();
+
+
+        if(grub.get_available_kernels().length <= 0){
+          grub.show_grub_menu();
         }
 
 
@@ -72,17 +73,17 @@ class Bios  {
     })
   }
 
-  protected static get_grub_file(): Promise<NapicuGrub.GrubBootFileInterface> { //TODO Promise
-    return new Promise<NapicuGrub.GrubBootFileInterface>((resolve, reject) => {
-      let i: NapicuGrub.GrubBootFileInterface | undefined = this.get_bootable_file(this.get_selected_drv());
+  protected static get_grub_file(): Promise<NapicuGrub.Grub> { //TODO Promise
+    return new Promise<NapicuGrub.Grub>((resolve, reject) => {
+      let i: NapicuGrub.Grub | undefined = this.get_bootable_file(this.get_selected_drv());
       if(!i) reject(BiosPostExceptionCodes.no_bootable_device);
       else resolve(i);
     })
   }
 
-  public static get_bootable_file(drv: NapicuComputer.Hardware.HardwareDRVInformationInterface): NapicuGrub.GrubBootFileInterface | undefined {
+  public static get_bootable_file(drv: NapicuComputer.Hardware.HardwareDRVInformationInterface): NapicuGrub.Grub | undefined {
     let ckb = drv.data.partitions?.["sda"]?.folders.data?.["boot"]?.files["grub"];
-    if(ckb) return ckb.data as NapicuGrub.GrubBootFileInterface;
+    if(ckb) return ckb.data as NapicuGrub.Grub;
     return undefined;
   }
 
