@@ -3,6 +3,8 @@ import {GrubBootFileInterface} from "./interface/BootFile";
 
 class Grub{
 
+  protected selected_system: number = -1; //TODO
+
   protected available_systems: NapicuKernel.Kernel[] = [];
 
 
@@ -13,11 +15,26 @@ class Grub{
 
   public init(): void {
 
-  }
-
-  private show_grub_menu(): void {
 
   }
+
+  public init_kernel(): void {
+    this.get_kernel().init();
+  }
+
+  public get_kernel(): NapicuKernel.Kernel{
+    return this.available_systems[this.selected_system];
+  }
+
+  public get_available_kernels(): NapicuKernel.Kernel[]{
+    return this.available_systems;
+  }
+
+  public show_grub_menu(): void {
+
+  }
+
+
 
 
 

@@ -10,6 +10,7 @@ import {VirtualComputer} from "@Napicu/VirtualComputer";
 import {SpeedControl} from "./scripts/SpeedControl";
 import {NapicuDate} from "napicuformatter";
 import {ConfigurationComponent} from "./components/configuration/configuration.component";
+import {readBooleanType} from "@angular/compiler-cli/src/ngtsc/metadata/src/util";
 
 class Bios  {
   protected static declare biosConfiguration: InformationInterface;
@@ -32,8 +33,15 @@ class Bios  {
 
       //await this.check_hardware();
 
-      await this.get_bootable_file().then((bootable_file: NapicuComputer.Hardware.DriveBaseFileStructureInterface<NapicuGrub.GrubBootFileInterface>) => {
+      await this.get_grub_file().then((bt_file: NapicuGrub.GrubBootFileInterface) => {
         //TODO StartGrub
+
+        if(bt_file.grub.get_available_kernels().length <= 0){
+          bt_file.grub.show_grub_menu();
+        }
+
+
+
       }, (reason) => {
         switch (reason as BiosPostExceptionCodes) {
           case BiosPostExceptionCodes.no_bootable_device:
@@ -64,13 +72,18 @@ class Bios  {
     })
   }
 
-  protected static get_bootable_file(): Promise<NapicuComputer.Hardware.DriveBaseFileStructureInterface<NapicuGrub.GrubBootFileInterface>> { //TODO Promise
-    return new Promise<NapicuComputer.Hardware.DriveBaseFileStructureInterface<NapicuGrub.GrubBootFileInterface>>((resolve, reject) => {
-      const ckb: NapicuComputer.Hardware.DriveBaseFilesAndFoldersStructureInterface | undefined =
-        this.get_selected_drv().data.partitions?.["sda"]?.folders.data?.["boot"];
-      if(!ckb || !ckb.files["grub"]?.data) reject(BiosPostExceptionCodes.no_bootable_device);
-      else resolve(ckb.files["grub"]);
+  protected static get_grub_file(): Promise<NapicuGrub.GrubBootFileInterface> { //TODO Promise
+    return new Promise<NapicuGrub.GrubBootFileInterface>((resolve, reject) => {
+      let i: NapicuGrub.GrubBootFileInterface | undefined = this.get_bootable_file(this.get_selected_drv());
+      if(!i) reject(BiosPostExceptionCodes.no_bootable_device);
+      else resolve(i);
     })
+  }
+
+  public static get_bootable_file(drv: NapicuComputer.Hardware.HardwareDRVInformationInterface): NapicuGrub.GrubBootFileInterface | undefined {
+    let ckb = drv.data.partitions?.["sda"]?.folders.data?.["boot"]?.files["grub"];
+    if(ckb) return ckb.data as NapicuGrub.GrubBootFileInterface;
+    return undefined;
   }
 
   public static get_bios_configuration(): InformationInterface{

@@ -1,6 +1,6 @@
 import * as NapicuComputer from "@Napicu/VirtualComputer";
 import * as NapicuKernel from "@Napicu/System/Kernel";
-
+import * as NapicuGrub from "@Napicu/Grub";
 
 
 const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
@@ -18,7 +18,7 @@ const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
             //BootFIle
             boot: {
               files: {
-                grub: {data: null}
+                grub: {data: new NapicuGrub.Grub([])}
               },
               folders: {}
             }

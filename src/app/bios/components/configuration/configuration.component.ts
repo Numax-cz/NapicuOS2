@@ -11,6 +11,8 @@ import {
   BiosOptionElementTypeOptionMenu, biosOptionFunctionReturn, biosOptionTypeMap
 } from "./interface/ConfigurationElements";
 import {NapicuDate} from "napicuformatter";
+import {DriveBaseFilesAndFoldersStructureInterface} from "../../../computer/interface/NapicuHardware";
+import {GrubBootFileInterface} from "@Napicu/Grub";
 
 
 @Pipe({ name: 'as', pure: true })
@@ -84,7 +86,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       options: [
         BiosOptionElement("options", {
           name: "Boot",
-          options: NapicuBios.Bios.get_drv().map((drv: NapicuComputer.Hardware.HardwareDRVInformationInterface) => {return drv.name}),
+          options: this.get_drv_with_os_name(),
           selectedOption: 0
         })
       ]
@@ -334,6 +336,17 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     }
   }
 
+  protected get_drv_with_os_name(): string[] {
+    let d: string[] = [];
+    for (const drv of NapicuBios.Bios.get_drv()) {
+      let i: string | null = null;
+      let grub = NapicuBios.Bios.get_bootable_file(drv);
+      if (grub?.grub) i = grub.grub.get_kernel().get_system_name();
+      d.push(i ? `${drv.name} (${i})` : drv.name);
+    }
+    return d;
+  }
+
   get get_options(): BiosConfigurationOptionsInterface[] {
     return this.options;
   }
@@ -345,4 +358,5 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   get get_bios_version(): string {
     return NapicuBios.Bios.get_bios_full_version();
   }
+
 }
