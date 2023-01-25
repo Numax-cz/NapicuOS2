@@ -23,6 +23,8 @@ export namespace Bios{
 
   export const BOOT_ERROR_REBOOT_TIME: number = 1500;
 
+  export const ENTER_GRUB_MENU: number = 2000;
+
 
   //CONFIGURATOR
 

@@ -16,12 +16,22 @@ class Grub{
 
 
   public init(): void {
+    if(this.available_systems.length === 0){
+
+    } else if (this.available_systems.length > 1){
+
+    }
+
 
 
   }
 
-  public init_kernel(): void {
+  protected init_kernel(): void {
     this.get_kernel().init();
+  }
+
+  protected show_grub_menu(): void {
+    NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.GRUB_MENU_PATH);
   }
 
   public get_kernel(): NapicuKernel.Kernel{
@@ -31,19 +41,6 @@ class Grub{
   public get_available_kernels(): NapicuKernel.Kernel[]{
     return this.available_systems;
   }
-
-  public show_grub_menu(): void {
-    NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.GRUB_MENU_PATH);
-  }
-
-
-
-
-
-
-
-
-
 }
 
 

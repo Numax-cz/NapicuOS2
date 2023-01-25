@@ -33,15 +33,8 @@ class Bios  {
       //await this.check_hardware();
 
       await this.get_grub_file().then((grub: NapicuGrub.Grub) => {
-        //TODO StartGrub
 
-
-
-        if(grub.get_available_kernels().length <= 0){
-          grub.show_grub_menu();
-        }
-
-
+        grub.init();
 
       }, (reason) => {
         switch (reason as BiosPostExceptionCodes) {
