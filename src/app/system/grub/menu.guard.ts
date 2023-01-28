@@ -1,12 +1,12 @@
-import * as NapicuComputer from "@Napicu/VirtualComputer";
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {Injectable} from "@angular/core";
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {Observable} from "rxjs";
+import * as NapicuComputer from "@Napicu/VirtualComputer";
 
 @Injectable({
   providedIn: 'root',
 })
-export class BiosTextScreenGuard implements CanActivate {
+export class GrubMenuGuard implements CanActivate {
   constructor(private router: Router) {
   }
 

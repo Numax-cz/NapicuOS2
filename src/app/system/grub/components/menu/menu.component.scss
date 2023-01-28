@@ -7,4 +7,27 @@
   padding: 20px 13.25px;
   font-size: 1.321rem;
   line-height: 28.21px;
+  display: flex;
+  flex-direction: column;
+}
+
+.GrubTitle{
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.GrubMenu{
+  padding: 20px;
+  height: 80%;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+}
+
+.GrubBottomText{
+  padding: 20px;
+  width: 90%;
+  margin: auto;
 }
