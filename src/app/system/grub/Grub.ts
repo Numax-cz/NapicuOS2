@@ -16,6 +16,8 @@ class Grub{
 
 
   public init(): void {
+    this.show_grub_menu();
+
     if(this.available_systems.length === 0){
 
     } else if (this.available_systems.length > 1){
