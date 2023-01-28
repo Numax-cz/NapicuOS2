@@ -10,7 +10,7 @@ export class Cookies{
   public static setCookies<T>(name: string, value: T): void {
     if(NapicuUtils.WebManager.get_cookies_permission()){
       const date: Date = new Date();
-      date.setTime(date.getTime() + NapicuConfig.Web.WEB_COOKIES_LIFE_TIME);
+      date.setTime(date.getTime() + NapicuConfig.Cookies.WEB_COOKIES_LIFE_TIME);
       document.cookie =
         name + '=' + JSON.stringify(value) + '; expires=' + date.toUTCString() + '; path=/';
     }

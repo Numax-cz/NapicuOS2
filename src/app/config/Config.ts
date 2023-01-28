@@ -1,15 +1,17 @@
-import {Web} from "./web/Cookies";
+import {Cookies} from "./web/Cookies";
 import {Bios} from "./bios/Bios";
 import {VirtualComputer} from "./hardware/ComputerHardware";
 import {Path} from "./web/Path";
 import {Grub} from "./system/Grub";
+import {Web} from "./web/Web";
 
 export {
-  Web,
+  Cookies,
   Bios,
   VirtualComputer,
   Path,
-  Grub
+  Grub,
+  Web
 
 }
 

@@ -83,7 +83,7 @@ class Bios  {
   public static get_bios_configuration(): InformationInterface{
     if (!this.biosConfiguration){
       this.biosConfiguration = NapicuUtils.Cookies.getCookies
-        <InformationInterface>(NapicuConfig.Web.BIOS_COOKIES_NAME) || NapicuConfig.Bios.DEFAULT_CONFIGURATION;
+        <InformationInterface>(NapicuConfig.Cookies.BIOS_COOKIES_NAME) || NapicuConfig.Bios.DEFAULT_CONFIGURATION;
     }
     return this.biosConfiguration;
   }
@@ -94,7 +94,7 @@ class Bios  {
 
   protected static save_bios_config(): void {
     this.load_time_from_configuration();
-    NapicuUtils.Cookies.setCookies<InformationInterface>(NapicuConfig.Web.BIOS_COOKIES_NAME, this.biosConfiguration);
+    NapicuUtils.Cookies.setCookies<InformationInterface>(NapicuConfig.Cookies.BIOS_COOKIES_NAME, this.biosConfiguration);
   }
 
   protected static no_bootable_device_error(): void {

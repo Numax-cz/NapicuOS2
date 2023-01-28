@@ -1,4 +1,4 @@
-export namespace Web {
+export namespace Cookies {
   export const BIOS_COOKIES_NAME: string = "NapicuBios";
 
   export const SYSTEM_COOKIES_NAME: string = "NapicuSystem";
