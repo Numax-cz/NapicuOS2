@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "ng serve --configuration=production",
+    "dev": "ng serve --configuration=development",
+    "build": "ng build --build-optimizer --extract-licenses --output-hashing none --optimization true",
+    "buildDev": "ng build --configuration=development --build-optimizer --extract-licenses --output-hashing none"
   },
   "private": true,
   "dependencies": {
