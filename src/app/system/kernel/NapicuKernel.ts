@@ -1,4 +1,6 @@
 import * as NapicuUtils from "@Napicu/Utils";
+import * as NapicuBios from "@Napicu/Bios";
+import * as NapicuConfig from "@Napicu/Config";
 import { Process } from "./core/Process";
 import {SystemDataDriveInterface} from "./interface/Kernel";
 import {SystemFileStructure} from "./interface/Drive";
@@ -14,7 +16,7 @@ abstract class Kernel{
 
 
   public init(): void {
-    //NapicuUtils.WebManager.navigate_angular_router("system");
+    NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.SYSTEM_PATH, NapicuBios.SpeedControl.calculate_hardware_speed(1000));
     this.main();
   }
 

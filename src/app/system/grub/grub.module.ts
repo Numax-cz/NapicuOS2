@@ -7,7 +7,7 @@ import {MenuComponent} from "./components/menu/menu.component";
 
 
 const routes: Routes = [
-  {path: NapicuConfig.Path.GRUB_MENU_PATH, component: MenuComponent, canActivate: [NapicuComputer.Guards.IsRunningGuard]},
+  {path: NapicuConfig.Path.GRUB_MENU_PATH, component: MenuComponent},
 ];
 
 @NgModule({

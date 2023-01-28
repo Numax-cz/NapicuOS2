@@ -1,9 +1,23 @@
 import * as NapicuConfig from "@Napicu/Config";
 import * as NapicuBios from "@Napicu/Bios";
 import * as NapicuComputer from "@Napicu/VirtualComputer";
+import {Kernel} from "@Napicu/System/Kernel";
+
+
+
+class NapicuTestKernel extends Kernel{
+  protected readonly system_name: string = "system";
+
+  protected main(): void {
+    console.log("xd");
+  }
+
+}
+
+
 
 export class VirtualComputer {
-  protected static readonly hardware: NapicuComputer.Hardware.HardwareInformationInterface = NapicuConfig.VirtualComputer.HARDWARE;
+  protected static readonly hardware: NapicuComputer.Hardware.HardwareInformationInterface = NapicuConfig.Computer.HARDWARE;
 
   protected static isRunning: boolean = false;
 

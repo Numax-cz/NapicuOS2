@@ -9,7 +9,7 @@ import {SplashScreenComponent} from "./components/splash-screen/splash-screen.co
 import {NgClass, NgComponentOutlet, NgForOf, NgIf} from "@angular/common";
 const routes: Routes = [
   {path: NapicuConfig.Path.BIOS_CONFIGURATION_ROOT_PATH, component: ConfigurationComponent},
-  {path: NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH, component: TextScreenComponent, canActivate: [NapicuComputer.Guards.IsRunningGuard]},
+  {path: NapicuConfig.Path.BIOS_TEXT_SCREEN_PATH, component: TextScreenComponent},
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import * as NapicuComputer from "@Napicu/VirtualComputer";
-import * as NapicuKernel from "@Napicu/System/Kernel";
 import * as NapicuGrub from "@Napicu/Grub";
+import {Kernel} from "@Napicu/System/Kernel";
+
 
 
 const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
@@ -50,7 +51,7 @@ const disk_3: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
   }
 }
 
-export namespace VirtualComputer{
+export namespace Computer{
   export const HARDWARE: NapicuComputer.Hardware.HardwareInformationInterface = {
     cpu: {
       name: "CPU",
