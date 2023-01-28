@@ -3,7 +3,7 @@ import * as NapicuComputer from "@Napicu/VirtualComputer";
 import { NgModule } from '@angular/core';
 import {NgClass, NgComponentOutlet, NgForOf, NgIf} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
-import {MenuComponent} from "./grub/components/menu/menu.component";
+import {MenuComponent} from "./components/menu/menu.component";
 
 
 const routes: Routes = [
