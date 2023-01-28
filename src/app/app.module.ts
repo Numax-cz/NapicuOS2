@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import {BiosModule} from "./bios/bios.module";
 import { MenuComponent } from './system/grub/components/menu/menu.component';
 import {GrubModule} from "./system/grub/grub.module";
-import {KernelModule} from "./system/kernel/kernel.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import {KernelModule} from "./system/kernel/kernel.module";
     //NapicuModule
     BiosModule,
     GrubModule,
-    KernelModule
   ],
   providers: [],
   bootstrap: [AppComponent]
