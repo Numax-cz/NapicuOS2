@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import {NgClass, NgComponentOutlet, NgForOf, NgIf} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {MenuComponent} from "./components/menu/menu.component";
+import {SystemComponent} from "./components/system/system.component";
 
 
 const routes: Routes = [
@@ -11,6 +12,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  declarations: [
+    MenuComponent,
+    SystemComponent
+  ],
   imports: [RouterModule.forRoot(routes), NgComponentOutlet, NgForOf, NgClass, NgIf],
   exports: [RouterModule],
 })
