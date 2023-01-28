@@ -33,9 +33,7 @@ class Bios  {
       //await this.check_hardware();
 
       await this.get_grub_file().then((grub: NapicuGrub.Grub) => {
-
         grub.init();
-
       }, (reason) => {
         switch (reason as BiosPostExceptionCodes) {
           case BiosPostExceptionCodes.no_bootable_device:

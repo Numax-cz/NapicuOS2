@@ -3,7 +3,7 @@ import * as NapicuConfig from "@Napicu/Config";
 import * as NapicuComputer from "@Napicu/VirtualComputer";
 import {NgModule} from "@angular/core";
 import {NgClass, NgComponentOutlet, NgForOf, NgIf} from "@angular/common";
-import { SystemComponent } from './components/system/system.component';
+import { SystemComponent } from '../grub/components/system/system.component';
 
 const routes: Routes = [
   {path: NapicuConfig.Path.SYSTEM_PATH}

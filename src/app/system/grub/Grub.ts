@@ -2,6 +2,7 @@ import * as NapicuKernel from "@Napicu/System/Kernel";
 import * as NapicuUtils from "@Napicu/Utils";
 import * as NapicuConfig from "@Napicu/Config";
 import {GrubBootFileInterface} from "./interface/BootFile";
+import {TextScreenComponent} from "../../bios/components/text-screen/text-screen.component";
 
 class Grub{
 
@@ -16,16 +17,18 @@ class Grub{
 
 
   public init(): void {
-    this.show_grub_menu();
 
     if(this.available_systems.length === 0){
-
+      TextScreenComponent.print_lines([
+        'No system available',
+      ]);
+      return;
     } else if (this.available_systems.length > 1){
-
+      this.show_grub_menu();
+      return;
     }
 
-
-
+    this.init_kernel();
   }
 
   protected init_kernel(): void {

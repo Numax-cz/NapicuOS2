@@ -1,3 +1,4 @@
+import * as NapicuUtils from "@Napicu/Utils";
 import { Process } from "./core/Process";
 import {SystemDataDriveInterface} from "./interface/Kernel";
 import {SystemFileStructure} from "./interface/Drive";
@@ -13,8 +14,8 @@ abstract class Kernel{
 
 
   public init(): void {
-
-    //Init NapicuKernel
+    //NapicuUtils.WebManager.navigate_angular_router("system");
+    this.main();
   }
 
 
