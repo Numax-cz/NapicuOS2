@@ -8,7 +8,11 @@ export const BiosOptionElement = <T extends keyof biosOptionTypeMap>(type: T, ar
   return {type: type, option: array, description: description}
 }
 
-export const BiosClockElement = (name: string, separator: string = ":", description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> => {
+export const BiosOptionEnableDisableElement = (name: string, description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap["options"]> => {
+  return {type: "options", option: {name: name, options: ["Enabled", "Disabled"], selectedOption: 0}, description: description}
+}
+
+export const BiosClockElement = (name: string, description: string | null = null, separator: string = ":"): biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> => {
   let i: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> = {
     type: "clock",
     option: {
@@ -27,7 +31,7 @@ export const BiosClockElement = (name: string, separator: string = ":", descript
   return ConfigurationComponent.clock_cache;
 }
 
-export const BiosDateElement = (name: string, separator: string = "/", description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> => {
+export const BiosDateElement = (name: string, description: string | null = null, separator: string = "/",): biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> => {
   let i: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> = {
     type: "date",
     option: {
