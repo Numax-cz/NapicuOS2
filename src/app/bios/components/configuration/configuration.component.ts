@@ -1,6 +1,11 @@
 import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
-import {BiosClockElement, BiosDateElement, BiosOptionElement} from "./ConfigurationElements";
+import {
+  BiosClockElement,
+  BiosDateElement,
+  BiosOptionElement,
+  BiosOptionEnableDisableElement
+} from "./ConfigurationElements";
 import {
   BiosOptionElementTypeAction,
   BiosOptionElementTypeInformation,
@@ -63,20 +68,13 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       title: "System Overview",
       options: [
 
-        BiosOptionElement("options", {
-          name: "NULL",
-          options: ["TEST", "TES2", "TEST3", "TEST4"],
-          selectedOption: 0
-        }, "NULL"),
-        BiosOptionElement("information", {
-          name: "NULL",
-          value: "NULL"
-        }),        BiosOptionElement("information", {
-          name: "NULL",
-          value: "NULL"
-        }),
-        BiosClockElement("Time"),
-        BiosDateElement("Date")
+        BiosClockElement("System Time", "Change system time"),
+        BiosDateElement("System Date", "Change system date"),
+
+        BiosOptionEnableDisableElement("Network Boot", Bios.get_bios_configuration().network_boot, (newValue: number) =>
+          Bios.get_bios_configuration().network_boot = newValue, "Enable/Disable PXE boot on to LAN"),
+        BiosOptionEnableDisableElement("Wake On LAN", Bios.get_bios_configuration().wake_on_lan, (newValue: number) =>
+          Bios.get_bios_configuration().wake_on_lan = newValue, "Enable/Disable Integrated LAN to wake the system"),
       ]
     },
     {
@@ -89,7 +87,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
         BiosOptionElement("options", {
           name: "Boot",
           options: this.get_drv_with_os_name(),
-          selectedOption: 0
+          selectedOption: Bios.get_bios_configuration().selected_drive,
+          onChange: (newValue: number) => Bios.get_bios_configuration().selected_drive = newValue,
         })
       ]
     },
@@ -187,7 +186,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       option = i.option as biosOptionTypeMap["options"];
       if (this.selected_menu_option_cache === null) this.selected_menu_option_cache = option.selectedOption;
       else this.selected_menu_option_cache = null;
-
+      option.onChange(option.selectedOption);
 
     }else if (i.type === "action"){
       option = i.option as biosOptionTypeMap["action"];

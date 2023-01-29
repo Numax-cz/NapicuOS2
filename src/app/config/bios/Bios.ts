@@ -33,7 +33,10 @@ export namespace BiosConfig{
   export const DEFAULT_CONFIGURATION: InformationInterface = {
     selected_drive: 0,
     time: [0, 0, 0],
-    date: [1, 1, 2023]
+    date: [1, 1, 2023],
+
+    network_boot: 0,
+    wake_on_lan: 0
   }
 
 }

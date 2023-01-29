@@ -8,4 +8,5 @@ export class TestSystem extends Kernel{
     console.log("Hello World!");
     Kernel.set_display_component(SystemComponent);
   }
+
 }

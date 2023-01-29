@@ -1,3 +1,4 @@
+import {ValueOf} from "@Napicu/Utils/Utils";
 
 export interface biosOptionFunctionReturn<T = ValueOf<biosOptionTypeMap>>{
   type: keyof biosOptionTypeMap,
@@ -28,6 +29,7 @@ export interface BiosOptionElementTypeOptionMenu {
   name: string,
   options: string[]
   selectedOption: number,
+  onChange: (newValue: number) => void
 }
 
 export interface BiosOptionElementTypeNumbersNumberInterface{
