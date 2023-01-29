@@ -20,6 +20,7 @@ import {Bios} from "../../Bios";
 import {CopyArray} from "../../../utils/CopyArray";
 import {BiosConfig} from "../../../config/bios/Bios";
 import {ValueOf} from "../../../utils/Utils";
+import {VirtualComputer} from "@Napicu/VirtualComputer/VirtualComputer";
 
 
 @Pipe({ name: 'as', pure: true })
@@ -75,6 +76,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           Bios.get_bios_configuration().network_boot = newValue, "Enable/Disable PXE boot on to LAN"),
         BiosOptionEnableDisableElement("Wake On LAN", Bios.get_bios_configuration().wake_on_lan, (newValue: number) =>
           Bios.get_bios_configuration().wake_on_lan = newValue, "Enable/Disable Integrated LAN to wake the system"),
+
+        BiosOptionElement("information", {name: "Processor Type",  value:    Bios.get_cpu().name}),
+        BiosOptionElement("information", {name: "Processor Speed", value: `${Bios.get_cpu().speed}MHz`}),
+        BiosOptionElement("information", {name: "Cache Size",      value: `${Bios.get_cpu().cache}KB`}),
+        BiosOptionElement("information", {name: "Total Memory",    value: `${Bios.get_ram_total_memory()}MB`}),
+        BiosOptionElement("information", {name: "Serial Number",   value:    Bios.get_serial_number()})
       ]
     },
     {

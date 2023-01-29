@@ -2,6 +2,7 @@ export interface HardwareCPUInformationInterface{
   name: string;
   speed: number;
   tdp: number;
+  cache: number
 }
 
 export interface HardwareDRVInformationInterface{
@@ -33,6 +34,7 @@ export interface HardwareInformationInterface{
   gpu: HardwareGPUInformationInterface;
   drv: HardwareDRVInformationInterface[];
   brd: HardwareBRDInformationInterface;
+  serial_number: string
 }
 
 export interface DriveBaseFileStructureInterface<file_structure = any> {

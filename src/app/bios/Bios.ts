@@ -144,6 +144,18 @@ export class Bios  {
     return VirtualComputer.get_hardware().ram;
   }
 
+  public static get_ram_total_memory(): number {
+    let i: number = 0;
+    VirtualComputer.get_hardware().ram.forEach((ram: HardwareRAMInformationInterface) => {
+      i += ram.speed;
+    })
+    return i;
+  }
+
+  public static get_serial_number(): string{
+    return VirtualComputer.get_hardware().serial_number;
+  }
+
   public static get_gpu(): HardwareGPUInformationInterface {
     return VirtualComputer.get_hardware().gpu;
   }

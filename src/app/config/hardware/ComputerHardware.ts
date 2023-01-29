@@ -53,9 +53,10 @@ const disk_3: HardwareDRVInformationInterface = {
 export namespace Computer{
   export const HARDWARE: HardwareInformationInterface = {
     cpu: {
-      name: "CPU",
+      name: "AMD Celeron (tm) II B45 Processor @ 3.0 GHz (64bit)",
       tdp: 0,
-      speed: 3000
+      speed: 3000,
+      cache: 8192
     },
     drv: [disk_1, disk_2, disk_3],
     gpu: {
@@ -69,7 +70,8 @@ export namespace Computer{
     brd: {
       name: "Board",
       speed: 100
-    }
+    },
+    serial_number: "PICO32KJA490KD23J13FD41J6"
   };
 }
 
