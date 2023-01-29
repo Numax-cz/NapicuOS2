@@ -2,6 +2,8 @@ import {Process} from "./core/Process";
 import {PathConfig} from "../../config/web/PathConfig";
 import {SpeedControl} from "../../bios/scripts/SpeedControl";
 import {WebManager} from "../../utils/WebManager";
+import {Type} from "@angular/core";
+import {SystemComponent} from "@Napicu/System/Kernel/components/system/system.component";
 
 export abstract class Kernel{
 
@@ -27,4 +29,9 @@ export abstract class Kernel{
   public get_partition(name: string): void { //TODO NoVoid
 
   }
+
+  public static set_display_component(component: Type<any>): void {
+    SystemComponent.system_display_component = component;
+  }
+
 }

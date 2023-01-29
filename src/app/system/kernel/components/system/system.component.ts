@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Type} from '@angular/core';
 
 @Component({
   selector: 'kernel-system-ui',
@@ -6,5 +6,9 @@ import {Component} from '@angular/core';
   styleUrls: ['./system.component.scss']
 })
 export class SystemComponent {
+  public static system_display_component: Type<any> | null = null;
 
+  get get_system_display_component(): Type<any> | null {
+    return SystemComponent.system_display_component;
+  }
 }

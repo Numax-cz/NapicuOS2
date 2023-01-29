@@ -6,10 +6,12 @@ import {AppComponent} from './app.component';
 import {BiosModule} from "./bios/bios.module";
 import {GrubModule} from "./system/grub/grub.module";
 import {KernelModule} from "./system/kernel/kernel.module";
+import { SystemComponent } from './system/TestSystem/components/system/system.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SystemComponent,
 
   ],
   imports: [
