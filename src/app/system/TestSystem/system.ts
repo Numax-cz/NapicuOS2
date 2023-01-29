@@ -1,4 +1,4 @@
-import {Kernel} from "@Napicu/System/Kernel";
+import {Kernel} from "../kernel/NapicuKernel";
 
 
 export class TestSystem extends Kernel{

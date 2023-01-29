@@ -1,4 +1,3 @@
-import * as NapicuConfig from "@Napicu/Config";
 
 export class Console{
 

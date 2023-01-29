@@ -1,6 +1,5 @@
-import * as NapicuUtils from "@Napicu/Utils";
 
-export interface biosOptionFunctionReturn<T = NapicuUtils.ValueOf<biosOptionTypeMap>>{
+export interface biosOptionFunctionReturn<T = ValueOf<biosOptionTypeMap>>{
   type: keyof biosOptionTypeMap,
   option: T,
   description: string | null

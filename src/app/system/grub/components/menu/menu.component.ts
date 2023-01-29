@@ -1,5 +1,5 @@
-import * as NapicuConfig from "@Napicu/Config";
 import { Component } from '@angular/core';
+import {GrubConfig} from "../../../../config/system/GrubConfig";
 
 @Component({
   selector: 'grub-menu',
@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
 })
 export class MenuComponent {
   get get_full_grub_version(): string {
-    return `${NapicuConfig.Grub.GRUB_VERSION_COMPANY_NAME} ${NapicuConfig.Grub.GRUB_VERSION}`;
+    return `${GrubConfig.GRUB_VERSION_COMPANY_NAME} ${GrubConfig.GRUB_VERSION}`;
   }
 }

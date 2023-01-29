@@ -1,8 +1,7 @@
-import * as NapicuUtils from "@Napicu/Utils"
 import {biosOptionFunctionReturn, biosOptionTypeMap} from "./interface/ConfigurationElements";
 import {ConfigurationComponent} from "./configuration.component";
-import * as NapicuBios from "@Napicu/Bios";
-import {NapicuDate} from "napicuformatter";
+import {Bios} from "../../Bios";
+import {Console} from "../../../utils/Console";
 
 
 export const BiosOptionElement = <T extends keyof biosOptionTypeMap>(type: T, array: biosOptionTypeMap[T], description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap[T]> => {
@@ -16,14 +15,14 @@ export const BiosClockElement = (name: string, separator: string = ":", descript
       name: name,
       separator: separator,
       numbers: [
-        {value: NapicuBios.Bios.get_bios_configuration().time[0], min: 0, max: 24}, //Hours
-        {value: NapicuBios.Bios.get_bios_configuration().time[1], min: 0, max: 60}, //Minutes
-        {value: NapicuBios.Bios.get_bios_configuration().time[2], min: 0, max: 60}  //Seconds
+        {value: Bios.get_bios_configuration().time[0], min: 0, max: 24}, //Hours
+        {value: Bios.get_bios_configuration().time[1], min: 0, max: 60}, //Minutes
+        {value: Bios.get_bios_configuration().time[2], min: 0, max: 60}  //Seconds
       ]
     },
     description: description
   }
-  if(ConfigurationComponent.clock_cache) NapicuUtils.Console.print_error("bios clock already exists");
+  if(ConfigurationComponent.clock_cache) Console.print_error("bios clock already exists");
   ConfigurationComponent.clock_cache = i;
   return ConfigurationComponent.clock_cache;
 }
@@ -35,14 +34,14 @@ export const BiosDateElement = (name: string, separator: string = "/", descripti
       name: name,
       separator: separator,
       numbers: [
-        {value: NapicuBios.Bios.get_bios_configuration().date[0], min: 1, max: 12},    //Month
-        {value: NapicuBios.Bios.get_bios_configuration().date[1], min: 1, max: 31},     //Day
-        {value: NapicuBios.Bios.get_bios_configuration().date[2], min: 2000, max: 3000} //Year
+        {value: Bios.get_bios_configuration().date[0], min: 1, max: 12},    //Month
+        {value: Bios.get_bios_configuration().date[1], min: 1, max: 31},     //Day
+        {value: Bios.get_bios_configuration().date[2], min: 2000, max: 3000} //Year
       ]
     },
     description: description
   }
-  if(ConfigurationComponent.date_cache) NapicuUtils.Console.print_error("bios date already exists");
+  if(ConfigurationComponent.date_cache) Console.print_error("bios date already exists");
   ConfigurationComponent.date_cache = i;
   return ConfigurationComponent.date_cache;
 }

@@ -1,4 +1,4 @@
-export namespace Grub{
+export namespace GrubConfig{
   export const PRODUCTION_CONFIGURATION: boolean = false;
 
   export const GRUB_VERSION: string = "version 3.01-DEVELOPMENT";

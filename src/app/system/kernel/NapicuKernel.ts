@@ -1,11 +1,9 @@
-import * as NapicuUtils from "@Napicu/Utils";
-import * as NapicuBios from "@Napicu/Bios";
-import * as NapicuConfig from "@Napicu/Config";
-import { Process } from "./core/Process";
-import {SystemDataDriveInterface} from "./interface/Kernel";
-import {SystemFileStructure} from "./interface/Drive";
+import {Process} from "./core/Process";
+import {PathConfig} from "../../config/web/PathConfig";
+import {SpeedControl} from "../../bios/scripts/SpeedControl";
+import {WebManager} from "../../utils/WebManager";
 
-abstract class Kernel{
+export abstract class Kernel{
   protected readonly abstract system_name: string;
 
   protected running_process: Process[] = [];
@@ -16,7 +14,7 @@ abstract class Kernel{
 
 
   public init(): void {
-    NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.SYSTEM_PATH, NapicuBios.SpeedControl.calculate_hardware_speed(1000));
+    WebManager.navigate_angular_router(PathConfig.SYSTEM_PATH, SpeedControl.calculate_hardware_speed(1000));
     this.main();
   }
 
@@ -36,12 +34,3 @@ abstract class Kernel{
 
   }
 }
-
-export {
-  Kernel,
-  Process,
-  SystemDataDriveInterface,
-  SystemFileStructure
-
-}
-

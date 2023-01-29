@@ -1,28 +1,19 @@
-import * as NapicuConfig from "@Napicu/Config";
-import * as NapicuBios from "@Napicu/Bios";
-import * as NapicuComputer from "@Napicu/VirtualComputer";
-import {Kernel} from "@Napicu/System/Kernel";
-
-
-
-class NapicuTestKernel extends Kernel{
-  protected readonly system_name: string = "system";
-
-  protected main(): void {
-    console.log("xd");
-  }
-
-}
-
+import {Bios} from "../bios/Bios";
+import {
+  HardwareCPUInformationInterface, HardwareDRVInformationInterface, HardwareGPUInformationInterface,
+  HardwareInformationInterface,
+  HardwareRAMInformationInterface
+} from "./interface/NapicuHardware";
+import {Computer} from "../config/hardware/ComputerHardware";
 
 
 export class VirtualComputer {
-  protected static readonly hardware: NapicuComputer.Hardware.HardwareInformationInterface = NapicuConfig.Computer.HARDWARE;
+  protected static readonly hardware: HardwareInformationInterface = Computer.HARDWARE;
 
   protected static isRunning: boolean = false;
 
   public static start(): void {
-    NapicuBios.Bios.init(); //TODO Promise
+    Bios.init(); //TODO Promise
     this.isRunning = true;
   }
 
@@ -32,30 +23,30 @@ export class VirtualComputer {
 
 
   public static enter_bios_configuration(): void {
-    NapicuBios.Bios.enter_bios_configuration()
+    Bios.enter_bios_configuration()
   }
 
   public static get_is_running(): boolean{
     return this.isRunning;
   }
 
-  public static get_hardware(): NapicuComputer.Hardware.HardwareInformationInterface{
+  public static get_hardware(): HardwareInformationInterface{
     return this.hardware;
   }
 
-  protected static get_cpu(): NapicuComputer.Hardware.HardwareCPUInformationInterface {
+  protected static get_cpu(): HardwareCPUInformationInterface {
     return this.hardware.cpu;
   }
 
-  protected static get_ram(): NapicuComputer.Hardware.HardwareRAMInformationInterface[] {
+  protected static get_ram(): HardwareRAMInformationInterface[] {
     return this.hardware.ram;
   }
 
-  protected static get_gpu(): NapicuComputer.Hardware.HardwareGPUInformationInterface {
+  protected static get_gpu(): HardwareGPUInformationInterface {
     return this.hardware.gpu;
   }
 
-  protected static get_drv(): NapicuComputer.Hardware.HardwareDRVInformationInterface[] {
+  protected static get_drv(): HardwareDRVInformationInterface[] {
     return this.hardware.drv;
   }
 }

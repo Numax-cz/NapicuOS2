@@ -1,7 +1,7 @@
-import * as NapicuBios from "@Napicu/Bios"
-import {NapicuDate} from "napicuformatter";
+import {InformationInterface} from "../../bios/interface/NapicuBiosInformations";
 
-export namespace Bios{
+
+export namespace BiosConfig{
   export const PRODUCTION_CONFIGURATION: boolean = true;
 
   export const ENTER_BIOS_KEY_1: number = 46;
@@ -20,7 +20,7 @@ export namespace Bios{
   export const BIOS_VERSION_DATE: string = "1969 - 2023";
 
 
-  export const DEFAULT_CONFIGURATION: NapicuBios.InformationInterface = {
+  export const DEFAULT_CONFIGURATION: InformationInterface = {
     selected_drive: 0,
 
     time: [0, 0, 0],

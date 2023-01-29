@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import * as NapicuConfig from "@Napicu/Config";
-import * as NapicuComputer from "@Napicu/VirtualComputer";
-import * as NapicuUtils from "@Napicu/Utils";
-import * as NapicuBios from "@Napicu/Bios";
 import {Router} from "@angular/router";
+import {VirtualComputer} from "../../../computer/VirtualComputer";
+import {WebManager} from "../../../utils/WebManager";
+import {BiosConfig} from "../../../config/bios/Bios";
+import {SpeedControl} from "../../scripts/SpeedControl";
+import {Bios} from "../../Bios";
 
 @Component({
   selector: 'app-splash-screen',
@@ -17,17 +18,17 @@ export class SplashScreenComponent implements OnInit, OnDestroy {
   constructor(router: Router) {
     this.bios_boot_timeout = -1;
     //WebManager
-    NapicuUtils.WebManager.set_angular_router(router);
+    WebManager.set_angular_router(router);
 
-    NapicuComputer.VirtualComputer.start();
+    VirtualComputer.start();
   }
 
   public ngOnInit() {
     window.addEventListener("keydown", this.onKeyDownEvent);
 
     this.bios_boot_timeout = setTimeout(() => {
-      NapicuBios.Bios.start_boot();
-    }, NapicuBios.SpeedControl.calculate_hardware_speed(NapicuConfig.Bios.EXIT_BIOS_SPLASH_SCREEN_DELAY));
+      Bios.start_boot();
+    }, SpeedControl.calculate_hardware_speed(BiosConfig.EXIT_BIOS_SPLASH_SCREEN_DELAY));
   }
 
   public ngOnDestroy() {
@@ -35,10 +36,10 @@ export class SplashScreenComponent implements OnInit, OnDestroy {
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent) => {
-    if (e.keyCode == NapicuConfig.Bios.ENTER_BIOS_KEY_1 ||
-      e.keyCode == NapicuConfig.Bios.ENTER_BIOS_KEY_2) {
+    if (e.keyCode == BiosConfig.ENTER_BIOS_KEY_1 ||
+      e.keyCode == BiosConfig.ENTER_BIOS_KEY_2) {
       clearTimeout(this.bios_boot_timeout);
-      NapicuComputer.VirtualComputer.enter_bios_configuration();
+      VirtualComputer.enter_bios_configuration();
     }
   }
 }

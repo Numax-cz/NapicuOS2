@@ -1,4 +1,4 @@
-import {Grub} from "@Napicu/Grub";
+import {Grub} from "../Grub";
 
 export interface GrubBootFileInterface{
   grub: Grub

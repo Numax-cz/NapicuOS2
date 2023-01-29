@@ -1,5 +1,6 @@
-import * as NapicuConfig from "@Napicu/Config";
-import * as NapicuUtils from "@Napicu/Utils";
+import {WebManager} from "./WebManager";
+import {CookiesConfig} from "../config/web/CookiesConfig";
+
 
 export class Cookies{
   /**
@@ -8,9 +9,9 @@ export class Cookies{
    * @param {string} value Value of cookies
    */
   public static setCookies<T>(name: string, value: T): void {
-    if(NapicuUtils.WebManager.get_cookies_permission()){
+    if(WebManager.get_cookies_permission()){
       const date: Date = new Date();
-      date.setTime(date.getTime() + NapicuConfig.Cookies.WEB_COOKIES_LIFE_TIME);
+      date.setTime(date.getTime() + CookiesConfig.WEB_COOKIES_LIFE_TIME);
       document.cookie =
         name + '=' + JSON.stringify(value) + '; expires=' + date.toUTCString() + '; path=/';
     }
@@ -21,7 +22,7 @@ export class Cookies{
    * @returns {any} value of cookies
    */
   public static getCookies<T>(name: string): T | null {
-    if(NapicuUtils.WebManager.get_cookies_permission()){
+    if(WebManager.get_cookies_permission()){
       const value: string = '; ' + document.cookie;
       const parts = value.split('; ' + name + '=');
       if (parts.length == 2) {

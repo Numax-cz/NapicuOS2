@@ -1,17 +1,15 @@
-import * as NapicuKernel from "@Napicu/System/Kernel";
-import * as NapicuUtils from "@Napicu/Utils";
-import * as NapicuConfig from "@Napicu/Config";
-import * as NapicuBios from "@Napicu/Bios";
-import {GrubBootFileInterface} from "./interface/BootFile";
+import {Kernel} from "../kernel/NapicuKernel";
+import {WebManager} from "../../utils/WebManager";
+import {PathConfig} from "../../config/web/PathConfig";
 
-class Grub{
+export class Grub{
 
   protected selected_system: number = 0; //TODO -1
 
-  protected available_systems: NapicuKernel.Kernel[] = [];
+  protected available_systems: Kernel[] = [];
 
 
-  constructor(available_systems: NapicuKernel.Kernel[]) {
+  constructor(available_systems: Kernel[]) {
     this.available_systems = available_systems;
   }
 
@@ -35,22 +33,16 @@ class Grub{
   }
 
   protected show_grub_menu(): void {
-    NapicuUtils.WebManager.navigate_angular_router(NapicuConfig.Path.GRUB_MENU_PATH);
+    WebManager.navigate_angular_router(PathConfig.GRUB_MENU_PATH);
   }
 
-  public get_kernel(): NapicuKernel.Kernel{
+  public get_kernel(): Kernel{
     return this.available_systems[this.selected_system];
   }
 
-  public get_available_kernels(): NapicuKernel.Kernel[]{
+  public get_available_kernels(): Kernel[]{
     return this.available_systems;
   }
 }
 
-
-export {
-  Grub,
-  GrubBootFileInterface
-
-}
 

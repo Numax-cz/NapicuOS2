@@ -1,10 +1,10 @@
-import * as NapicuComputer from "@Napicu/VirtualComputer";
-import * as NapicuGrub from "@Napicu/Grub";
 import {TestSystem} from "../../system/TestSystem/system";
+import {Grub} from "../../system/grub/Grub";
+import {HardwareDRVInformationInterface, HardwareInformationInterface} from "../../computer/interface/NapicuHardware";
 
 
 
-const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
+const disk_1: HardwareDRVInformationInterface = {
   name: "Samsung SSD 860 EVO 500GB",
   capacity: 500,
   speed: 500,
@@ -19,7 +19,7 @@ const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
             //BootFIle
             boot: {
               files: {
-                grub: {data: new NapicuGrub.Grub([new TestSystem()])}
+                grub: {data: new Grub([new TestSystem()])}
               },
               folders: {}
             }
@@ -31,7 +31,7 @@ const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
   }
 }
 
-const disk_2: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
+const disk_2: HardwareDRVInformationInterface = {
   name: "Seagate BarraCuda 2.5 500GB",
   capacity: 500,
   speed: 10,
@@ -41,7 +41,7 @@ const disk_2: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
   }
 }
 
-const disk_3: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
+const disk_3: HardwareDRVInformationInterface = {
   name: "IBM 3330",
   capacity: 0.100,
   speed: 10,
@@ -52,7 +52,7 @@ const disk_3: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
 }
 
 export namespace Computer{
-  export const HARDWARE: NapicuComputer.Hardware.HardwareInformationInterface = {
+  export const HARDWARE: HardwareInformationInterface = {
     cpu: {
       name: "CPU",
       tdp: 0,

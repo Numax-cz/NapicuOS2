@@ -1,5 +1,5 @@
-import * as NapicuUtils from "@Napicu/Utils"
-import {Route, Router} from "@angular/router";
+import {Router} from "@angular/router";
+import {Console} from "./Console";
 
 
 export class WebManager{
@@ -25,9 +25,9 @@ export class WebManager{
     setTimeout(() => {
       if(this.angular_router){
           this.angular_router.navigate([path]).then(r => {}, e => {
-            NapicuUtils.Console.print_error("web navigating error");
+            Console.print_error("web navigating error");
           });
-      } else NapicuUtils.Console.print_error("web router does not exist");
+      } else Console.print_error("web router does not exist");
     }, time_out);
   }
 }

@@ -1,7 +1,3 @@
-import * as NapicuConfig from "@Napicu/Config";
-import * as NapicuBios from "@Napicu/Bios";
-import * as NapicuUtils from "@Napicu/Utils";
-import * as NapicuComputer from "@Napicu/VirtualComputer";
 import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
 import {BiosClockElement, BiosDateElement, BiosOptionElement} from "./ConfigurationElements";
@@ -12,7 +8,10 @@ import {
 } from "./interface/ConfigurationElements";
 import {NapicuDate} from "napicuformatter";
 import {DriveBaseFilesAndFoldersStructureInterface} from "../../../computer/interface/NapicuHardware";
-import {GrubBootFileInterface} from "@Napicu/Grub";
+import {Bios} from "../../Bios";
+import {CopyArray} from "../../../utils/CopyArray";
+import {BiosConfig} from "../../../config/bios/Bios";
+import {ValueOf} from "../../../utils/Utils";
 
 
 @Pipe({ name: 'as', pure: true })
@@ -100,15 +99,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       options: [
         BiosOptionElement("action", {
           name: "Load Optimized Defaults",
-          action: () => NapicuBios.Bios.load_default_bios_configuration()
+          action: () => Bios.load_default_bios_configuration()
         }),
         BiosOptionElement("action", {
           name: "Save Changes & Reset",
-          action: () => NapicuBios.Bios.exit_bios_configuration_with_save()
+          action: () => Bios.exit_bios_configuration_with_save()
         }),
         BiosOptionElement("action", {
           name: "Discard Changes & Exit",
-          action: () => NapicuBios.Bios.exit_bios_configuration_without_save()
+          action: () => Bios.exit_bios_configuration_without_save()
         })
       ]
     }
@@ -167,17 +166,17 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent) => {
-    if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_RIGHT) this.move_right_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_LEFT) this.move_left_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_UP) this.move_up_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_DOWN) this.move_down_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_ON_ENTER) this.on_select_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_ON_ESC) this.on_esc();
+    if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_MOVE_RIGHT) this.move_right_option();
+    else if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_MOVE_LEFT) this.move_left_option();
+    else if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_MOVE_UP) this.move_up_option();
+    else if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_MOVE_DOWN) this.move_down_option();
+    else if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_ON_ENTER) this.on_select_option();
+    else if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_ON_ESC) this.on_esc();
   }
 
   protected on_select_option(): void {
     let option;
-    let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+    let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
 
 
@@ -209,7 +208,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     if (this.selected_in_numbers_option !== null) this.selected_in_numbers_option = null;
     else {
       this.selected_in_numbers_option = 0;
-      this.numbers_option_cache = NapicuUtils.CopyArray(option.numbers);
+      this.numbers_option_cache = CopyArray(option.numbers);
     }
   }
 
@@ -221,7 +220,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       return;
     }
 
-    let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+    let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
 
     if(this.numbers_option_cache !== null){
@@ -298,7 +297,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   protected move_up_option(): void {
     if(this.selected_menu_option_cache == null) {
       if (this.selected_in_numbers_option !== null) {
-        let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+        let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
           this.options[this.selected_screen_option].options[this.selected_option];
         let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
         let number = numbers.numbers[this.selected_in_numbers_option];
@@ -319,7 +318,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   protected move_down_option(): void {
     if(this.selected_menu_option_cache == null) {
       if (this.selected_in_numbers_option !== null) {
-        let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+        let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
           this.options[this.selected_screen_option].options[this.selected_option];
         let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
         let number = numbers.numbers[this.selected_in_numbers_option];
@@ -338,9 +337,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   protected get_drv_with_os_name(): string[] {
     let d: string[] = [];
-    for (const drv of NapicuBios.Bios.get_drv()) {
+    for (const drv of Bios.get_drv()) {
       let i: string | null = null;
-      let grub = NapicuBios.Bios.get_bootable_file(drv);
+      let grub = Bios.get_bootable_file(drv);
       if (grub) i = grub.get_kernel().get_system_name();
       d.push(i ? `${drv.name} (${i})` : drv.name);
     }
@@ -356,7 +355,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   get get_bios_version(): string {
-    return NapicuBios.Bios.get_bios_full_version();
+    return Bios.get_bios_full_version();
   }
 
 }
