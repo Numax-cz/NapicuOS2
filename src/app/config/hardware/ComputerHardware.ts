@@ -1,7 +1,6 @@
 import {TestSystem} from "../../system/TestSystem/system";
-import {Grub} from "../../system/grub/Grub";
+import {Grub} from "@Napicu/Grub/Grub";
 import {HardwareDRVInformationInterface, HardwareInformationInterface} from "../../computer/interface/NapicuHardware";
-
 
 
 const disk_1: HardwareDRVInformationInterface = {

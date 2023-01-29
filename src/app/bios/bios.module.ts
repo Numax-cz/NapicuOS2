@@ -6,6 +6,7 @@ import {NgModule} from "@angular/core";
 import {SplashScreenComponent} from "./components/splash-screen/splash-screen.component";
 import {NgClass, NgComponentOutlet, NgForOf, NgIf} from "@angular/common";
 import {PathConfig} from "../config/web/PathConfig";
+
 const routes: Routes = [
   {path: PathConfig.BIOS_CONFIGURATION_ROOT_PATH, component: ConfigurationComponent},
   {path: PathConfig.BIOS_TEXT_SCREEN_PATH, component: TextScreenComponent},

@@ -1,4 +1,4 @@
-import {biosOptionFunctionReturn, biosOptionTypeMap} from "./ConfigurationElements";
+import {biosOptionFunctionReturn} from "./ConfigurationElements";
 
 export declare interface BiosConfigurationOptionsInterface {
   name: string,

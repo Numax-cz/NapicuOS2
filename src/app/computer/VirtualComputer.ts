@@ -1,6 +1,8 @@
 import {Bios} from "../bios/Bios";
 import {
-  HardwareCPUInformationInterface, HardwareDRVInformationInterface, HardwareGPUInformationInterface,
+  HardwareCPUInformationInterface,
+  HardwareDRVInformationInterface,
+  HardwareGPUInformationInterface,
   HardwareInformationInterface,
   HardwareRAMInformationInterface
 } from "./interface/NapicuHardware";

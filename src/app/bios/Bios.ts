@@ -6,10 +6,11 @@ import {SpeedControl} from "./scripts/SpeedControl";
 import {ConfigurationComponent} from "./components/configuration/configuration.component";
 import {VirtualComputer} from "../computer/VirtualComputer";
 import {BiosConfig} from "../config/bios/Bios";
-import {Grub} from "../system/grub/Grub";
+import {Grub} from "@Napicu/Grub/Grub";
 import {
   HardwareCPUInformationInterface,
-  HardwareDRVInformationInterface, HardwareGPUInformationInterface,
+  HardwareDRVInformationInterface,
+  HardwareGPUInformationInterface,
   HardwareRAMInformationInterface
 } from "../computer/interface/NapicuHardware";
 import {CookiesConfig} from "../config/web/CookiesConfig";
@@ -17,7 +18,6 @@ import {PathConfig} from "../config/web/PathConfig";
 import {Cookies} from "../utils/Cookies";
 import {WebManager} from "../utils/WebManager";
 import {ArrayOfMaxLength3} from "../utils/Utils";
-
 
 
 export class Bios  {

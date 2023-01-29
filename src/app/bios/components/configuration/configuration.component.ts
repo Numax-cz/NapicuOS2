@@ -3,11 +3,14 @@ import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
 import {BiosClockElement, BiosDateElement, BiosOptionElement} from "./ConfigurationElements";
 import {
   BiosOptionElementTypeAction,
-  BiosOptionElementTypeInformation, BiosOptionElementTypeNumbers, BiosOptionElementTypeNumbersNumberInterface,
-  BiosOptionElementTypeOptionMenu, biosOptionFunctionReturn, biosOptionTypeMap
+  BiosOptionElementTypeInformation,
+  BiosOptionElementTypeNumbers,
+  BiosOptionElementTypeNumbersNumberInterface,
+  BiosOptionElementTypeOptionMenu,
+  biosOptionFunctionReturn,
+  biosOptionTypeMap
 } from "./interface/ConfigurationElements";
 import {NapicuDate} from "napicuformatter";
-import {DriveBaseFilesAndFoldersStructureInterface} from "../../../computer/interface/NapicuHardware";
 import {Bios} from "../../Bios";
 import {CopyArray} from "../../../utils/CopyArray";
 import {BiosConfig} from "../../../config/bios/Bios";

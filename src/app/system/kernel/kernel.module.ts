@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {NgClass, NgComponentOutlet, NgForOf, NgIf} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {SystemComponent} from "./components/system/system.component";
