@@ -1,0 +1,22 @@
+<div class="BootCookiesWindowContainer">
+  <div>
+
+    <div class="BootCookiesWindowMainTitle">
+      Allow cookies?
+    </div>
+    <p>
+      This website uses cookies to save NapicuOS and NapicuBIOS settings<br>
+      For more information about cookies: <a href="https://www.cookiesandyou.com/" target="_blank">cookiesandyou</a>
+    </p>
+    <div class="BootCookiesWindowMainButtons">
+      <div [ngClass]="{BootCookiesSelectedButton: selected_option === true}"
+           (click)="enable_cookies()" (mouseenter)="selected_option = true">
+        <p>Yes</p>
+      </div>
+      <div [ngClass]="{BootCookiesSelectedButton: selected_option === false}"
+           (click)="disable_cookies()" (mouseenter)="selected_option = false">
+        <p>No</p>
+      </div>
+    </div>
+  </div>
+</div>
