@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Cookies} from "@Napicu/Utils/Cookies";
 
 @Component({
@@ -7,6 +7,8 @@ import {Cookies} from "@Napicu/Utils/Cookies";
   styleUrls: ['./pop-up-cookies.component.scss']
 })
 export class PopUpCookiesComponent implements OnInit, OnDestroy{
+
+  @Input() public declare onSubmit: () => void;
 
   public selected_option: boolean = false;
 
@@ -25,9 +27,5 @@ export class PopUpCookiesComponent implements OnInit, OnDestroy{
   protected onKeyDownEvent = (e: KeyboardEvent) => {
     if(e.keyCode == 37) this.selected_option = true;
     else if (e.keyCode == 39) this.selected_option = false;
-
-
-
-
   }
 }

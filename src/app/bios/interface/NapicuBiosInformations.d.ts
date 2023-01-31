@@ -10,7 +10,11 @@ export interface InformationInterface {
 
   network_boot: number,
 
-  wake_on_lan: number
+  wake_on_lan: number,
+
+  amd_svm: number,
+
+  amd_iommu: number
 
 
 

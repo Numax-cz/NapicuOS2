@@ -86,7 +86,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     },
     {
       name: "Advanced",
-      options: []
+      options: [
+        BiosOptionEnableDisableElement("AMD-SVM", Bios.get_bios_configuration().amd_svm, (newValue: number) =>
+          Bios.get_bios_configuration().amd_svm = newValue, "This is AMD virtualization function switch"),
+        BiosOptionEnableDisableElement("AMD-IOMMU", Bios.get_bios_configuration().amd_iommu, (newValue: number) =>
+          Bios.get_bios_configuration().amd_iommu = newValue, "This is AMD virtualization function switch"),
+      ]
     },
     {
       name: "Boot",
@@ -109,15 +114,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
         BiosOptionElement("action", {
           name: "Load Optimized Defaults",
           action: () => Bios.load_default_bios_configuration()
-        }),
+        }, "Restores/loads the default values for all the setup options"),
         BiosOptionElement("action", {
           name: "Save Changes & Reset",
           action: () => Bios.exit_bios_configuration_with_save()
-        }),
+        }, "Exit Bios and save your changes to CMOS"),
         BiosOptionElement("action", {
           name: "Discard Changes & Exit",
           action: () => Bios.exit_bios_configuration_without_save()
-        })
+        }, "Exit Bios without saving any changes")
       ]
     }
   ];

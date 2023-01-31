@@ -24,7 +24,12 @@ export namespace BiosConfig{
     selected_drive: 0,
 
     time: [0, 0, 0],
-    date: [1, 1, 2023]
+    date: [1, 1, 2023],
+
+    network_boot: 0,
+    wake_on_lan: 0,
+    amd_iommu: 0,
+    amd_svm: 0
   }
 }
 

@@ -5,10 +5,6 @@ import {Console} from "./Console";
 export class WebManager{
   protected static angular_router: Router | null = null;
 
-  public static get_cookies_permission(): boolean { //TODO
-    return true;
-  }
-
   public static set_angular_router(router: Router): void {
     this.angular_router = router;
   }

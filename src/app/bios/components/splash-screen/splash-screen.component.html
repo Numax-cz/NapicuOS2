@@ -7,5 +7,7 @@
     </div>
     <div class="BottomText">Please press DEL or F2 to enter BIOS setting</div>
   </div>
+  <bios-pop-up-cookies *ngIf="get_is_cookies_permission_unchecked()" [onSubmit]="start"></bios-pop-up-cookies>
 </section>
+
 

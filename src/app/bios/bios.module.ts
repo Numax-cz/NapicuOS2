@@ -6,6 +6,7 @@ import {NgModule} from "@angular/core";
 import {SplashScreenComponent} from "./components/splash-screen/splash-screen.component";
 import {NgClass, NgComponentOutlet, NgForOf, NgIf} from "@angular/common";
 import {PathConfig} from "../config/web/PathConfig";
+import { PopUpCookiesComponent } from './components/pop-up-cookies/pop-up-cookies.component';
 
 const routes: Routes = [
   {path: PathConfig.BIOS_CONFIGURATION_ROOT_PATH, component: ConfigurationComponent},
@@ -19,7 +20,8 @@ const routes: Routes = [
     SplashScreenComponent,
     ConfigurationComponent,
     TextScreenComponent,
-    CastPipe
+    CastPipe,
+    PopUpCookiesComponent
   ]
 })
 export class BiosModule { }

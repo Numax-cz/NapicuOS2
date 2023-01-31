@@ -10,11 +10,11 @@
     </p>
     <div class="BootCookiesWindowMainButtons">
       <div [ngClass]="{BootCookiesSelectedButton: selected_option === true}"
-           (click)="enable_cookies()" (mouseenter)="selected_option = true">
+           (click)="enable_cookies(); onSubmit()" (mouseenter)="selected_option = true">
         <p>Yes</p>
       </div>
       <div [ngClass]="{BootCookiesSelectedButton: selected_option === false}"
-           (click)="disable_cookies()" (mouseenter)="selected_option = false">
+           (click)="disable_cookies(); onSubmit()" (mouseenter)="selected_option = false">
         <p>No</p>
       </div>
     </div>
