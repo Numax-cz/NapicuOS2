@@ -97,6 +97,19 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       name: "Boot",
       options: [
         BiosOptionElement("options", {
+          name: "Boot Mode",
+          options: ["UEFI", "Legacy"],
+          selectedOption: Bios.get_bios_configuration().boot_mode,
+          onChange: (newValue: number) => Bios.get_bios_configuration().boot_mode = newValue,
+        }, "Set System Boot Mode"),
+
+        BiosOptionEnableDisableElement("Fast Boot", Bios.get_bios_configuration().fast_boot, (newValue: number) =>
+          Bios.get_bios_configuration().fast_boot = newValue, "Enable/Disable Fast Boot"),
+
+        BiosOptionEnableDisableElement("Secure Boot", Bios.get_bios_configuration().secure_boot, (newValue: number) =>
+          Bios.get_bios_configuration().secure_boot = newValue, "Enable/Disable Secure Boot"),
+
+        BiosOptionElement("options", {
           name: "Boot",
           options: this.get_drv_with_os_name(),
           selectedOption: Bios.get_bios_configuration().selected_drive,
@@ -106,7 +119,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     },
     {
       name: "Tools",
-      options: []
+      options: [
+        BiosOptionElement("action", {
+          name: "NapicuFlash",
+          action: () => {}
+        }, "Run the utility to select and update BIOS. This utility supports Fat 12/16/32, NTFS, CD-DISC")
+      ]
     },
     {
       name: "Exit",

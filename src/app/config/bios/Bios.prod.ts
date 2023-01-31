@@ -29,7 +29,10 @@ export namespace BiosConfig{
     network_boot: 0,
     wake_on_lan: 0,
     amd_iommu: 0,
-    amd_svm: 0
+    amd_svm: 0,
+    boot_mode: 0,
+    fast_boot: 0,
+    secure_boot:0
   }
 }
 

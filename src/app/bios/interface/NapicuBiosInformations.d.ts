@@ -14,7 +14,16 @@ export interface InformationInterface {
 
   amd_svm: number,
 
-  amd_iommu: number
+  amd_iommu: number,
+
+  boot_mode: number,
+
+  fast_boot: number,
+
+  secure_boot: number,
+
+
+
 
 
 
