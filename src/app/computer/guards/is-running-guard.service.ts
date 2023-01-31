@@ -2,7 +2,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTre
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {VirtualComputer} from "../VirtualComputer";
-import {WebConfig} from "../../config/web/WebConfig";
+import {WebConfig} from "@Napicu/Config/web/Web";
 
 @Injectable({
   providedIn: 'root',

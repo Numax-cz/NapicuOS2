@@ -7,6 +7,8 @@ import {Router} from "@angular/router";
 import {VirtualComputer} from "../../../computer/VirtualComputer";
 import {SpeedControl} from "../../scripts/SpeedControl";
 import {Bios} from "../../Bios";
+import {CookiesConfig} from "@Napicu/Config/web/CookiesConfig";
+import {WebConfig} from "@Napicu/Config/web/Web";
 
 @Component({
   selector: 'app-splash-screen',
@@ -20,6 +22,8 @@ export class SplashScreenComponent implements OnInit, OnDestroy {
     this.bios_boot_timeout = -1;
     //WebManager
     WebManager.set_angular_router(router);
+
+    if(!this.get_is_cookies_permission_unchecked()) this.start();
   }
 
   public ngOnInit() { }

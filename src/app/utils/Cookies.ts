@@ -1,4 +1,5 @@
 import {CookiesConfig} from "../config/web/CookiesConfig";
+import {WebConfig} from "@Napicu/Config/web/Web";
 
 export const enum CookiesCookiesPermissionsEnum {
   deny = 0,
@@ -7,7 +8,7 @@ export const enum CookiesCookiesPermissionsEnum {
 }
 
 export class Cookies{
-  protected static allow_cookies: CookiesCookiesPermissionsEnum = document.cookie.length
+  protected static allow_cookies: CookiesCookiesPermissionsEnum = document.cookie.length || !WebConfig.ALLOW_POP_UP_SPLASH_SCREEN
     ? CookiesCookiesPermissionsEnum.allow : CookiesCookiesPermissionsEnum.unchecked;
 
   public static get_cookies_permission(): CookiesCookiesPermissionsEnum{
