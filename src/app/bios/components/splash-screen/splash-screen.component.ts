@@ -7,8 +7,6 @@ import {Router} from "@angular/router";
 import {VirtualComputer} from "../../../computer/VirtualComputer";
 import {SpeedControl} from "../../scripts/SpeedControl";
 import {Bios} from "../../Bios";
-import {CookiesConfig} from "@Napicu/Config/web/CookiesConfig";
-import {WebConfig} from "@Napicu/Config/web/Web";
 
 @Component({
   selector: 'app-splash-screen',
@@ -50,6 +48,6 @@ export class SplashScreenComponent implements OnInit, OnDestroy {
   }
 
   public get_is_cookies_permission_unchecked(): boolean {
-    return Cookies.get_cookies_permission() == CookiesCookiesPermissionsEnum.unchecked
+    return Cookies.get_cookies_permission() == CookiesCookiesPermissionsEnum.unchecked;
   }
 }
