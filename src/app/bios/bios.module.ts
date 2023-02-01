@@ -7,10 +7,14 @@ import {SplashScreenComponent} from "./components/splash-screen/splash-screen.co
 import {NgClass, NgComponentOutlet, NgForOf, NgIf} from "@angular/common";
 import {PathConfig} from "../config/web/PathConfig";
 import { PopUpCookiesComponent } from './components/pop-up-cookies/pop-up-cookies.component';
+import { FlashScreenComponent } from './components/configuration/flash-screen/flash-screen.component';
+import {IsRunningGuard} from "@Napicu/VirtualComputer/guards/is-running-guard.service";
+import { OptionMenuComponent } from './components/configuration/option-menu/option-menu.component';
 
 const routes: Routes = [
-  {path: PathConfig.BIOS_CONFIGURATION_ROOT_PATH, component: ConfigurationComponent},
-  {path: PathConfig.BIOS_TEXT_SCREEN_PATH, component: TextScreenComponent},
+  {path: PathConfig.BIOS_CONFIGURATION_ROOT_PATH, component: ConfigurationComponent, canActivate: [IsRunningGuard]},
+  {path: PathConfig.BIOS_TEXT_SCREEN_PATH, component: TextScreenComponent, canActivate: [IsRunningGuard]},
+  {path: PathConfig.BIOS_FLASH_PATH, component: FlashScreenComponent, canActivate: [IsRunningGuard]},
 ];
 
 @NgModule({
@@ -21,7 +25,9 @@ const routes: Routes = [
     ConfigurationComponent,
     TextScreenComponent,
     CastPipe,
-    PopUpCookiesComponent
+    PopUpCookiesComponent,
+    FlashScreenComponent,
+    OptionMenuComponent
   ]
 })
 export class BiosModule { }

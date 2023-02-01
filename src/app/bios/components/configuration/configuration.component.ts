@@ -21,6 +21,10 @@ import {CopyArray} from "../../../utils/CopyArray";
 import {BiosConfig} from "../../../config/bios/Bios";
 import {ValueOf} from "../../../utils/Utils";
 import {VirtualComputer} from "@Napicu/VirtualComputer/VirtualComputer";
+import {InformationInterface} from "@Napicu/Bios/interface/NapicuBiosInformations";
+import {WebManager} from "@Napicu/Utils/WebManager";
+import {PathConfig} from "@Napicu/Config/web/PathConfig";
+import {BiosPopUpMenu} from "@Napicu/Bios/components/configuration/PopUpMenu";
 
 
 @Pipe({ name: 'as', pure: true })
@@ -59,9 +63,16 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public static date_cache: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> | null = null;
 
+  public static last_configuration: InformationInterface;
+
   public static date_is_moved_day: boolean = false;
 
-  public selected_menu_option_cache: number | null = null;
+  //public selected_menu_option_cache: number | null = null;
+
+
+  public is_menu_option_opened: boolean = false;
+
+  public active_pop_up_menu: BiosPopUpMenu | null = null;
 
   protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
@@ -122,7 +133,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       options: [
         BiosOptionElement("action", {
           name: "NapicuFlash",
-          action: () => {}
+          action: () => this.open_flash_menu()
         }, "Run the utility to select and update BIOS. This utility supports Fat 12/16/32, NTFS, CD-DISC")
       ]
     },
@@ -145,15 +156,29 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     }
   ];
 
+
+  protected readonly addEventListener = (): void => window.addEventListener("keydown", this.onKeyDownEvent);
+
+  protected readonly removeEventListener = (): void => window.removeEventListener("keydown", this.onKeyDownEvent);
+
   public ngOnInit(): void {
+    ConfigurationComponent.last_configuration = CopyArray(Bios.get_bios_configuration());
+    this.addEventListener();
+
     this.reset_selected_option();
     this.start_clock();
-    window.addEventListener("keydown", this.onKeyDownEvent);
   }
 
   public ngOnDestroy() {
-    window.removeEventListener("keydown", this.onKeyDownEvent);
+    this.removeEventListener();
+
     this.stop_clock();
+  }
+
+  public open_flash_menu = (): void => {
+    this.active_pop_up_menu = new BiosPopUpMenu("Ez Flash")
+    this.active_pop_up_menu.addElement({name: "Yes", onClick: () => WebManager.navigate_angular_router(PathConfig.BIOS_FLASH_PATH)});
+    this.active_pop_up_menu.addElement({name: "No",  onClick: () => {}});
   }
 
   public start_clock(): void {
@@ -214,9 +239,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
     if(i.type === "options"){
       option = i.option as biosOptionTypeMap["options"];
-      if (this.selected_menu_option_cache === null) this.selected_menu_option_cache = option.selectedOption;
-      else this.selected_menu_option_cache = null;
-      option.onChange(option.selectedOption);
+      this.is_menu_option_opened = true;
+
+      this.removeEventListener();
 
     }else if (i.type === "action"){
       option = i.option as biosOptionTypeMap["action"];
@@ -231,9 +256,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           ConfigurationComponent.date_is_moved_day = false;
       }
 
-
       this.select_numbers_option(option);
     }
+  }
+
+  public on_change_value_in_option_menu = (value: number): void => {
+    (this.options[this.selected_screen_option].options[this.selected_option].option as BiosOptionElementTypeOptionMenu).selectedOption = value;
   }
 
   protected select_numbers_option(option: biosOptionTypeMap["numbers"]): void {
@@ -245,13 +273,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected on_esc(): void {
-    if(this.selected_menu_option_cache !== null){
-      (this.options[this.selected_screen_option].options[this.selected_option].option as
-        biosOptionTypeMap["options"]).selectedOption = this.selected_menu_option_cache;
-      this.selected_menu_option_cache = null;
-      return;
-    }
-
     let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
 
@@ -296,38 +317,33 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected move_right_option(): void {
-    if(this.selected_menu_option_cache == null){
-      if(this.selected_in_numbers_option !== null){
-        ConfigurationComponent.date_is_moved_day = false;
-        let i: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
-        if(this.selected_in_numbers_option + 1 < i.numbers.length) this.selected_in_numbers_option++;
-        return;
-      }
+    if(this.selected_in_numbers_option !== null){
+      ConfigurationComponent.date_is_moved_day = false;
+      let i: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
+      if(this.selected_in_numbers_option + 1 < i.numbers.length) this.selected_in_numbers_option++;
+      return;
+    }
 
-      if(this.selected_screen_option + 1 < this.options.length){
-        this.selected_screen_option += 1;
-        this.reset_selected_option();
-      }
+    if(this.selected_screen_option + 1 < this.options.length){
+      this.selected_screen_option += 1;
+      this.reset_selected_option();
     }
   }
 
   protected move_left_option(): void {
-    if(this.selected_menu_option_cache == null) {
-      if (this.selected_in_numbers_option !== null) {
-        ConfigurationComponent.date_is_moved_day = false;
-        if (this.selected_in_numbers_option > 0) this.selected_in_numbers_option--;
-        return;
-      }
+    if (this.selected_in_numbers_option !== null) {
+      ConfigurationComponent.date_is_moved_day = false;
+      if (this.selected_in_numbers_option > 0) this.selected_in_numbers_option--;
+      return;
+    }
 
-      if (this.selected_screen_option > 0) {
-        this.selected_screen_option -= 1;
-        this.reset_selected_option();
-      }
+    if (this.selected_screen_option > 0) {
+      this.selected_screen_option -= 1;
+      this.reset_selected_option();
     }
   }
 
   protected move_up_option(): void {
-    if(this.selected_menu_option_cache == null) {
       if (this.selected_in_numbers_option !== null) {
         let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
           this.options[this.selected_screen_option].options[this.selected_option];
@@ -341,30 +357,21 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       }
 
       if (this.selected_option > 0) this.check_previous_option();
-    } else {
-      let i = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["options"];
-      if(i.selectedOption  > 0) i.selectedOption--
-    }
   }
 
   protected move_down_option(): void {
-    if(this.selected_menu_option_cache == null) {
-      if (this.selected_in_numbers_option !== null) {
-        let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
-          this.options[this.selected_screen_option].options[this.selected_option];
-        let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
-        let number = numbers.numbers[this.selected_in_numbers_option];
-        if (number.value > number.min) numbers.numbers[this.selected_in_numbers_option].value--;
-        else number.value = number.max;
+    if (this.selected_in_numbers_option !== null) {
+      let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
+        this.options[this.selected_screen_option].options[this.selected_option];
+      let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
+      let number = numbers.numbers[this.selected_in_numbers_option];
+      if (number.value > number.min) numbers.numbers[this.selected_in_numbers_option].value--;
+      else number.value = number.max;
 
-        if (i.type === "date") this.update_max_days_in_month();
-        return;
-      }
-      if (this.selected_option + 1 < this.options[this.selected_screen_option].options.length) this.check_next_option();
-    } else {
-      let i = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["options"];
-      if(i.selectedOption + 1 <  i.options.length) i.selectedOption++
+      if (i.type === "date") this.update_max_days_in_month();
+      return;
     }
+    if (this.selected_option + 1 < this.options[this.selected_screen_option].options.length) this.check_next_option();
   }
 
   protected get_drv_with_os_name(): string[] {
@@ -389,5 +396,4 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   get get_bios_version(): string {
     return Bios.get_bios_full_version();
   }
-
 }

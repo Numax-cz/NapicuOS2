@@ -1,0 +1,11 @@
+<section class="BiosOptionMenu">
+  <div >
+    <div *ngIf="title" class="BiosOptionMenuTitle">{{title}}</div>
+    <div [ngClass]="{BiosFlexOptionMenu: row_options}">
+      <div *ngFor="let i of options;
+            let index = index" [ngClass]="{BiosSelectedOptionElement: selected_option === index}">
+        {{i}}
+      </div>
+    </div>
+  </div>
+</section>

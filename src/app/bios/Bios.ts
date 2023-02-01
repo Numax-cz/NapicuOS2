@@ -117,7 +117,8 @@ export class Bios  {
   }
 
   public static exit_bios_configuration_without_save(): void {
-
+    this.biosConfiguration = ConfigurationComponent.last_configuration;
+    this.save_bios_config();
   }
 
   public static load_default_bios_configuration(): void {
