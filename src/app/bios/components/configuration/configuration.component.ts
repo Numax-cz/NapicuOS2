@@ -63,8 +63,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   public static last_configuration: InformationInterface;
 
   public static date_is_moved_day: boolean = false;
-  
-  public is_menu_option_opened: OptionMenu | null = null;
+
+  public active_option_menu: OptionMenu | null = null;
 
 
   protected readonly options: BiosConfigurationOptionsInterface[] = [
@@ -169,6 +169,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   public open_flash_menu = (): void => {
+
+    this.active_option_menu
+
     // this.active_pop_up_menu = new BiosPopUpMenu("Ez Flash")
     // this.active_pop_up_menu.addElement({name: "Yes", onClick: () => WebManager.navigate_angular_router(PathConfig.BIOS_FLASH_PATH)});
     // this.active_pop_up_menu.addElement({name: "No",  onClick: () => {}});
@@ -232,7 +235,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
     if(i.type === "options"){
       option = i.option as biosOptionTypeMap["options"];
-      this.is_menu_option_opened = new OptionMenu(option.options, this.on_change_value_in_option_menu, option.selectedOption);
+      this.active_option_menu = new OptionMenu(option.options, this.on_change_value_in_option_menu, option.selectedOption);
       this.removeEventListener();
 
     }else if (i.type === "action"){

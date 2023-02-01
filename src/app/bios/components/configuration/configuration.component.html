@@ -63,12 +63,12 @@
   </section>
 
   <bios-option-menu
-    *ngIf="is_menu_option_opened"
-    [options]="is_menu_option_opened.get_options()"
-    [selected_option]="is_menu_option_opened.get_selected_option()"
-    [title]="is_menu_option_opened.get_title()"
-    [row_options]="is_menu_option_opened.is_row_options()"
+    *ngIf="active_option_menu"
+    [options]="active_option_menu.get_options()"
+    [selected_option]="active_option_menu.get_selected_option()"
+    [title]="active_option_menu.get_title()"
+    [row_options]="active_option_menu.is_row_options()"
     [onChangeValue]="on_change_value_in_option_menu"
-    (onEsc)="is_menu_option_opened = null; addEventListener()"
+    (onEsc)="active_option_menu = null; addEventListener()"
   ></bios-option-menu>
 </div>
