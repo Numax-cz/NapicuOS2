@@ -11,15 +11,14 @@ export class OptionMenu {
 
   protected declare selected_option: number;
 
-
-  constructor(options: string[], onChangeValue: ((value: number) => void) | null, onEsc: ((value: number) => void) | null, selectedOption?: number){
+  constructor(options: string[], onChangeValue: ((value: number) => void) | null, onEsc: ((value: number) => void) | null, selectedOption?: number) {
     this.options = options;
     this.onChangeValue = onChangeValue;
     this.onEsc = onEsc;
     this.selected_option = selectedOption ? selectedOption : 0;
   }
 
-  public get_title(): string | undefined{
+  public get_title(): string | undefined {
     return this.title;
   }
 
@@ -31,11 +30,11 @@ export class OptionMenu {
     return this.selected_option;
   }
 
-  public is_row_options(): boolean{
+  public is_row_options(): boolean {
     return this.row_options;
   }
 
-  public set_row_option_layout(): void{
+  public set_row_option_layout(): void {
     this.row_options = true;
   }
 
