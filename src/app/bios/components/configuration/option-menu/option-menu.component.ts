@@ -15,7 +15,7 @@ export class OptionMenuComponent implements OnInit, OnDestroy, AfterViewInit{
 
   @Input() public declare onChangeValue: (value: number) => void;
 
-  @Input() public declare title: string;
+  @Input() public declare title?: string;
 
   @Input() public options: string[] = [];
 

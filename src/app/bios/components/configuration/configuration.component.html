@@ -62,23 +62,13 @@
     <div class="BiosBottomTitle">{{get_bios_version}}</div>
   </section>
 
-  <bios-option-menu *ngIf="is_menu_option_opened"
-                    [options]="(options[selected_screen_option].options[selected_option].option | as : BiosOptionElementTypeOptionMenu).options"
-                    [selected_option]="(options[selected_screen_option].options[selected_option].option | as : BiosOptionElementTypeOptionMenu).selectedOption"
-                    [onChangeValue]="on_change_value_in_option_menu"
-                    (onEsc)="is_menu_option_opened = false; addEventListener()"
+  <bios-option-menu
+    *ngIf="is_menu_option_opened"
+    [options]="is_menu_option_opened.get_options()"
+    [selected_option]="is_menu_option_opened.get_selected_option()"
+    [title]="is_menu_option_opened.get_title()"
+    [row_options]="is_menu_option_opened.is_row_options()"
+    [onChangeValue]="on_change_value_in_option_menu"
+    (onEsc)="is_menu_option_opened = null; addEventListener()"
   ></bios-option-menu>
-
-  <!--PopUp select option-->
-<!--  <ng-container *ngIf="active_pop_up_menu">-->
-<!--    <section class="BiosOptionMenu">-->
-<!--      <div>-->
-<!--        <div class="BiosOptionMenuTitle">{{active_pop_up_menu.get_title()}}</div>-->
-<!--        <div class="BiosOptionMenuButtons">-->
-<!--          <div *ngFor="let i of active_pop_up_menu.get_elements(); let index = index"-->
-<!--               [ngClass]="{BiosOptionMenuSelectedButton: active_pop_up_menu.get_selected_option() === index}">{{i.name}}</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </section>-->
-<!--  </ng-container>-->
 </div>

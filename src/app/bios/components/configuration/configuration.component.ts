@@ -20,11 +20,8 @@ import {Bios} from "../../Bios";
 import {CopyArray} from "../../../utils/CopyArray";
 import {BiosConfig} from "../../../config/bios/Bios";
 import {ValueOf} from "../../../utils/Utils";
-import {VirtualComputer} from "@Napicu/VirtualComputer/VirtualComputer";
 import {InformationInterface} from "@Napicu/Bios/interface/NapicuBiosInformations";
-import {WebManager} from "@Napicu/Utils/WebManager";
-import {PathConfig} from "@Napicu/Config/web/PathConfig";
-import {BiosPopUpMenu} from "@Napicu/Bios/components/configuration/PopUpMenu";
+import {OptionMenu} from "@Napicu/Bios/components/configuration/OptionMenu";
 
 
 @Pipe({ name: 'as', pure: true })
@@ -70,9 +67,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   //public selected_menu_option_cache: number | null = null;
 
 
-  public is_menu_option_opened: boolean = false;
+  public is_menu_option_opened: OptionMenu | null = null;
 
-  public active_pop_up_menu: BiosPopUpMenu | null = null;
 
   protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
@@ -176,9 +172,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   public open_flash_menu = (): void => {
-    this.active_pop_up_menu = new BiosPopUpMenu("Ez Flash")
-    this.active_pop_up_menu.addElement({name: "Yes", onClick: () => WebManager.navigate_angular_router(PathConfig.BIOS_FLASH_PATH)});
-    this.active_pop_up_menu.addElement({name: "No",  onClick: () => {}});
+    // this.active_pop_up_menu = new BiosPopUpMenu("Ez Flash")
+    // this.active_pop_up_menu.addElement({name: "Yes", onClick: () => WebManager.navigate_angular_router(PathConfig.BIOS_FLASH_PATH)});
+    // this.active_pop_up_menu.addElement({name: "No",  onClick: () => {}});
   }
 
   public start_clock(): void {
@@ -239,8 +235,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
     if(i.type === "options"){
       option = i.option as biosOptionTypeMap["options"];
-      this.is_menu_option_opened = true;
-
+      this.is_menu_option_opened = new OptionMenu(option.options, this.on_change_value_in_option_menu, option.selectedOption);
       this.removeEventListener();
 
     }else if (i.type === "action"){
