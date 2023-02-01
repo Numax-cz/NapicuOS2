@@ -261,6 +261,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public on_change_value_in_option_menu = (value: number): void => {
     (this.options[this.selected_screen_option].options[this.selected_option].option as BiosOptionElementTypeOptionMenu).selectedOption = value;
+    (this.options[this.selected_screen_option].options[this.selected_option].option as BiosOptionElementTypeOptionMenu).onChange(value);
   }
 
   protected select_numbers_option(option: biosOptionTypeMap["numbers"]): void {
