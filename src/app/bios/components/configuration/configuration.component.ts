@@ -63,10 +63,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   public static last_configuration: InformationInterface;
 
   public static date_is_moved_day: boolean = false;
-
-  //public selected_menu_option_cache: number | null = null;
-
-
+  
   public is_menu_option_opened: OptionMenu | null = null;
 
 
