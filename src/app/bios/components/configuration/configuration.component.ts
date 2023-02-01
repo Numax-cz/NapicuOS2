@@ -170,7 +170,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public open_flash_menu = (): void => {
 
-    this.active_option_menu
+    this.active_option_menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
+      console.log(value);
+    } ,0);
 
     // this.active_pop_up_menu = new BiosPopUpMenu("Ez Flash")
     // this.active_pop_up_menu.addElement({name: "Yes", onClick: () => WebManager.navigate_angular_router(PathConfig.BIOS_FLASH_PATH)});
@@ -235,7 +237,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
     if(i.type === "options"){
       option = i.option as biosOptionTypeMap["options"];
-      this.active_option_menu = new OptionMenu(option.options, this.on_change_value_in_option_menu, option.selectedOption);
+      this.active_option_menu = new OptionMenu(option.options, this.on_change_value_in_option_menu, () => this.active_option_menu = null ,option.selectedOption);
       this.removeEventListener();
 
     }else if (i.type === "action"){

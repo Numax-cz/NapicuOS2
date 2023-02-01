@@ -1,5 +1,7 @@
 export class OptionMenu {
-  public declare onChangeValue: (value: number) => void;
+  public declare onChangeValue: ((value: number) => void) | null;
+
+  public declare onEsc: ((value: number) => void) | null;
 
   protected declare options: string[];
 
@@ -10,9 +12,10 @@ export class OptionMenu {
   protected declare selected_option: number;
 
 
-  constructor(options: string[], onChangeValue: (value: number) => void, selectedOption?: number){
+  constructor(options: string[], onChangeValue: ((value: number) => void) | null, onEsc: ((value: number) => void) | null, selectedOption?: number){
     this.options = options;
     this.onChangeValue = onChangeValue;
+    this.onEsc = onEsc;
     this.selected_option = selectedOption ? selectedOption : 0;
   }
 

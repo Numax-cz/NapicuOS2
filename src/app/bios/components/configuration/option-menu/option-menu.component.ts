@@ -11,9 +11,9 @@ export class OptionMenuComponent implements OnInit, OnDestroy, AfterViewInit{
   protected last_selected_option: number = 0;
 
   @Output()
-  public onEsc = new EventEmitter<void>();
+  public onEsc = new EventEmitter<number>();
 
-  @Input() public declare onChangeValue: (value: number) => void;
+  @Input() public declare onChangeValue: ((value: number) => void) | null;
 
   @Input() public declare title?: string;
 
@@ -46,20 +46,20 @@ export class OptionMenuComponent implements OnInit, OnDestroy, AfterViewInit{
 
   protected move_up_option(): void {
     if(this.selected_option > 0) this.selected_option--;
-    this.onChangeValue(this.selected_option);
+    this.onChangeValue?.(this.selected_option);
   }
 
   protected move_down_option(): void {
     if(this.selected_option < this.options.length - 1) this.selected_option++;
-    this.onChangeValue(this.selected_option);
+    this.onChangeValue?.(this.selected_option);
   }
 
   protected on_enter(): void {
-    this.onEsc.emit();
+    this.onEsc.emit(this.selected_option);
   }
 
   protected on_esc(): void {
-    this.onChangeValue(this.last_selected_option);
-    this.onEsc.emit();
+    this.onChangeValue?.(this.last_selected_option);
+    this.onEsc.emit(this.last_selected_option);
   }
 }

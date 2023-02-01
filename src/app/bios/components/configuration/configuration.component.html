@@ -68,7 +68,7 @@
     [selected_option]="active_option_menu.get_selected_option()"
     [title]="active_option_menu.get_title()"
     [row_options]="active_option_menu.is_row_options()"
-    [onChangeValue]="on_change_value_in_option_menu"
-    (onEsc)="active_option_menu = null; addEventListener()"
+    [onChangeValue]="active_option_menu.onChangeValue"
+    (onEsc)="active_option_menu.onEsc?.($event); addEventListener()"
   ></bios-option-menu>
 </div>
