@@ -169,14 +169,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   public open_flash_menu = (): void => {
-
     this.active_option_menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
-      console.log(value);
+      if(value === 0){
+        //TODO Start Flash
+      } else this.active_option_menu = null;
     } ,0);
-
-    // this.active_pop_up_menu = new BiosPopUpMenu("Ez Flash")
-    // this.active_pop_up_menu.addElement({name: "Yes", onClick: () => WebManager.navigate_angular_router(PathConfig.BIOS_FLASH_PATH)});
-    // this.active_pop_up_menu.addElement({name: "No",  onClick: () => {}});
   }
 
   public start_clock(): void {
@@ -234,10 +231,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
 
-
     if(i.type === "options"){
       option = i.option as biosOptionTypeMap["options"];
-      this.active_option_menu = new OptionMenu(option.options, this.on_change_value_in_option_menu, () => this.active_option_menu = null ,option.selectedOption);
+      this.active_option_menu = new OptionMenu(option.options, this.on_change_value_in_option_menu, null ,option.selectedOption);
       this.removeEventListener();
 
     }else if (i.type === "action"){
