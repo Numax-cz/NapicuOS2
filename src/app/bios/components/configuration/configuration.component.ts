@@ -169,11 +169,17 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   public open_flash_menu = (): void => {
-    this.active_option_menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
+    let menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
       if(value === 0){
         //TODO Start Flash
       } else this.active_option_menu = null;
     } ,0);
+
+    menu.set_title("Ez Flash?");
+    menu.set_row_option_layout();
+
+    this.removeEventListener();
+    this.active_option_menu = menu;
   }
 
   public start_clock(): void {
