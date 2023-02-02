@@ -40,7 +40,7 @@ export const BiosDateElement = (name: string, description: string | null = null,
       numbers: [
         {value: Bios.get_bios_configuration().date[0], min: 1, max: 12},    //Month
         {value: Bios.get_bios_configuration().date[1], min: 1, max: 31},     //Day
-        {value: Bios.get_bios_configuration().date[2], min: 2000, max: 3000} //Year
+        {value: Bios.get_bios_configuration().date[2], min: 1970, max: 3000} //Year
       ]
     },
     description: description
