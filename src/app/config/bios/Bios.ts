@@ -23,6 +23,8 @@ export namespace BiosConfig{
 
   export const ENTER_GRUB_MENU: number = 2000;
 
+  export const ENTER_FLASH_MENU_TIME: number = 1500;
+
 
   //CONFIGURATOR
 

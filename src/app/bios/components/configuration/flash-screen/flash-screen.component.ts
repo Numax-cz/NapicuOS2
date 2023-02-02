@@ -17,7 +17,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
     window.removeEventListener("keydown", this.onKeyDownEvent);
   }
 
-  protected onKeyDownEvent = (): void => {
+  protected onKeyDownEvent = (e: KeyboardEvent): void => {
 
   }
 }

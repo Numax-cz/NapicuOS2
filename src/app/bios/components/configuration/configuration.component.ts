@@ -22,6 +22,9 @@ import {BiosConfig} from "../../../config/bios/Bios";
 import {ValueOf} from "../../../utils/Utils";
 import {InformationInterface} from "@Napicu/Bios/interface/NapicuBiosInformations";
 import {OptionMenu} from "@Napicu/Bios/components/configuration/OptionMenu";
+import {WebManager} from "@Napicu/Utils/WebManager";
+import {PathConfig} from "@Napicu/Config/web/PathConfig";
+import {SpeedControl} from "@Napicu/Bios/scripts/SpeedControl";
 
 
 @Pipe({ name: 'as', pure: true })
@@ -170,9 +173,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public open_flash_menu = (): void => {
     let menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
-      if(value === 0){
-        //TODO Start Flash
-      } else this.active_option_menu = null;
+      if(value === 0) WebManager.navigate_angular_router(PathConfig.BIOS_FLASH_PATH, SpeedControl.calculate_hardware_speed(BiosConfig.ENTER_FLASH_MENU_TIME));
+      else this.active_option_menu = null;
     } ,0);
 
     menu.set_title("Ez Flash?");
