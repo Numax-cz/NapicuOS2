@@ -16,8 +16,14 @@
     <!-- Drives & Paths -->
     <div class="Drives">
       <div class="Window" [ngClass]="{SelectedWindow: is_active_drive_selection}">
+        <div *ngFor="let i of get_drives(); let index = index" [ngClass]="{SelectedOption: selected_drive === index}" >
+          {{index + 1}}. {{i.name}}
+        </div>
       </div>
       <div class="Window" [ngClass]="{SelectedWindow: !is_active_drive_selection}">
+        <div *ngFor="let i of get_drive_data(); let index = index" [ngClass]="{SelectedOption: selected_dir === index}" >
+          {{i}}
+        </div>
       </div>
     </div>
     <!-- Note -->

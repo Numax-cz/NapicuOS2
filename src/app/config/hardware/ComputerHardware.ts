@@ -50,6 +50,16 @@ const disk_3: HardwareDRVInformationInterface = {
   }
 }
 
+const disk_4: HardwareDRVInformationInterface = {
+  name: "USB-BIOS",
+  capacity: 0.100,
+  speed: 10,
+
+  data: {
+    partitions: {}
+  }
+}
+
 export namespace Computer{
   export const HARDWARE: HardwareInformationInterface = {
     cpu: {
@@ -58,7 +68,7 @@ export namespace Computer{
       speed: 3000,
       cache: 8192
     },
-    drv: [disk_1, disk_2, disk_3],
+    drv: [disk_1, disk_2, disk_3, disk_4],
     gpu: {
       name: "GPU",
       speed: 1000

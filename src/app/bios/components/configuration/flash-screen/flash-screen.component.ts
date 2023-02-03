@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CopyArray} from "@Napicu/Utils/CopyArray";
 import {Bios} from "@Napicu/Bios/Bios";
 import {BiosConfig} from "@Napicu/Config/bios/Bios";
+import {HardwareDRVInformationInterface} from "@Napicu/VirtualComputer/interface/NapicuHardware";
 
 @Component({
   selector: 'app-flash-screen',
@@ -50,8 +51,14 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
   }
 
-  public get_drives(): any{
+  public get_drive_data(){
+    console.log(Bios.get_drv()[this.selected_drive].data);
+    let i = Bios.get_drv()[this.selected_drive].data.partitions
+    return Object.keys(i);
+  }
 
+  public get_drives(): HardwareDRVInformationInterface[]{
+    return Bios.get_drv()
   }
 
   public get_bios_version(): string{
