@@ -1,0 +1,59 @@
+.Background{
+  background: blue;
+  color: white;
+  height: 100vh;
+}
+
+.BiosTitle{
+  text-align: center;
+  font-size: 2rem;
+  padding: 20px;
+}
+
+
+.FlashWindow{
+  width: 100%;
+  max-width: 60%;
+  margin: auto;
+
+  .FlashTitle{
+    color: #f0f;
+    font-size: 2rem;
+    margin-bottom: 7px;
+  }
+
+  .Window{
+    margin: 15px;
+    padding: 20px;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    border-left: 4.5px solid white;
+    border-right: 4.5px solid white;
+  }
+
+  .SelectedWindow{
+    border-color: #0ff;
+  }
+
+  .BiosGrid50{
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+
+  .ActivePath{
+
+  }
+
+  .Drives{
+    display: grid;
+    grid-template-columns: 30% 70%;
+
+  }
+
+  .NoteTexts{
+    p{
+      font-size: 1.35rem;
+      margin: 10px 10px 10px 10%;
+    }
+  }
+}

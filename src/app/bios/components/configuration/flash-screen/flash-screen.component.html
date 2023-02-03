@@ -1,1 +1,38 @@
-<p>flash-screen works!</p>
+<div class="Background NapicuFontDosVGA">
+  <!-- Title -->
+  <div class="BiosTitle">NapicuBios EZ Flash 2 BIOS {{get_bios_version()}}</div>
+  <section class="FlashWindow">
+    <!-- Bios Versions -->
+    <div class="BiosGrid50">
+      <div class="Window">
+        <div class="FlashTitle" style="text-align: center">Current ROM</div>
+      </div>
+      <div class="Window">
+        <div class="FlashTitle" style="text-align: center">Update ROM</div>
+      </div>
+    </div>
+    <!-- Active Path -->
+    <div class="ActivePath"></div>
+    <!-- Drives & Paths -->
+    <div class="Drives">
+      <div class="Window" [ngClass]="{SelectedWindow: is_active_drive_selection}">
+      </div>
+      <div class="Window" [ngClass]="{SelectedWindow: !is_active_drive_selection}">
+      </div>
+    </div>
+    <!-- Note -->
+    <div class="Window">
+      <div class="FlashTitle" style="text-align: left; margin-left: 2%;">Note</div>
+      <div class="BiosGrid50">
+        <div class="NoteTexts">
+          <p>[Enter] Select or Load</p>
+          <p>[Up/Down/Home/End] Move</p>
+        </div>
+        <div class="NoteTexts">
+          <p>[Tab] Switch</p>
+          <p>[Esc] Exit</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
