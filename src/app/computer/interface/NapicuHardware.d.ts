@@ -7,6 +7,7 @@ export interface HardwareCPUInformationInterface{
 
 export interface HardwareDRVInformationInterface{
   name: string;
+  sys_name?: string;
   speed: number;
   capacity: number;
   partitions: DrivePartitionsStructureDataInterface[]
@@ -61,12 +62,9 @@ export interface DriveDataFilesStructureInterface<file_structure = any> {
 export type DrivePartitionsStructureDataFlags = "boot" | "data";
 
 export interface DrivePartitionsStructureDataInterface{
+  name?: string,
   flag?: DrivePartitionsStructureDataFlags,
   data: DriveBaseFilesAndFoldersStructureInterface
-}
-
-export interface DrivePartitionsStructureInterface{
-  partitions: DrivePartitionsStructureDataInterface[]
 }
 
 
