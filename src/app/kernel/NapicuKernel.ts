@@ -1,7 +1,7 @@
 import {Process} from "./core/Process";
-import {PathConfig} from "../../config/web/PathConfig";
-import {SpeedControl} from "../../bios/scripts/SpeedControl";
-import {WebManager} from "../../utils/WebManager";
+import {PathConfig} from "@Napicu/Config/web/PathConfig";
+import {SpeedControl} from "@Napicu/Bios/scripts/SpeedControl";
+import {WebManager} from "@Napicu/Utils/WebManager";
 import {Type} from "@angular/core";
 import {KernelComponent} from "@Napicu/System/Kernel/components/kernel/kernel.component";
 

@@ -1,4 +1,4 @@
-import {Kernel} from "../kernel/NapicuKernel";
+import {Kernel} from "../NapicuKernel";
 import {WebManager} from "../../utils/WebManager";
 import {PathConfig} from "../../config/web/PathConfig";
 import {BootLoader} from "@Napicu/Bios/Boot";

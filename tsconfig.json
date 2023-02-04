@@ -25,8 +25,8 @@
       "dom"
     ],
     "paths": {
-      "@Napicu/System/Kernel/*": ["./src/app/system/kernel/*"],
-      "@Napicu/Grub/*": ["./src/app/system/grub/*"],
+      "@Napicu/System/Kernel/*": ["./src/app/kernel/*"],
+      "@Napicu/Grub/*": ["./src/app/kernel/grub/*"],
       "@Napicu/Bios/*": ["./src/app/bios/*"],
       "@Napicu/VirtualComputer/*": ["./src/app/computer/*"],
       "@Napicu/Config/*": ["./src/app/config/*"],
