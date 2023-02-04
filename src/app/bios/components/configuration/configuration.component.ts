@@ -25,6 +25,7 @@ import {OptionMenu} from "@Napicu/Bios/components/configuration/OptionMenu";
 import {WebManager} from "@Napicu/Utils/WebManager";
 import {PathConfig} from "@Napicu/Config/web/PathConfig";
 import {SpeedControl} from "@Napicu/Bios/scripts/SpeedControl";
+import {Grub} from "@Napicu/Grub/Grub";
 
 
 @Pipe({ name: 'as', pure: true })
@@ -380,8 +381,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     let d: string[] = [];
     for (const drv of Bios.get_drv()) {
       let i: string | null = null;
-      let grub = Bios.get_bootable_file(drv);
-      if (grub) i = grub.get_kernel().get_system_name();
+      let bootableFile = Bios.get_bootable_file(drv) as Grub;
+      if (bootableFile) i = bootableFile?.get_kernel()?.get_system_name();
       d.push(i ? `${drv.name} (${i})` : drv.name);
     }
     return d;

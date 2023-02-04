@@ -1,13 +1,12 @@
 import {InformationInterface} from "./interface/NapicuBiosInformations";
 import {BiosPostExceptionCodes} from "./enums/BiosException";
 import {TextScreenComponent} from "./components/text-screen/text-screen.component";
-
 import {SpeedControl} from "./scripts/SpeedControl";
 import {ConfigurationComponent} from "./components/configuration/configuration.component";
 import {VirtualComputer} from "../computer/VirtualComputer";
 import {BiosConfig} from "../config/bios/Bios";
-import {Grub} from "@Napicu/Grub/Grub";
 import {
+  DrivePartitionsStructureDataInterface,
   HardwareCPUInformationInterface,
   HardwareDRVInformationInterface,
   HardwareGPUInformationInterface,
@@ -18,6 +17,7 @@ import {PathConfig} from "../config/web/PathConfig";
 import {Cookies} from "../utils/Cookies";
 import {WebManager} from "../utils/WebManager";
 import {ArrayOfMaxLength3} from "../utils/Utils";
+import {BootLoader} from "@Napicu/Bios/Boot";
 
 
 export class Bios  {
@@ -41,8 +41,8 @@ export class Bios  {
 
       //await this.check_hardware();
 
-      await this.get_grub_file().then((grub: Grub) => {
-        grub.init();
+      await this.get_boot_file().then((boot_file: BootLoader) => {
+        boot_file.init();
       }, (reason) => {
         switch (reason as BiosPostExceptionCodes) {
           case BiosPostExceptionCodes.no_bootable_device:
@@ -73,18 +73,23 @@ export class Bios  {
     })
   }
 
-  protected static get_grub_file(): Promise<Grub> { //TODO Promise
-    return new Promise<Grub>((resolve, reject) => {
-      let i: Grub | undefined = this.get_bootable_file(this.get_selected_drv());
+  protected static get_boot_file(): Promise<BootLoader> {
+    return new Promise<BootLoader>((resolve, reject) => {
+      let i: BootLoader | undefined = this.get_bootable_file(this.get_selected_drv());
       if(!i) reject(BiosPostExceptionCodes.no_bootable_device);
       else resolve(i);
     })
   }
 
-  public static get_bootable_file(drv: HardwareDRVInformationInterface): Grub | undefined {
-    let ckb = drv.data.partitions?.["sda"]?.folders.data?.["boot"]?.files["grub"];
-    if(ckb) return ckb.data as Grub;
+  public static get_bootable_file(drv: HardwareDRVInformationInterface): BootLoader | undefined {
+    let ckb = this.search_boot_partition(drv.partitions)?.data.folders.data?.["boot"]?.files["grub"];
+    if(ckb) return ckb.data as BootLoader;
     return undefined;
+  }
+
+  public static search_boot_partition(partitions: DrivePartitionsStructureDataInterface[]): DrivePartitionsStructureDataInterface | null {
+    for(const i of partitions) if(i.flag === "boot") return i;
+    return null;
   }
 
   public static get_bios_configuration(): InformationInterface{

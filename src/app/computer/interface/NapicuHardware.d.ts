@@ -9,7 +9,7 @@ export interface HardwareDRVInformationInterface{
   name: string;
   speed: number;
   capacity: number;
-  data: DrivePartitionsStructureInterface;
+  partitions: DrivePartitionsStructureDataInterface[]
 }
 
 export interface HardwareBRDInformationInterface{
@@ -58,8 +58,15 @@ export interface DriveDataFilesStructureInterface<file_structure = any> {
   [index: string]: DriveBaseFileStructureInterface<file_structure> | undefined
 }
 
+export type DrivePartitionsStructureDataFlags = "boot" | "data";
+
+export interface DrivePartitionsStructureDataInterface{
+  flag?: DrivePartitionsStructureDataFlags,
+  data: DriveBaseFilesAndFoldersStructureInterface
+}
+
 export interface DrivePartitionsStructureInterface{
-  partitions: { [index: string]: DriveBaseFilesAndFoldersStructureInterface | undefined }
+  partitions: DrivePartitionsStructureDataInterface[]
 }
 
 

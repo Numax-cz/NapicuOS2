@@ -1,8 +1,9 @@
 import {Kernel} from "../kernel/NapicuKernel";
 import {WebManager} from "../../utils/WebManager";
 import {PathConfig} from "../../config/web/PathConfig";
+import {BootLoader} from "@Napicu/Bios/Boot";
 
-export class Grub{
+export class Grub extends BootLoader{
 
   protected selected_system: number = 0; //TODO -1
 
@@ -10,10 +11,11 @@ export class Grub{
 
 
   constructor(available_systems: Kernel[]) {
+    super();
     this.available_systems = available_systems;
   }
 
-  public init(): void {
+  public override init(): void {
     // if(this.available_systems.length === 0){
     //   TextScreenComponent.print_lines([
     //     'No system available',

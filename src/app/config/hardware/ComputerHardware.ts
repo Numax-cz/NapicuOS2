@@ -8,9 +8,11 @@ const disk_1: HardwareDRVInformationInterface = {
   capacity: 500,
   speed: 500,
 
-  data: {
-    partitions: {
-      sda: {
+
+  partitions: [
+    {
+      flag: "boot",
+      data: {
         files: {},
 
         folders: {
@@ -27,37 +29,29 @@ const disk_1: HardwareDRVInformationInterface = {
         }
       }
     }
-  }
+  ]
+
 }
 
 const disk_2: HardwareDRVInformationInterface = {
   name: "Seagate BarraCuda 2.5 500GB",
   capacity: 500,
   speed: 10,
-
-  data: {
-    partitions: {}
-  }
+  partitions: []
 }
 
 const disk_3: HardwareDRVInformationInterface = {
   name: "IBM 3330",
   capacity: 0.100,
   speed: 10,
-
-  data: {
-    partitions: {}
-  }
+  partitions: []
 }
 
 const disk_4: HardwareDRVInformationInterface = {
   name: "USB-BIOS",
   capacity: 0.100,
   speed: 10,
-
-  data: {
-    partitions: {}
-  }
+  partitions: []
 }
 
 export namespace Computer{

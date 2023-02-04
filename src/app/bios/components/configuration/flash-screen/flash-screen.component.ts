@@ -52,9 +52,9 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   }
 
   public get_drive_data(){
-    console.log(Bios.get_drv()[this.selected_drive].data);
-    let i = Bios.get_drv()[this.selected_drive].data.partitions
-    return Object.keys(i);
+    // console.log(Bios.get_drv()[this.selected_drive].data);
+    // let i = Bios.get_drv()[this.selected_drive].data.partitions
+    return Object.keys(["adf"]);
   }
 
   public get_drives(): HardwareDRVInformationInterface[]{
