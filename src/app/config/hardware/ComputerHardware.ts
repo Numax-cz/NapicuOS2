@@ -1,4 +1,4 @@
-import {TestSystem} from "../../TestSystem/system";
+import {TestSystem} from "../../system/TestSystem/system";
 import {Grub} from "@Napicu/Grub/Grub";
 import {HardwareDRVInformationInterface, HardwareInformationInterface} from "../../computer/interface/NapicuHardware";
 
