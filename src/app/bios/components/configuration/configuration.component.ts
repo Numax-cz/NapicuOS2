@@ -26,6 +26,7 @@ import {WebManager} from "@Napicu/Utils/WebManager";
 import {PathConfig} from "@Napicu/Config/web/PathConfig";
 import {SpeedControl} from "@Napicu/Bios/scripts/SpeedControl";
 import {Grub} from "@Napicu/Grub/Grub";
+import {KeyBind} from "@Napicu/Utils/KeyBind";
 
 
 @Pipe({ name: 'as', pure: true })
@@ -227,15 +228,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent) => {
-    if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_MOVE_RIGHT) this.move_right_option();
-    else if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_MOVE_LEFT) this.move_left_option();
-    else if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_MOVE_UP) this.move_up_option();
-    else if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_MOVE_DOWN) this.move_down_option();
-    else if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_ON_ENTER) this.on_select_option();
-    else if(e.keyCode === BiosConfig.BIOS_CONFIGURATION_ON_ESC) this.on_esc();
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_RIGHT, this.move_right_option);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_LEFT, this.move_left_option);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_UP, this.move_up_option);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_DOWN, this.move_down_option);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ENTER, this.on_select_option);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ESC, this.on_esc);
   }
 
-  protected on_select_option(): void {
+  protected readonly on_select_option = (): void => {
     let option;
     let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
@@ -275,7 +276,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     }
   }
 
-  protected on_esc(): void {
+  protected readonly on_esc = (): void => {
     let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
 
@@ -319,7 +320,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     }
   }
 
-  protected move_right_option(): void {
+  protected readonly move_right_option = (): void => {
     if(this.selected_in_numbers_option !== null){
       ConfigurationComponent.date_is_moved_day = false;
       let i: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
@@ -333,7 +334,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     }
   }
 
-  protected move_left_option(): void {
+  protected readonly move_left_option = (): void => {
     if (this.selected_in_numbers_option !== null) {
       ConfigurationComponent.date_is_moved_day = false;
       if (this.selected_in_numbers_option > 0) this.selected_in_numbers_option--;
@@ -346,7 +347,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     }
   }
 
-  protected move_up_option(): void {
+  protected readonly move_up_option = (): void =>  {
       if (this.selected_in_numbers_option !== null) {
         let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
           this.options[this.selected_screen_option].options[this.selected_option];
@@ -362,7 +363,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       if (this.selected_option > 0) this.check_previous_option();
   }
 
-  protected move_down_option(): void {
+  protected readonly move_down_option = (): void => {
     if (this.selected_in_numbers_option !== null) {
       let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
         this.options[this.selected_screen_option].options[this.selected_option];
