@@ -1,4 +1,5 @@
 import {InformationInterface} from "../../bios/interface/NapicuBiosInformations";
+import {BiosRomVersion} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 
 export namespace BiosConfig{
   export const PRODUCTION_CONFIGURATION: boolean = false;
@@ -14,6 +15,7 @@ export namespace BiosConfig{
   export const BIOS_CONFIGURATION_MOVE_DOWN: number = 40; //ArrowLeft
   export const BIOS_CONFIGURATION_ON_ENTER: number = 13; //Enter
   export const BIOS_CONFIGURATION_ON_ESC: number = 27; //ESC
+  export const BIOS_CONFIGURATION_ON_TAB: number = 9; //TAB
 
   //TIMES
   export const ENTER_BIOS_TIME_DELAY: number = 0;
@@ -27,6 +29,12 @@ export namespace BiosConfig{
 
 
   //CONFIGURATOR
+
+  export const BIOS_ROM: BiosRomVersion = {
+    board: "P8H66-CFT3",
+    date: "07/24/2022",
+    version: "1606 h:320"
+  }
 
   export const BIOS_VERSION: string = "v3.69_DEVELOPMENT";
   export const BIOS_VERSION_COMPANY_NAME: string = "Napicu";

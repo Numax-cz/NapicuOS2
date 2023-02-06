@@ -12,17 +12,20 @@
       </div>
     </div>
     <!-- Active Path -->
-    <div class="ActivePath"></div>
+    <div class="ActivePath">
+      <div>Path:</div>
+      <div class="CyanBackground" style="padding: 2px">{{get_path()}}</div>
+    </div>
     <!-- Drives & Paths -->
     <div class="Drives">
       <div class="Window" [ngClass]="{SelectedWindow: is_active_drive_selection}">
-        <div *ngFor="let i of get_drives(); let index = index" [ngClass]="{SelectedOption: selected_drive === index}" >
-          {{index + 1}}. {{i.name}}
+        <div *ngFor="let i of get_drives_names(); let index = index" [ngClass]="{SelectedOption: selected_drive === index}" >
+          {{i}}
         </div>
       </div>
       <div class="Window" [ngClass]="{SelectedWindow: !is_active_drive_selection}">
         <div *ngFor="let i of get_drive_data(); let index = index" [ngClass]="{SelectedOption: selected_dir === index}" >
-          {{i}}
+          {{i.name}} <span *ngIf="i.is_dir">[DIR]</span>
         </div>
       </div>
     </div>

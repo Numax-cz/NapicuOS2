@@ -82,13 +82,13 @@ export class Bios  {
   }
 
   public static get_bootable_file(drv: HardwareDRVInformationInterface): BootLoader | undefined {
-    let ckb = this.search_boot_partition(drv.partitions)?.data.folders.data?.["boot"]?.files["grub"];
+    let ckb = this.search_boot_partition(drv.partitions)?.data?.folders.data?.["boot"]?.files["grub"];
     if(ckb) return ckb.data as BootLoader;
     return undefined;
   }
 
   public static search_boot_partition(partitions: DrivePartitionsStructureDataInterface[]): DrivePartitionsStructureDataInterface | null {
-    for(const i of partitions) if(i.flag === "boot") return i;
+    for(const i of partitions) if(i.flag === "Boot") return i;
     return null;
   }
 

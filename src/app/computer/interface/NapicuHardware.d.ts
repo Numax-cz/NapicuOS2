@@ -59,12 +59,12 @@ export interface DriveDataFilesStructureInterface<file_structure = any> {
   [index: string]: DriveBaseFileStructureInterface<file_structure> | undefined
 }
 
-export type DrivePartitionsStructureDataFlags = "boot" | "data";
+export type DrivePartitionsStructureDataFlags = "Boot" | "Data" | "System Volume";
 
 export interface DrivePartitionsStructureDataInterface{
   name?: string,
   flag?: DrivePartitionsStructureDataFlags,
-  data: DriveBaseFilesAndFoldersStructureInterface
+  data?: DriveBaseFilesAndFoldersStructureInterface
 }
 
 

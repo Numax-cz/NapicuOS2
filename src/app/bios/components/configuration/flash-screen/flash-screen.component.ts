@@ -1,8 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CopyArray} from "@Napicu/Utils/CopyArray";
 import {Bios} from "@Napicu/Bios/Bios";
 import {BiosConfig} from "@Napicu/Config/bios/Bios";
-import {HardwareDRVInformationInterface} from "@Napicu/VirtualComputer/interface/NapicuHardware";
+import {
+  DriveBaseFilesAndFoldersStructureInterface,
+  DriveDataFilesStructureInterface,
+  DriveDataFoldersStructureDataType,
+  HardwareDRVInformationInterface
+} from "@Napicu/VirtualComputer/interface/NapicuHardware";
+import {KeyBind} from "@Napicu/Utils/KeyBind";
+import {ALPHABET} from "@Napicu/Utils/interface/Alphabet";
 
 @Component({
   selector: 'app-flash-screen',
@@ -18,6 +24,12 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   public selected_dir: number = 0;
 
 
+  public active_path: DriveBaseFilesAndFoldersStructureInterface | null = null;
+
+  public drive_data_cache: { name: string, is_dir: boolean }[] = []
+
+  public dirs_history_indexes: number[] = [-1];
+
   public ngOnInit() {
     window.addEventListener("keydown", this.onKeyDownEvent);
   }
@@ -27,41 +39,132 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent): void => {
-
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_UP, this.move_up);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_DOWN, this.move_down);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ESC, this.on_esc);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_TAB, this.on_tab);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ENTER, this.on_enter);
   }
 
 
-  protected on_enter(): void {
+  protected readonly on_enter = (): void => {
+
+    if(!this.is_active_drive_selection){
+      //Set partition
+      if(this.dirs_history_indexes[0] == -1) {
+        this.dirs_history_indexes[0] = this.selected_dir;
+        return;
+      }
+      //Back
+      if(this.drive_data_cache[this.selected_dir].name === "..") {
+        this.dirs_history_indexes.pop();
+        if(!this.dirs_history_indexes.length) this.dirs_history_indexes = [-1];
+      }
+      //Next
+      if(this.drive_data_cache[this.selected_dir].is_dir) {
+        this.dirs_history_indexes.push(this.selected_dir - 1);
+      }
+
+
+
+
+
+    }
+
+
 
   }
 
-  protected on_tab(): void {
+  protected readonly on_tab = (): void => {
     this.is_active_drive_selection = !this.is_active_drive_selection;
   }
 
-  protected on_esc(): void {
+  protected readonly on_esc = (): void => {
 
   }
 
-  protected move_up(): void {
+  protected readonly move_up = (): void => {
+    if (this.is_active_drive_selection){
+      this.selected_dir = 0;
+      this.dirs_history_indexes = [-1];
+      if (this.selected_drive > 0) this.selected_drive--
+    } else if (this.selected_dir > 0) this.selected_dir--
+
 
   }
 
-  protected move_down(): void {
-
+  protected readonly move_down = (): void => {
+    if (this.is_active_drive_selection) {
+      this.selected_dir = 0;
+      this.dirs_history_indexes = [-1];
+      if (this.selected_drive + 1 < this.get_drives_names().length) this.selected_drive++
+    } else if (this.selected_dir + 1 < this.get_drive_data().length) this.selected_dir++
   }
 
-  public get_drive_data(){
-    // console.log(Bios.get_drv()[this.selected_drive].data);
-    // let i = Bios.get_drv()[this.selected_drive].data.partitions
-    return Object.keys(["adf"]);
+  public get_drive_data(): { name: string, is_dir: boolean }[]{
+    let i: { name: string, is_dir: boolean }[] = [];
+    let partitions = Bios.get_drv()[this.selected_drive].partitions
+
+    if(partitions.length > 1 && this.dirs_history_indexes[0] == -1) {
+      for (const partition of partitions) {
+        if (partition.flag) i.push({name: partition.flag, is_dir: false});
+      }
+    } else {
+      if(this.dirs_history_indexes[0] == -1) this.dirs_history_indexes[0] = 0;
+
+      let ac_path: DriveBaseFilesAndFoldersStructureInterface | undefined = partitions[this.dirs_history_indexes[0]]?.data;
+      for(let i = 1; i < this.dirs_history_indexes.length; i++){
+        let folder = partitions[this.dirs_history_indexes[0]].data?.folders;
+        let d: DriveBaseFilesAndFoldersStructureInterface | undefined = folder?.data?.[Object.keys(folder?.data || {})[this.dirs_history_indexes[i]]];
+        if(d) ac_path = d;
+        else break;
+      }
+
+      //TODO HERE
+      if(this.dirs_history_indexes.length > 0) i.push({name: "..", is_dir: false});
+
+      const d: DriveDataFoldersStructureDataType | undefined = ac_path?.folders?.data
+      const f: DriveDataFilesStructureInterface | undefined = ac_path?.files;
+
+      if (d) {
+        let directories_names: string[] = Object.keys(d);
+        i = [...i, ...directories_names.map((value: string) => {
+          return {name: value, is_dir: true}
+        })];
+      }
+
+      if (f) {
+        let folders_name: string[] = Object.keys(f);
+        i = [...i, ...folders_name.map((value: string) => {
+          return {name: value, is_dir: false}
+        })];
+      }
+    }
+
+    this.drive_data_cache = i;
+    return i;
   }
 
-  public get_drives(): HardwareDRVInformationInterface[]{
-    return Bios.get_drv()
+  public get_path(): string {
+    let path: string = "";
+
+
+    return path;
+  }
+
+  public get_drives_names(): string[]{
+    return Bios.get_drv().map((drive: HardwareDRVInformationInterface, index: number) => {
+      let name = drive.name;
+      if(name.length > 9) name = `${drive.name.substr(0, 9)}...`;
+      return `${this.get_alphabet(index + 2)}: ${name}`
+    });
   }
 
   public get_bios_version(): string{
     return BiosConfig.BIOS_VERSION;
+  }
+
+  public get_alphabet(index: number): string {
+    return ALPHABET[index];
   }
 }

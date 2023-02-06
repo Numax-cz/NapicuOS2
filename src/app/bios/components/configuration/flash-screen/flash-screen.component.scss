@@ -36,6 +36,11 @@
     border-color: #0ff;
   }
 
+  .CyanBackground{
+    color: black !important;
+    background-color: #0ff !important;
+  }
+
   .SelectedOption{
     background-color: #f0f;
   }
@@ -46,7 +51,9 @@
   }
 
   .ActivePath{
-
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding: 0 40px;
   }
 
   .Drives{
