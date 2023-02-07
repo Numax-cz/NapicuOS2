@@ -120,8 +120,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
         else break;
       }
 
-      //TODO HERE
-      if(this.dirs_history_indexes.length > 0) i.push({name: "..", is_dir: false});
+      if(this.dirs_history_indexes.length > 0 && partitions.length > 1) i.push({name: "..", is_dir: false});
 
       const d: DriveDataFoldersStructureDataType | undefined = ac_path?.folders?.data
       const f: DriveDataFilesStructureInterface | undefined = ac_path?.files;
