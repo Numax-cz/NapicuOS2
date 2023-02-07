@@ -1,5 +1,5 @@
 import {InformationInterface} from "../../bios/interface/NapicuBiosInformations";
-import {BiosRomVersion} from "@Napicu/Bios/components/configuration/interface/FlashFile";
+import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 
 export namespace BiosConfig{
   export const PRODUCTION_CONFIGURATION: boolean = false;
@@ -29,6 +29,13 @@ export namespace BiosConfig{
 
 
   //CONFIGURATOR
+  export const BIOS_NEW_ROM_FILE: FlashFile = {
+    rom_information: {
+      board: "P8H66-CFT3",
+      date: "01/24/2023",
+      version: "1906 h:420"
+    }
+  }
 
   export const BIOS_ROM: BiosRomVersion = {
     board: "P8H66-CFT3",

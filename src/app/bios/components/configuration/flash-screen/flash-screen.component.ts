@@ -9,6 +9,7 @@ import {
 } from "@Napicu/VirtualComputer/interface/NapicuHardware";
 import {KeyBind} from "@Napicu/Utils/KeyBind";
 import {ALPHABET} from "@Napicu/Utils/interface/Alphabet";
+import {FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 
 @Component({
   selector: 'app-flash-screen',
@@ -49,26 +50,35 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
   protected readonly on_enter = (): void => {
 
-    if(!this.is_active_drive_selection){
+    if(!this.is_active_drive_selection && this.drive_data_cache[this.selected_dir]) {
+      //Back
+      if (this.drive_data_cache[this.selected_dir].name === "..") {
+        this.dirs_history_indexes.pop();
+        if (!this.dirs_history_indexes.length) this.dirs_history_indexes = [-1];
+        return;
+      }
+
       //Set partition
-      if(this.dirs_history_indexes[0] == -1) {
+      if (this.dirs_history_indexes[0] == -1) {
         this.dirs_history_indexes[0] = this.selected_dir;
         return;
       }
-      //Back
-      if(this.drive_data_cache[this.selected_dir].name === "..") {
-        this.dirs_history_indexes.pop();
-        if(!this.dirs_history_indexes.length) this.dirs_history_indexes = [-1];
-      }
+
       //Next
-      if(this.drive_data_cache[this.selected_dir].is_dir) {
+      if (this.drive_data_cache[this.selected_dir].is_dir) {
         this.dirs_history_indexes.push(this.selected_dir - 1);
+      } else if (!this.drive_data_cache[this.selected_dir].is_dir){
+        let files: DriveDataFilesStructureInterface<any> | undefined = this.get_active_path_directory()?.files;
+
+        let rom_file: FlashFile = files?.[this.drive_data_cache[this.selected_dir].name]?.data as FlashFile;
+        if(rom_file.rom_information){
+
+        }else {
+          //Unsupported file
+        }
+
+
       }
-
-
-
-
-
     }
 
 
@@ -89,8 +99,6 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
       this.dirs_history_indexes = [-1];
       if (this.selected_drive > 0) this.selected_drive--
     } else if (this.selected_dir > 0) this.selected_dir--
-
-
   }
 
   protected readonly move_down = (): void => {
@@ -112,13 +120,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
     } else {
       if(this.dirs_history_indexes[0] == -1) this.dirs_history_indexes[0] = 0;
 
-      let ac_path: DriveBaseFilesAndFoldersStructureInterface | undefined = partitions[this.dirs_history_indexes[0]]?.data;
-      for(let i = 1; i < this.dirs_history_indexes.length; i++){
-        let folder = partitions[this.dirs_history_indexes[0]].data?.folders;
-        let d: DriveBaseFilesAndFoldersStructureInterface | undefined = folder?.data?.[Object.keys(folder?.data || {})[this.dirs_history_indexes[i]]];
-        if(d) ac_path = d;
-        else break;
-      }
+      const ac_path = this.get_active_path_directory();
 
       if(this.dirs_history_indexes.length > 0 && partitions.length > 1) i.push({name: "..", is_dir: false});
 
@@ -149,6 +151,18 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
 
     return path;
+  }
+
+  public get_active_path_directory(): DriveBaseFilesAndFoldersStructureInterface | undefined {
+    let partitions = Bios.get_drv()[this.selected_drive].partitions;
+    let ac_path: DriveBaseFilesAndFoldersStructureInterface | undefined = partitions[this.dirs_history_indexes[0]]?.data;
+    for(let i = 1; i < this.dirs_history_indexes.length; i++){
+      let folder = partitions[this.dirs_history_indexes[0]].data?.folders;
+      let d: DriveBaseFilesAndFoldersStructureInterface | undefined = folder?.data?.[Object.keys(folder?.data || {})[this.dirs_history_indexes[i]]];
+      if(d) ac_path = d;
+      else break;
+    }
+    return ac_path;
   }
 
   public get_drives_names(): string[]{

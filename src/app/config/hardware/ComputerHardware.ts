@@ -1,6 +1,7 @@
 import {TestSystem} from "../../system/TestSystem/system";
 import {Grub} from "@Napicu/Grub/Grub";
 import {HardwareDRVInformationInterface, HardwareInformationInterface} from "../../computer/interface/NapicuHardware";
+import {BiosConfig} from "@Napicu/Config/bios/Bios";
 
 
 const disk_1: HardwareDRVInformationInterface = {
@@ -56,14 +57,14 @@ const disk_3: HardwareDRVInformationInterface = {
 
 const disk_4: HardwareDRVInformationInterface = {
   name: "USB-BIOS",
-  capacity: 0.100,
-  speed: 10,
+  capacity: 1,
+  speed: 200,
   partitions: [
     {
       flag: "System Volume",
       data: {
         files: {
-          update_bios: {data: ""}
+          "P8H66-CFT3": {data: BiosConfig.BIOS_NEW_ROM_FILE}
         },
         folders: {}
       }
