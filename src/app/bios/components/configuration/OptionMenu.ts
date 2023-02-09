@@ -11,6 +11,10 @@ export class OptionMenu {
 
   protected declare selected_option: number;
 
+  protected declare background_color?: string;
+
+  protected declare title_color?: string;
+
   constructor(options: string[], onChangeValue: ((value: number) => void) | null, onEsc: ((value: number) => void) | null, selectedOption?: number) {
     this.options = options;
     this.onChangeValue = onChangeValue;
@@ -22,8 +26,16 @@ export class OptionMenu {
     return this.title;
   }
 
+  public get_title_color(): string | undefined {
+    return this.title_color;
+  }
+
   public get_options(): string[]{
     return this.options;
+  }
+
+  public get_background_color(): string | undefined {
+    return this.background_color
   }
 
   public get_selected_option(): number {
@@ -40,5 +52,13 @@ export class OptionMenu {
 
   public set_title(title: string): void {
     this.title = title;
+  }
+
+  public set_title_color(color: string): void {
+    this.title_color = color;
+  }
+
+  public set_background_color(color: string): void {
+    this.background_color = color;
   }
 }

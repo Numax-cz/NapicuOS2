@@ -10,6 +10,7 @@ import {
 import {KeyBind} from "@Napicu/Utils/KeyBind";
 import {ALPHABET} from "@Napicu/Utils/interface/Alphabet";
 import {FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
+import {OptionMenu} from "@Napicu/Bios/components/configuration/OptionMenu";
 
 @Component({
   selector: 'app-flash-screen',
@@ -24,12 +25,14 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
   public selected_dir: number = 0;
 
-
   public active_path: DriveBaseFilesAndFoldersStructureInterface | null = null;
 
   public drive_data_cache: { name: string, is_dir: boolean }[] = []
 
   public dirs_history_indexes: number[] = [-1];
+
+  public active_option_menu: OptionMenu | null = null;
+
 
   public ngOnInit() {
     window.addEventListener("keydown", this.onKeyDownEvent);
@@ -73,8 +76,16 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
         let rom_file: FlashFile = files?.[this.drive_data_cache[this.selected_dir].name]?.data as FlashFile;
         if(rom_file.rom_information){
 
-        }else {
-          //Unsupported file
+        } else { //Unsupported file
+
+          const menu = new OptionMenu(["Ok"], null, () => {
+            this.active_option_menu = null;
+          });
+
+          menu.set_title("Unsupported file");
+          menu.set_background_color("red");
+
+          this.active_option_menu = menu;
         }
 
 

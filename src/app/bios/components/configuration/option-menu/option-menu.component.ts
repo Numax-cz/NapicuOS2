@@ -23,6 +23,10 @@ export class OptionMenuComponent implements OnInit, OnDestroy, AfterViewInit{
 
   @Input() public selected_option = 0;
 
+  @Input() public declare background_color?: string;
+
+  @Input() public declare title_color?: string;
+
   ngOnInit() {
     window.addEventListener("keydown", this.onKeyDownEvent);
   }

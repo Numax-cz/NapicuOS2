@@ -4,7 +4,7 @@ import {TextScreenComponent} from "./components/text-screen/text-screen.componen
 import {NgModule} from "@angular/core";
 
 import {SplashScreenComponent} from "./components/splash-screen/splash-screen.component";
-import {NgClass, NgComponentOutlet, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgComponentOutlet, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {PathConfig} from "../config/web/PathConfig";
 import { PopUpCookiesComponent } from './components/pop-up-cookies/pop-up-cookies.component';
 import { FlashScreenComponent } from './components/configuration/flash-screen/flash-screen.component';
@@ -18,7 +18,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), NgComponentOutlet, NgForOf, NgClass, NgIf],
+    imports: [RouterModule.forRoot(routes), NgComponentOutlet, NgForOf, NgClass, NgIf, NgStyle],
   exports: [RouterModule],
   declarations: [
     SplashScreenComponent,

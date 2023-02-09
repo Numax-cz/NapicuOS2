@@ -44,4 +44,17 @@
       </div>
     </div>
   </section>
+
+  <bios-option-menu
+    *ngIf="active_option_menu"
+    [options]="active_option_menu.get_options()"
+    [selected_option]="active_option_menu.get_selected_option()"
+    [title]="active_option_menu.get_title()"
+    [title_color]="active_option_menu.get_title_color()"
+    [background_color]="active_option_menu.get_background_color()"
+    [row_options]="active_option_menu.is_row_options()"
+    [onChangeValue]="active_option_menu.onChangeValue"
+    (onEsc)="active_option_menu.onEsc?.($event); active_option_menu = null"
+  ></bios-option-menu>
 </div>
+
