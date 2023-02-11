@@ -25,11 +25,9 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
   public selected_dir: number = 0;
 
-  public active_path: DriveBaseFilesAndFoldersStructureInterface | null = null;
-
   public drive_data_cache: { name: string, is_dir: boolean }[] = []
 
-  public dirs_history_indexes: number[] = [-1];
+  public dirs_history_indexes: {name: string | null, index: number }[] = [{name: null, index: -1}];
 
   public active_option_menu: OptionMenu | null = null;
 
@@ -50,26 +48,25 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
     KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ENTER, this.on_enter);
   }
 
-
   protected readonly on_enter = (): void => {
 
     if(!this.is_active_drive_selection && this.drive_data_cache[this.selected_dir]) {
       //Back
       if (this.drive_data_cache[this.selected_dir].name === "..") {
         this.dirs_history_indexes.pop();
-        if (!this.dirs_history_indexes.length) this.dirs_history_indexes = [-1];
+        if (!this.dirs_history_indexes.length) this.dirs_history_indexes = [{name: null, index: -1}];
         return;
       }
 
       //Set partition
-      if (this.dirs_history_indexes[0] == -1) {
-        this.dirs_history_indexes[0] = this.selected_dir;
+      if (this.dirs_history_indexes[0].index == -1) {
+        this.dirs_history_indexes[0] = { name:this.drive_data_cache[this.selected_dir].name, index: this.selected_dir};
         return;
       }
 
       //Next
       if (this.drive_data_cache[this.selected_dir].is_dir) {
-        this.dirs_history_indexes.push(this.selected_dir - 1);
+        this.dirs_history_indexes.push({name: this.drive_data_cache[this.selected_dir].name, index: this.selected_dir - 1});
       } else if (!this.drive_data_cache[this.selected_dir].is_dir){
         let files: DriveDataFilesStructureInterface<any> | undefined = this.get_active_path_directory()?.files;
 
@@ -87,13 +84,8 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
           this.active_option_menu = menu;
         }
-
-
       }
     }
-
-
-
   }
 
   protected readonly on_tab = (): void => {
@@ -107,7 +99,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   protected readonly move_up = (): void => {
     if (this.is_active_drive_selection){
       this.selected_dir = 0;
-      this.dirs_history_indexes = [-1];
+      this.dirs_history_indexes = [{name: null, index: -1}];
       if (this.selected_drive > 0) this.selected_drive--
     } else if (this.selected_dir > 0) this.selected_dir--
   }
@@ -115,21 +107,21 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   protected readonly move_down = (): void => {
     if (this.is_active_drive_selection) {
       this.selected_dir = 0;
-      this.dirs_history_indexes = [-1];
+      this.dirs_history_indexes = [{name: null, index: -1}];
       if (this.selected_drive + 1 < this.get_drives_names().length) this.selected_drive++
     } else if (this.selected_dir + 1 < this.get_drive_data().length) this.selected_dir++
   }
 
   public get_drive_data(): { name: string, is_dir: boolean }[]{
     let i: { name: string, is_dir: boolean }[] = [];
-    let partitions = Bios.get_drv()[this.selected_drive].partitions
+    let partitions = Bios.get_drv()[this.selected_drive].partitions;
 
-    if(partitions.length > 1 && this.dirs_history_indexes[0] == -1) {
+    if(partitions.length > 1 && this.dirs_history_indexes[0].index == -1) {
       for (const partition of partitions) {
         if (partition.flag) i.push({name: partition.flag, is_dir: false});
       }
     } else {
-      if(this.dirs_history_indexes[0] == -1) this.dirs_history_indexes[0] = 0;
+      if(this.dirs_history_indexes[0].index == -1) this.dirs_history_indexes[0] = {name: null, index: 0};
 
       const ac_path = this.get_active_path_directory();
 
@@ -157,19 +149,12 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
     return i;
   }
 
-  public get_path(): string {
-    let path: string = "";
-
-
-    return path;
-  }
-
   public get_active_path_directory(): DriveBaseFilesAndFoldersStructureInterface | undefined {
     let partitions = Bios.get_drv()[this.selected_drive].partitions;
-    let ac_path: DriveBaseFilesAndFoldersStructureInterface | undefined = partitions[this.dirs_history_indexes[0]]?.data;
+    let ac_path: DriveBaseFilesAndFoldersStructureInterface | undefined = partitions[this.dirs_history_indexes[0].index]?.data;
     for(let i = 1; i < this.dirs_history_indexes.length; i++){
-      let folder = partitions[this.dirs_history_indexes[0]].data?.folders;
-      let d: DriveBaseFilesAndFoldersStructureInterface | undefined = folder?.data?.[Object.keys(folder?.data || {})[this.dirs_history_indexes[i]]];
+      let folder = partitions[this.dirs_history_indexes[0].index].data?.folders;
+      let d: DriveBaseFilesAndFoldersStructureInterface | undefined = folder?.data?.[Object.keys(folder?.data || {})[this.dirs_history_indexes[i].index]];
       if(d) ac_path = d;
       else break;
     }

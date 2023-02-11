@@ -14,7 +14,8 @@
     <!-- Active Path -->
     <div class="ActivePath">
       <div>Path:</div>
-      <div class="CyanBackground" style="padding: 2px">{{get_path()}}</div>
+      <div class="CyanBackground" style="padding: 2px"><span>{{get_alphabet(selected_drive + 2)}}:</span>
+        <span *ngFor="let i of dirs_history_indexes; let index = index">\{{i.name}}</span></div>
     </div>
     <!-- Drives & Paths -->
     <div class="Drives">
