@@ -43,6 +43,7 @@
     <!-- Note -->
     <div class="Window">
       <div class="FlashTitle" style="text-align: left; margin-left: 2%;">Note</div>
+      <div *ngIf="flashing_progress_bar_title">{{flashing_progress_bar_title}}</div>
       <ng-container *ngIf="!progress_bar">
         <div class="BiosGrid50">
           <div class="NoteTexts">

@@ -36,6 +36,8 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
   public progress_bar: ProgressBar | null = null;
 
+  public flashing_progress_bar_title: string | null = null;
+
   public ngOnInit() {
     window.addEventListener("keydown", this.onKeyDownEvent);
   }
@@ -79,6 +81,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
         let rom_file: FlashFile = files?.[this.drive_data_cache[this.selected_dir].name]?.data as FlashFile;
         if(rom_file.rom_information) {
+          this.set_flashing_progress_bar_title("Checking File:");
           this.progress_bar = new ProgressBar(75, () => {
             this.loaded_new_rom_file = rom_file.rom_information;
             const menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
@@ -134,12 +137,22 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   }
 
   public start_flashing(): void {
+    this.set_flashing_progress_bar_title("Erasing BIOS:");
+    this.progress_bar = new ProgressBar(10, () => {
 
+      this.set_flashing_progress_bar_title("Writing BIOS:");
+      this.progress_bar = new ProgressBar(20, () => {
 
+        if(this.loaded_new_rom_file) Bios.flash_bios_rom(this.loaded_new_rom_file);
+        this.set_flashing_progress_bar_title("Verifying BIOS:");
+        this.progress_bar = new ProgressBar(5, () => {
 
-
-    if(this.loaded_new_rom_file) Bios.flash_bios_rom(this.loaded_new_rom_file);
-
+        });
+        this.progress_bar.run();
+      });
+      this.progress_bar.run();
+    });
+    this.progress_bar.run();
   }
 
   public get_drive_data(): { name: string, is_dir: boolean }[]{
@@ -197,6 +210,10 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
       if(name.length > 9) name = `${drive.name.substr(0, 9)}...`;
       return `${this.get_alphabet(index + 2)}: ${name}`
     });
+  }
+
+  public set_flashing_progress_bar_title(value: string | null): void {
+    this.flashing_progress_bar_title = value;
   }
 
   public get_bios_version(): string {
