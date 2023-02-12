@@ -11,6 +11,17 @@
   padding: 20px;
 }
 
+.RomInformationContainer{
+  >div{
+    display: grid;
+    grid-template-columns: 30% 70%;
+  }
+  span{
+    color: black;
+    padding: 2px;
+    background-color: #0ff;
+  }
+}
 
 .FlashWindow{
   width: 100%;

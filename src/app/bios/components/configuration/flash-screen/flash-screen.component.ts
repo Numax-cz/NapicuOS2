@@ -9,7 +9,7 @@ import {
 } from "@Napicu/VirtualComputer/interface/NapicuHardware";
 import {KeyBind} from "@Napicu/Utils/KeyBind";
 import {ALPHABET} from "@Napicu/Utils/interface/Alphabet";
-import {FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
+import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 import {OptionMenu} from "@Napicu/Bios/components/configuration/OptionMenu";
 
 @Component({
@@ -30,6 +30,8 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   public dirs_history_indexes: {name: string | null, index: number }[] = [{name: null, index: -1}];
 
   public active_option_menu: OptionMenu | null = null;
+
+  public loaded_new_rom_file: BiosRomVersion | null = null;
 
 
   public ngOnInit() {
@@ -73,7 +75,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
         let rom_file: FlashFile = files?.[this.drive_data_cache[this.selected_dir].name]?.data as FlashFile;
         if(rom_file.rom_information){
-
+          this.loaded_new_rom_file = rom_file.rom_information;
         } else { //Unsupported file
 
           const menu = new OptionMenu(["Ok"], null, () => {
@@ -170,8 +172,12 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
     });
   }
 
-  public get_bios_version(): string{
+  public get_bios_version(): string {
     return BiosConfig.BIOS_VERSION;
+  }
+
+  public get_bios_rom(): BiosRomVersion {
+    return BiosConfig.BIOS_ROM;
   }
 
   public get_alphabet(index: number): string {

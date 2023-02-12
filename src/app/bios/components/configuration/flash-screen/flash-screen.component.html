@@ -6,9 +6,19 @@
     <div class="BiosGrid50">
       <div class="Window">
         <div class="FlashTitle" style="text-align: center">Current ROM</div>
+        <div class="RomInformationContainer">
+          <div>board<span>{{get_bios_rom().board}}</span></div>
+          <div>date<span>{{get_bios_rom().date}}</span></div>
+          <div>ver<span>{{get_bios_rom().version}}</span></div>
+        </div>
       </div>
       <div class="Window">
         <div class="FlashTitle" style="text-align: center">Update ROM</div>
+        <div class="RomInformationContainer">
+          <div>board<span>{{loaded_new_rom_file?.board || "Unknown"}}</span></div>
+          <div>date<span>{{loaded_new_rom_file?.date   || "Unknown"}}</span></div>
+          <div>ver<span>{{loaded_new_rom_file?.version || "Unknown"}}</span></div>
+        </div>
       </div>
     </div>
     <!-- Active Path -->
