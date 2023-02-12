@@ -27,6 +27,8 @@ export namespace BiosConfig{
 
   export const ENTER_FLASH_MENU_TIME: number = 1500;
 
+  export const EXIT_FLASH_REBOOT_TIME: number = 1400;
+
 
   //CONFIGURATOR
   export const BIOS_NEW_ROM_FILE: FlashFile = {

@@ -1,5 +1,6 @@
 import {InformationInterface} from "../../bios/interface/NapicuBiosInformations";
 import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
+import {EXIT_FLASH_REBOOT_TIME} from "@Napicu/Config/bios/Bios";
 
 
 export namespace BiosConfig{
@@ -29,6 +30,9 @@ export namespace BiosConfig{
 
   export const ENTER_FLASH_MENU_TIME: number = 1500;
 
+  export const EXIT_FLASH_REBOOT_TIME: number = 1400;
+
+
 
   export const BIOS_NEW_ROM_FILE: FlashFile = {
     rom_information: {
@@ -51,6 +55,8 @@ export namespace BiosConfig{
 
 
   export const DEFAULT_CONFIGURATION: InformationInterface = {
+    rom: BIOS_ROM,
+
     selected_drive: 0,
 
     time: [0, 0, 0],

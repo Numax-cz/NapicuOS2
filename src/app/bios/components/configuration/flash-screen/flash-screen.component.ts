@@ -13,6 +13,7 @@ import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/i
 import {OptionMenu} from "@Napicu/Bios/components/configuration/OptionMenu";
 import {ProgressBar} from "@Napicu/Bios/scripts/ProgressBar";
 import {VirtualComputer} from "@Napicu/VirtualComputer/VirtualComputer";
+import {SpeedControl} from "@Napicu/Bios/scripts/SpeedControl";
 
 @Component({
   selector: 'app-flash-screen',
@@ -158,9 +159,11 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
           menu.set_background_color("red");
           menu.disable_esc_emitter_callback();
 
-          VirtualComputer.reboot();
-          this.active_option_menu = menu;
+          setTimeout(() => {
+            VirtualComputer.reboot();
+          }, SpeedControl.calculate_hardware_speed(BiosConfig.EXIT_FLASH_REBOOT_TIME));
 
+          this.active_option_menu = menu;
         });
         this.progress_bar.run();
       });
