@@ -11,6 +11,7 @@ import {KeyBind} from "@Napicu/Utils/KeyBind";
 import {ALPHABET} from "@Napicu/Utils/interface/Alphabet";
 import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 import {OptionMenu} from "@Napicu/Bios/components/configuration/OptionMenu";
+import {ProgressBar} from "@Napicu/Bios/scripts/ProgressBar";
 
 @Component({
   selector: 'app-flash-screen',
@@ -33,6 +34,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
   public loaded_new_rom_file: BiosRomVersion | null = null;
 
+  public progress_bar: ProgressBar | null = null;
 
   public ngOnInit() {
     window.addEventListener("keydown", this.onKeyDownEvent);
@@ -43,11 +45,13 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent): void => {
-    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_UP, this.move_up);
-    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_DOWN, this.move_down);
-    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ESC, this.on_esc);
-    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_TAB, this.on_tab);
-    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ENTER, this.on_enter);
+    if(!this.active_option_menu){
+      KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_UP, this.move_up);
+      KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_DOWN, this.move_down);
+      KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ESC, this.on_esc);
+      KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_TAB, this.on_tab);
+      KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ENTER, this.on_enter);
+    } else e.preventDefault();
   }
 
   protected readonly on_enter = (): void => {
@@ -74,8 +78,22 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
         let files: DriveDataFilesStructureInterface<any> | undefined = this.get_active_path_directory()?.files;
 
         let rom_file: FlashFile = files?.[this.drive_data_cache[this.selected_dir].name]?.data as FlashFile;
-        if(rom_file.rom_information){
-          this.loaded_new_rom_file = rom_file.rom_information;
+        if(rom_file.rom_information) {
+          this.progress_bar = new ProgressBar(75, () => {
+            this.loaded_new_rom_file = rom_file.rom_information;
+            const menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
+              if(value === 0) this.start_flashing();
+              this.active_option_menu = null;
+            });
+
+            menu.set_title("Are you sure to update BIOS?");
+            menu.set_background_color("red");
+            menu.set_row_option_layout();
+
+            this.active_option_menu = menu;
+          });
+
+          this.progress_bar.run();
         } else { //Unsupported file
 
           const menu = new OptionMenu(["Ok"], null, () => {
@@ -113,6 +131,15 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
       this.dirs_history_indexes = [{name: null, index: -1}];
       if (this.selected_drive + 1 < this.get_drives_names().length) this.selected_drive++
     } else if (this.selected_dir + 1 < this.get_drive_data().length) this.selected_dir++
+  }
+
+  public start_flashing(): void {
+
+
+
+
+    if(this.loaded_new_rom_file) Bios.flash_bios_rom(this.loaded_new_rom_file);
+
   }
 
   public get_drive_data(): { name: string, is_dir: boolean }[]{
@@ -177,7 +204,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   }
 
   public get_bios_rom(): BiosRomVersion {
-    return BiosConfig.BIOS_ROM;
+    return Bios.get_bios_configuration().rom;
   }
 
   public get_alphabet(index: number): string {

@@ -18,6 +18,7 @@ import {Cookies} from "../utils/Cookies";
 import {WebManager} from "../utils/WebManager";
 import {ArrayOfMaxLength3} from "../utils/Utils";
 import {BootLoader} from "@Napicu/Bios/Boot";
+import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 
 
 export class Bios  {
@@ -141,6 +142,10 @@ export class Bios  {
     TextScreenComponent.clear();
   }
 
+  public static flash_bios_rom(version: BiosRomVersion): void {
+    this.biosConfiguration.rom = version;
+    this.save_bios_config();
+  }
 
   public static get_cpu(): HardwareCPUInformationInterface {
     return VirtualComputer.get_hardware().cpu;

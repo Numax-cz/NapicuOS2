@@ -80,3 +80,13 @@
     }
   }
 }
+
+.ProgressBar{
+  width: 100%;
+  .Line{
+    background-color: gray;
+    height: 30px;
+    background-color: #d3d3d3;
+    background-repeat: repeat;
+  }
+}

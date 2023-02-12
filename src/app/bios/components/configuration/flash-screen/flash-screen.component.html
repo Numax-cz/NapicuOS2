@@ -43,16 +43,25 @@
     <!-- Note -->
     <div class="Window">
       <div class="FlashTitle" style="text-align: left; margin-left: 2%;">Note</div>
-      <div class="BiosGrid50">
-        <div class="NoteTexts">
-          <p>[Enter] Select or Load</p>
-          <p>[Up/Down/Home/End] Move</p>
+      <ng-container *ngIf="!progress_bar">
+        <div class="BiosGrid50">
+          <div class="NoteTexts">
+            <p>[Enter] Select or Load</p>
+            <p>[Up/Down/Home/End] Move</p>
+          </div>
+          <div class="NoteTexts">
+            <p>[Tab] Switch</p>
+            <p>[Esc] Exit</p>
+          </div>
         </div>
-        <div class="NoteTexts">
-          <p>[Tab] Switch</p>
-          <p>[Esc] Exit</p>
+      </ng-container>
+
+      <ng-container *ngIf="progress_bar">
+        <div class="ProgressBar">
+          <div class="Line" [ngStyle]="{'width': progress_bar.get_width_percentage() + '%'}"></div>
         </div>
-      </div>
+      </ng-container>
+
     </div>
   </section>
 

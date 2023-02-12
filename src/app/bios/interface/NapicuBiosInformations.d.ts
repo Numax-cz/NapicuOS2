@@ -1,6 +1,9 @@
 import {ArrayOfMaxLength3} from "@Napicu/Utils/Utils";
+import {BiosRomVersion} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 
 export interface InformationInterface {
+
+  rom: BiosRomVersion;
 
   selected_drive: number;
 
