@@ -12,6 +12,7 @@ import {ALPHABET} from "@Napicu/Utils/interface/Alphabet";
 import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 import {OptionMenu} from "@Napicu/Bios/components/configuration/OptionMenu";
 import {ProgressBar} from "@Napicu/Bios/scripts/ProgressBar";
+import {VirtualComputer} from "@Napicu/VirtualComputer/VirtualComputer";
 
 @Component({
   selector: 'app-flash-screen',
@@ -157,6 +158,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
           menu.set_background_color("red");
           menu.disable_esc_emitter_callback();
 
+          VirtualComputer.reboot();
           this.active_option_menu = menu;
 
         });
