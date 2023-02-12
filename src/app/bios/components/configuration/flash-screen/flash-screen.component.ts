@@ -49,7 +49,6 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   }
 
   protected readonly on_enter = (): void => {
-
     if(!this.is_active_drive_selection && this.drive_data_cache[this.selected_dir]) {
       //Back
       if (this.drive_data_cache[this.selected_dir].name === "..") {
@@ -61,12 +60,14 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
       //Set partition
       if (this.dirs_history_indexes[0].index == -1) {
         this.dirs_history_indexes[0] = { name:this.drive_data_cache[this.selected_dir].name, index: this.selected_dir};
+        this.selected_dir = 0;
         return;
       }
 
       //Next
       if (this.drive_data_cache[this.selected_dir].is_dir) {
         this.dirs_history_indexes.push({name: this.drive_data_cache[this.selected_dir].name, index: this.selected_dir - 1});
+        this.selected_dir = 0;
       } else if (!this.drive_data_cache[this.selected_dir].is_dir){
         let files: DriveDataFilesStructureInterface<any> | undefined = this.get_active_path_directory()?.files;
 
