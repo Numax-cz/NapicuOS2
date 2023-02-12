@@ -38,6 +38,8 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
   public flashing_progress_bar_title: string | null = null;
 
+  public flashing: boolean = false;
+
   public ngOnInit() {
     window.addEventListener("keydown", this.onKeyDownEvent);
   }
@@ -47,7 +49,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent): void => {
-    if(!this.active_option_menu){
+    if(!this.active_option_menu && !this.flashing){
       KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_UP, this.move_up);
       KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_DOWN, this.move_down);
       KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ESC, this.on_esc);
@@ -81,11 +83,14 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
         let rom_file: FlashFile = files?.[this.drive_data_cache[this.selected_dir].name]?.data as FlashFile;
         if(rom_file.rom_information) {
+          this.flashing = true;
           this.set_flashing_progress_bar_title("Checking File:");
           this.progress_bar = new ProgressBar(75, () => {
             this.loaded_new_rom_file = rom_file.rom_information;
             const menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
               if(value === 0) this.start_flashing();
+              else this.flashing = false;
+
               this.active_option_menu = null;
             });
 
@@ -146,6 +151,13 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
         if(this.loaded_new_rom_file) Bios.flash_bios_rom(this.loaded_new_rom_file);
         this.set_flashing_progress_bar_title("Verifying BIOS:");
         this.progress_bar = new ProgressBar(5, () => {
+          const menu = new OptionMenu([], null, null);
+
+          menu.set_title("Update is done! System will reboot.");
+          menu.set_background_color("red");
+          menu.disable_esc_emitter_callback();
+
+          this.active_option_menu = menu;
 
         });
         this.progress_bar.run();

@@ -74,6 +74,7 @@
     [title_color]="active_option_menu.get_title_color()"
     [background_color]="active_option_menu.get_background_color()"
     [row_options]="active_option_menu.is_row_options()"
+    [esc_emitter_enable]="active_option_menu.get_is_esc_emitter_enable()"
     [onChangeValue]="active_option_menu.onChangeValue"
     (onEsc)="active_option_menu.onEsc?.($event); active_option_menu = null"
   ></bios-option-menu>

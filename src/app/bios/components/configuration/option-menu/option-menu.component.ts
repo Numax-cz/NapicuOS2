@@ -23,9 +23,12 @@ export class OptionMenuComponent implements OnInit, OnDestroy, AfterViewInit{
 
   @Input() public selected_option = 0;
 
+  @Input() public esc_emitter_enable: boolean = true;
+
   @Input() public declare background_color?: string;
 
   @Input() public declare title_color?: string;
+
 
   ngOnInit() {
     window.addEventListener("keydown", this.onKeyDownEvent);
@@ -59,11 +62,13 @@ export class OptionMenuComponent implements OnInit, OnDestroy, AfterViewInit{
   }
 
   protected on_enter(): void {
-    this.onEsc.emit(this.selected_option);
+    if(this.esc_emitter_enable) this.onEsc.emit(this.selected_option);
   }
 
   protected on_esc(): void {
-    this.onChangeValue?.(this.last_selected_option);
-    this.onEsc.emit(this.last_selected_option);
+    if(this.esc_emitter_enable) {
+      this.onChangeValue?.(this.last_selected_option);
+      this.onEsc.emit(this.last_selected_option);
+    }
   }
 }

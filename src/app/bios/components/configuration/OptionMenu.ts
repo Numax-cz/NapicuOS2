@@ -9,6 +9,8 @@ export class OptionMenu {
 
   protected row_options: boolean = false;
 
+  protected esc_emitter_enable: boolean = true;
+
   protected declare selected_option: number;
 
   protected declare background_color?: string;
@@ -20,6 +22,14 @@ export class OptionMenu {
     this.onChangeValue = onChangeValue;
     this.onEsc = onEsc;
     this.selected_option = selectedOption ? selectedOption : 0;
+  }
+
+  public disable_esc_emitter_callback(): void {
+    this.esc_emitter_enable = false;
+  }
+
+  public get_is_esc_emitter_enable(): boolean {
+    return this.esc_emitter_enable;
   }
 
   public get_title(): string | undefined {
