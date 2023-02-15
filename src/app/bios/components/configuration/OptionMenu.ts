@@ -1,7 +1,7 @@
 export class OptionMenu {
-  public declare onChangeValue: ((value: number) => void) | null;
+  public declare onChangeValue: ((value: number | null) => void) | null;
 
-  public declare onEsc: ((value: number) => void) | null;
+  public declare onEsc: ((value: number | null) => void) | null;
 
   protected declare options: string[];
 
@@ -17,7 +17,7 @@ export class OptionMenu {
 
   protected declare title_color?: string;
 
-  constructor(options: string[], onChangeValue: ((value: number) => void) | null, onEsc: ((value: number) => void) | null, selectedOption?: number) {
+  constructor(options: string[], onChangeValue: ((value: number | null) => void) | null, onEsc: ((value: number | null) => void) | null, selectedOption?: number) {
     this.options = options;
     this.onChangeValue = onChangeValue;
     this.onEsc = onEsc;

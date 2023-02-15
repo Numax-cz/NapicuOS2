@@ -91,7 +91,7 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
           this.set_flashing_progress_bar_title("Checking File:");
           this.progress_bar = new ProgressBar(75, () => {
             this.loaded_new_rom_file = rom_file.rom_information;
-            const menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
+            const menu = new OptionMenu(["Yes", "No"], null, (value: number | null) => {
               if(value === 0) this.start_flashing();
               else {
                 this.loaded_new_rom_file = null;

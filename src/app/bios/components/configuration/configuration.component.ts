@@ -174,7 +174,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   public open_flash_menu = (): void => {
-    let menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
+    let menu = new OptionMenu(["Yes", "No"], null, (value: number | null) => {
       if(value === 0) WebManager.navigate_angular_router(PathConfig.BIOS_FLASH_PATH, SpeedControl.calculate_hardware_speed(BiosConfig.ENTER_FLASH_MENU_TIME));
       else this.active_option_menu = null;
     } ,0);
@@ -263,9 +263,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     }
   }
 
-  public on_change_value_in_option_menu = (value: number): void => {
-    (this.options[this.selected_screen_option].options[this.selected_option].option as BiosOptionElementTypeOptionMenu).selectedOption = value;
-    (this.options[this.selected_screen_option].options[this.selected_option].option as BiosOptionElementTypeOptionMenu).onChange(value);
+  public on_change_value_in_option_menu = (value: number | null): void => {
+    if(value !== null){
+      (this.options[this.selected_screen_option].options[this.selected_option].option as BiosOptionElementTypeOptionMenu).selectedOption = value;
+      (this.options[this.selected_screen_option].options[this.selected_option].option as BiosOptionElementTypeOptionMenu).onChange(value);
+    }
   }
 
   protected select_numbers_option(option: biosOptionTypeMap["numbers"]): void {
