@@ -91,7 +91,11 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
             this.loaded_new_rom_file = rom_file.rom_information;
             const menu = new OptionMenu(["Yes", "No"], null, (value: number) => {
               if(value === 0) this.start_flashing();
-              else this.flashing = false;
+              else {
+                this.loaded_new_rom_file = null;
+                this.progress_bar = null;
+                this.flashing = false;
+              }
 
               this.active_option_menu = null;
             });
