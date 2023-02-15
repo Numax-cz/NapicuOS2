@@ -14,6 +14,8 @@ import {OptionMenu} from "@Napicu/Bios/components/configuration/OptionMenu";
 import {ProgressBar} from "@Napicu/Bios/scripts/ProgressBar";
 import {VirtualComputer} from "@Napicu/VirtualComputer/VirtualComputer";
 import {SpeedControl} from "@Napicu/Bios/scripts/SpeedControl";
+import {WebManager} from "@Napicu/Utils/WebManager";
+import {PathConfig} from "@Napicu/Config/web/PathConfig";
 
 @Component({
   selector: 'app-flash-screen',
@@ -52,8 +54,8 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
 
   protected onKeyDownEvent = (e: KeyboardEvent): void => {
     if(!this.active_option_menu && !this.flashing){
-      KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_UP, this.move_up);
-      KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_DOWN, this.move_down);
+      KeyBind(e,[BiosConfig.BIOS_CONFIGURATION_MOVE_UP, BiosConfig.BIOS_CONFIGURATION_ON_HOME], this.move_up);
+      KeyBind(e, [BiosConfig.BIOS_CONFIGURATION_MOVE_DOWN, BiosConfig.BIOS_CONFIGURATION_ON_END], this.move_down);
       KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ESC, this.on_esc);
       KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_TAB, this.on_tab);
       KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ENTER, this.on_enter);
@@ -128,7 +130,8 @@ export class FlashScreenComponent implements OnInit, OnDestroy{
   }
 
   protected readonly on_esc = (): void => {
-
+    Bios.redirect_text_screen();
+    WebManager.navigate_angular_router(PathConfig.BIOS_CONFIGURATION_ROOT_PATH, SpeedControl.calculate_hardware_speed(BiosConfig.EXIT_FLASH_MENU_TIME));
   }
 
   protected readonly move_up = (): void => {

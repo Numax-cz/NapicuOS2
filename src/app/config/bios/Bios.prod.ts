@@ -1,6 +1,5 @@
 import {InformationInterface} from "../../bios/interface/NapicuBiosInformations";
 import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
-import {EXIT_FLASH_REBOOT_TIME} from "@Napicu/Config/bios/Bios";
 
 
 export namespace BiosConfig{
@@ -18,7 +17,8 @@ export namespace BiosConfig{
   export const BIOS_CONFIGURATION_ON_ENTER: number = 13; //Enter
   export const BIOS_CONFIGURATION_ON_ESC: number = 27; //ESC
   export const BIOS_CONFIGURATION_ON_TAB: number = 9; //TAB
-
+  export const BIOS_CONFIGURATION_ON_HOME: number = 36; //HOME
+  export const BIOS_CONFIGURATION_ON_END: number = 35; //END
 
   //TIMES
   export const ENTER_BIOS_TIME_DELAY: number = 0;
@@ -30,7 +30,10 @@ export namespace BiosConfig{
 
   export const ENTER_FLASH_MENU_TIME: number = 1500;
 
+  export const EXIT_FLASH_MENU_TIME: number = 1000;
+
   export const EXIT_FLASH_REBOOT_TIME: number = 1400;
+
 
 
 
