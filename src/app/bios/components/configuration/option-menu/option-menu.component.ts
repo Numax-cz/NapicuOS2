@@ -21,7 +21,7 @@ export class OptionMenuComponent implements OnInit, OnDestroy, AfterViewInit{
 
   @Input() public row_options: boolean = false;
 
-  @Input() public selected_option = 0;
+  @Input() public selected_option: number = 0;
 
   @Input() public esc_emitter_enable: boolean = true;
 
