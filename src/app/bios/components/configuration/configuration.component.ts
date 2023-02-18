@@ -123,7 +123,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           options: this.get_drv_with_os_name(),
           selectedOption: Bios.get_bios_configuration().selected_drive,
           onChange: (newValue: number) => Bios.get_bios_configuration().selected_drive = newValue,
-        })
+        }, "Set Boot Priority")
       ]
     },
     {
