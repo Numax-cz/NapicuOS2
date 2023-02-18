@@ -1,4 +1,3 @@
-import {Process} from "./core/Process";
 import {PathConfig} from "@Napicu/Config/web/PathConfig";
 import {SpeedControl} from "@Napicu/Bios/scripts/SpeedControl";
 import {WebManager} from "@Napicu/Utils/WebManager";

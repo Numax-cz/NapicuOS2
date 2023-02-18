@@ -16,9 +16,9 @@ import {CookiesConfig} from "../config/web/CookiesConfig";
 import {PathConfig} from "../config/web/PathConfig";
 import {Cookies} from "../utils/Cookies";
 import {WebManager} from "../utils/WebManager";
-import {ArrayOfMaxLength3, ArrayOfMaxLength3Readonly} from "../utils/Utils";
+import {ArrayOfMaxLength3Readonly} from "../utils/Utils";
 import {BootLoader} from "@Napicu/Bios/Boot";
-import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
+import {BiosRomVersion} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 import DEFAULT_TIME_CONFIGURATION = BiosConfig.DEFAULT_TIME_CONFIGURATION;
 import DEFAULT_DATE_CONFIGURATION = BiosConfig.DEFAULT_DATE_CONFIGURATION;
 

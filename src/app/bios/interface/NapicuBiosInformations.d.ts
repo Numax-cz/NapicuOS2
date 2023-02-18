@@ -1,4 +1,4 @@
-import {ArrayOfMaxLength3, ArrayOfMaxLength3Readonly} from "@Napicu/Utils/Utils";
+import {ArrayOfMaxLength3Readonly} from "@Napicu/Utils/Utils";
 import {BiosRomVersion} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 
 export interface InformationInterface {
