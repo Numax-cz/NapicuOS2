@@ -4,12 +4,13 @@ import {SpeedControl} from "@Napicu/Bios/scripts/SpeedControl";
 import {WebManager} from "@Napicu/Utils/WebManager";
 import {Type} from "@angular/core";
 import {KernelComponent} from "@Napicu/System/Kernel/components/kernel/kernel.component";
+import {ProcessManager} from "@Napicu/System/Kernel/core/ProcessManager";
 
 export abstract class Kernel{
 
-  protected readonly abstract system_name: string;
+  public process_manager: ProcessManager = new ProcessManager();
 
-  protected running_process: Process[] = [];
+  protected readonly abstract system_name: string;
 
   protected abstract main(): void;
 
