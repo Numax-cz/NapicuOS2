@@ -2,6 +2,7 @@ import {biosOptionFunctionReturn, biosOptionTypeMap} from "./interface/Configura
 import {ConfigurationComponent} from "./configuration.component";
 import {Bios} from "../../Bios";
 import {Console} from "../../../utils/Console";
+import {CopyArray} from "@Napicu/Utils/CopyArray";
 
 
 export const BiosOptionElement = <T extends keyof biosOptionTypeMap>(type: T, array: biosOptionTypeMap[T], description: string | null = null): biosOptionFunctionReturn<biosOptionTypeMap[T]> => {

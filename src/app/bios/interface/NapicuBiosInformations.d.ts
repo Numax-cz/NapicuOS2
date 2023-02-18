@@ -1,4 +1,4 @@
-import {ArrayOfMaxLength3} from "@Napicu/Utils/Utils";
+import {ArrayOfMaxLength3, ArrayOfMaxLength3Readonly} from "@Napicu/Utils/Utils";
 import {BiosRomVersion} from "@Napicu/Bios/components/configuration/interface/FlashFile";
 
 export interface InformationInterface {
@@ -7,9 +7,9 @@ export interface InformationInterface {
 
   selected_drive: number;
 
-  date: ArrayOfMaxLength3<number>,
+  date: ArrayOfMaxLength3Readonly<number>,
 
-  time: ArrayOfMaxLength3<number>,
+  time: ArrayOfMaxLength3Readonly<number>,
 
   network_boot: number,
 

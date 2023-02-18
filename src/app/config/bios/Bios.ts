@@ -1,5 +1,6 @@
 import {InformationInterface} from "../../bios/interface/NapicuBiosInformations";
 import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
+import {ArrayOfMaxLength3Readonly} from "@Napicu/Utils/Utils";
 
 export namespace BiosConfig{
   export const PRODUCTION_CONFIGURATION: boolean = false;
@@ -53,11 +54,14 @@ export namespace BiosConfig{
   export const BIOS_VERSION_COMPANY_NAME: string = "Napicu";
   export const BIOS_VERSION_DATE: string = "1969 - 2023";
 
+  export const DEFAULT_TIME_CONFIGURATION: ArrayOfMaxLength3Readonly<number> = [0, 0, 0];
+  export const DEFAULT_DATE_CONFIGURATION: ArrayOfMaxLength3Readonly<number> = [1, 1, 2023];
+
   export const DEFAULT_CONFIGURATION: InformationInterface = {
     rom: BIOS_ROM,
     selected_drive: 0,
-    time: [0, 0, 0],
-    date: [1, 1, 2023],
+    time: DEFAULT_TIME_CONFIGURATION,
+    date: DEFAULT_DATE_CONFIGURATION,
 
     network_boot: 0,
     wake_on_lan: 0,

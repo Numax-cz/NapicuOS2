@@ -16,9 +16,11 @@ import {CookiesConfig} from "../config/web/CookiesConfig";
 import {PathConfig} from "../config/web/PathConfig";
 import {Cookies} from "../utils/Cookies";
 import {WebManager} from "../utils/WebManager";
-import {ArrayOfMaxLength3} from "../utils/Utils";
+import {ArrayOfMaxLength3, ArrayOfMaxLength3Readonly} from "../utils/Utils";
 import {BootLoader} from "@Napicu/Bios/Boot";
 import {BiosRomVersion, FlashFile} from "@Napicu/Bios/components/configuration/interface/FlashFile";
+import DEFAULT_TIME_CONFIGURATION = BiosConfig.DEFAULT_TIME_CONFIGURATION;
+import DEFAULT_DATE_CONFIGURATION = BiosConfig.DEFAULT_DATE_CONFIGURATION;
 
 
 export class Bios  {
@@ -128,6 +130,8 @@ export class Bios  {
   }
 
   public static load_default_bios_configuration(): void {
+    this.clear_bios_configuration_time_cache();
+    this.clear_bios_configuration_date_cache();
     this.biosConfiguration = BiosConfig.DEFAULT_CONFIGURATION;
     this.save_bios_config();
   }
@@ -200,7 +204,7 @@ export class Bios  {
     this.biosConfiguration.date = this.get_bios_configuration_date();
   }
 
-  protected static get_bios_configuration_time(): ArrayOfMaxLength3<number> {
+  protected static get_bios_configuration_time(): ArrayOfMaxLength3Readonly<number> {
     if(ConfigurationComponent.clock_cache){
       return [
         ConfigurationComponent.clock_cache.option.numbers[0].value,
@@ -208,10 +212,10 @@ export class Bios  {
         ConfigurationComponent.clock_cache.option.numbers[2].value
       ];
     }
-    return [0, 0, 0];
+    return DEFAULT_TIME_CONFIGURATION;
   }
 
-  protected static get_bios_configuration_date(): ArrayOfMaxLength3<number> {
+  protected static get_bios_configuration_date(): ArrayOfMaxLength3Readonly<number> {
     if(ConfigurationComponent.date_cache){
       return [
         ConfigurationComponent.date_cache.option.numbers[0].value,
@@ -219,6 +223,15 @@ export class Bios  {
         ConfigurationComponent.date_cache.option.numbers[2].value
       ];
     }
-    return [0, 0, 0];
+    return DEFAULT_DATE_CONFIGURATION;
+  }
+
+  protected static clear_bios_configuration_time_cache(): void {
+    ConfigurationComponent.clock_cache = null;
+  }
+
+  protected static clear_bios_configuration_date_cache(): void {
+    ConfigurationComponent.date_cache = null;
+
   }
 }
