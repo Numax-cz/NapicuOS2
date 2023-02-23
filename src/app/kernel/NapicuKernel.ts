@@ -4,18 +4,34 @@ import {WebManager} from "@Napicu/Utils/WebManager";
 import {Type} from "@angular/core";
 import {KernelComponent} from "@Napicu/System/Kernel/components/kernel/kernel.component";
 import {ProcessManager} from "@Napicu/System/Kernel/core/ProcessManager";
+import {NapicuDate} from "napicuformatter";
+import {KernelBaseProcess} from "@Napicu/System/Kernel/core/SysPrograms";
 
 export abstract class Kernel{
 
-  public process_manager: ProcessManager = new ProcessManager();
+  protected process_manager: ProcessManager = new ProcessManager();
+
+  protected static time: NapicuDate | null = null;
 
   protected readonly abstract system_name: string;
 
   protected abstract main(): void;
 
+
   public init(): void {
     WebManager.navigate_angular_router(PathConfig.SYSTEM_PATH, SpeedControl.calculate_hardware_speed(1000));
+    this.init_kernel_processes();
     this.main();
+  }
+
+  protected init_kernel_processes(): void {
+    for (const process of KernelBaseProcess) {
+      this.process_manager.add(process);
+    }
+
+    for (const process of this.process_manager.get_all_processes()) {
+      if(process.get_is_run_on_kernel_init()) process.run();
+    }
   }
 
   public get_system_name(): string{

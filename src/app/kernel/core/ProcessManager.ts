@@ -3,15 +3,39 @@ import {Process} from "@Napicu/System/Kernel/core/Process";
 export class ProcessManager{
   protected processes: Process[] = [];
 
+  public add(process: Process): void {
+    this.processes.push(process);
+  }
+
   public creat_new_process(): void {
 
   }
 
-
-
-
-  public get_running_process(): any {
-
+  public kill_all_processes(): void {
+    for(const process of this.processes) {
+      process.kill();
+    }
   }
+
+  public get_all_processes(): Process[] {
+    return this.processes;
+  }
+
+  public get_running_process(): Process[] {
+    return this.processes.filter((process: Process) => process.get_pid() !== -1);
+  }
+
+  public get_processes_by_name(name: string): Process[] {
+    return this.processes.filter((process: Process) => process.get_process_name() == name);
+  }
+
+  public get_process_by_pid(pid: number): Process | null {
+    for(const process of this.processes) {
+      if(process.get_pid() === pid) return process;
+    }
+    return null;
+  }
+
+
 
 }
