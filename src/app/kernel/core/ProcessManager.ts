@@ -1,7 +1,14 @@
 import {Process} from "@Napicu/System/Kernel/core/Process";
+import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 
 export class ProcessManager{
   protected processes: Process[] = [];
+
+  protected declare kernel: Kernel
+
+  constructor(kernel: Kernel) {
+    this.kernel = kernel
+  }
 
   public add(process: Process): void {
     this.processes.push(process);

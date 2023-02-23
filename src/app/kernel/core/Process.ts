@@ -1,3 +1,5 @@
+import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
+
 export abstract class Process{
 
   protected abstract process_name: string;
@@ -9,11 +11,8 @@ export abstract class Process{
   protected run_on_run_kernel: boolean = false;
 
 
-
-  public run(): void {
-
-
-    this.main();
+  public run(kernel: Kernel): void {
+    this.main(kernel);
   }
 
   public kill(): void {
@@ -24,7 +23,7 @@ export abstract class Process{
     this.on_kill();
   }
 
-  protected abstract main(): void;
+  protected abstract main(kernel: Kernel): void;
 
   protected abstract on_kill: () => void;
 
