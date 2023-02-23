@@ -9,14 +9,14 @@ import {KernelBaseProcess} from "@Napicu/System/Kernel/core/SysPrograms";
 
 export abstract class Kernel{
 
-  protected process_manager: ProcessManager = new ProcessManager();
-
-  protected static time: NapicuDate | null = null;
+  protected process_manager: ProcessManager = new ProcessManager(this);
 
   protected readonly abstract system_name: string;
 
   protected abstract main(): void;
 
+
+  public time: NapicuDate | null = null;
 
   public init(): void {
     WebManager.navigate_angular_router(PathConfig.SYSTEM_PATH, SpeedControl.calculate_hardware_speed(1000));
@@ -30,7 +30,7 @@ export abstract class Kernel{
     }
 
     for (const process of this.process_manager.get_all_processes()) {
-      if(process.get_is_run_on_kernel_init()) process.run();
+      if(process.get_is_run_on_kernel_init()) process.run(this);
     }
   }
 
