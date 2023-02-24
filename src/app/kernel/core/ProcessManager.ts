@@ -14,8 +14,10 @@ export class ProcessManager{
     this.processes.push(process);
   }
 
-  public creat_new_process(): void {
-
+  public run_all_kernel_base_process(): void {
+    for (const process of this.get_all_processes()) {
+      if(process.get_is_run_on_kernel_init()) process.run(this.kernel);
+    }
   }
 
   public kill_all_processes(): void {
