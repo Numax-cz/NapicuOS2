@@ -1,9 +1,18 @@
 import {Router} from "@angular/router";
 import {Console} from "./Console";
+import {WebConfig} from "@Napicu/Config/web/Web";
 
 
 export class WebManager{
   protected static angular_router: Router | null = null;
+
+  public static load(): void {
+    if(!this.is_production_config()) Console.print_information("DEBUGGER IS ENABLED")
+  }
+
+  public static is_production_config(): boolean{
+    return WebConfig.PRODUCTION_CONFIGURATION;
+  }
 
   public static set_angular_router(router: Router): void {
     this.angular_router = router;
