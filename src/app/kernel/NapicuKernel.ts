@@ -28,10 +28,7 @@ export abstract class Kernel{
     for (const process of KernelBaseProcess) {
       this.process_manager.add(process);
     }
-
-    for (const process of this.process_manager.get_all_processes()) {
-      if(process.get_is_run_on_kernel_init()) process.run(this);
-    }
+    this.process_manager.run_all_kernel_base_process();
   }
 
   public get_system_name(): string{
