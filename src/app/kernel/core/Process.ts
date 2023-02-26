@@ -1,4 +1,5 @@
 import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
+import {Console} from "@Napicu/Utils/Console";
 
 export abstract class Process{
 
@@ -13,6 +14,7 @@ export abstract class Process{
 
   public run(kernel: Kernel, pid: number): void {
     this.PID = pid;
+    Console.print_information_debug(`KERNEL - ${this.process_name} running. PID: ${this.PID}`);
     this.main(kernel);
   }
 
