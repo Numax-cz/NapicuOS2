@@ -13,7 +13,6 @@ export class Time extends Process {
   }
 
   protected override main(kernel: Kernel): void {
-    console.log(kernel.time);
     Console.print_information_debug("KERNEL - Time loaded");
   }
 
