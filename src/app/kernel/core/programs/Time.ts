@@ -1,6 +1,5 @@
 import {Process} from "@Napicu/System/Kernel/core/Process";
 import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
-import {Console} from "@Napicu/Utils/Console";
 
 
 export class Time extends Process {
@@ -13,7 +12,7 @@ export class Time extends Process {
   }
 
   protected override main(kernel: Kernel): void {
-    Console.print_information_debug("KERNEL - Time loaded");
+
   }
 
   protected override on_kill = (): void => {
