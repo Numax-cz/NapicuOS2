@@ -5,16 +5,18 @@ import {Type} from "@angular/core";
 import {KernelComponent} from "@Napicu/System/Kernel/components/kernel/kernel.component";
 import {ProcessManager} from "@Napicu/System/Kernel/core/ProcessManager";
 import {NapicuDate} from "napicuformatter";
-import {KernelBaseProcess} from "@Napicu/System/Kernel/core/SysPrograms";
+import {KernelBaseProcessTable} from "@Napicu/System/Kernel/core/SysPrograms";
+import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
 
 export abstract class Kernel{
 
   protected process_manager: ProcessManager = new ProcessManager(this);
 
+  public initialized_kernel_processes: ProcessManagerProcessTable[] = KernelBaseProcessTable;
+
   protected readonly abstract system_name: string;
 
   protected abstract main(): void;
-
 
   public time: NapicuDate | null = null;
 
@@ -24,11 +26,14 @@ export abstract class Kernel{
     this.main();
   }
 
+  public init_process_table(table: ProcessManagerProcessTable[]): void {
+    this.initialized_kernel_processes.push(...table);
+  }
+
   protected init_kernel_processes(): void {
-    for (const process of KernelBaseProcess) {
-      this.process_manager.add(process);
+    for (const processTable of this.initialized_kernel_processes) {
+      this.process_manager.run(processTable.program_id);
     }
-    this.process_manager.run_all_kernel_base_process();
   }
 
   public get_system_name(): string{
@@ -46,5 +51,4 @@ export abstract class Kernel{
   public static set_display_component(component: Type<any>): void {
     KernelComponent.system_display_component = component;
   }
-
 }

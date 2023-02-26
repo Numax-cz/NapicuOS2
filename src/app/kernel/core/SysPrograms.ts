@@ -1,4 +1,9 @@
-import {Process} from "@Napicu/System/Kernel/core/Process";
 import {Time} from "@Napicu/System/Kernel/core/programs/Time";
+import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
 
-export const KernelBaseProcess: Process[] = [new Time()];
+
+export const enum KernelBaseProcessProgramsID  {
+  Time = 0
+}
+
+export const KernelBaseProcessTable: ProcessManagerProcessTable[] = [{process: new Time(), program_id: KernelBaseProcessProgramsID.Time}];

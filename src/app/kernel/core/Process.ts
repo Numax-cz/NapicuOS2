@@ -11,7 +11,8 @@ export abstract class Process{
   protected run_on_run_kernel: boolean = false;
 
 
-  public run(kernel: Kernel): void {
+  public run(kernel: Kernel, pid: number): void {
+    this.PID = pid;
     this.main(kernel);
   }
 
