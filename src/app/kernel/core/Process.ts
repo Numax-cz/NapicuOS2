@@ -1,3 +1,6 @@
+import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
+import {Console} from "@Napicu/Utils/Console";
+
 export abstract class Process{
 
   protected abstract process_name: string;
@@ -9,11 +12,10 @@ export abstract class Process{
   protected run_on_run_kernel: boolean = false;
 
 
-
-  public run(): void {
-
-
-    this.main();
+  public run(kernel: Kernel, pid: number): void {
+    this.PID = pid;
+    Console.print_information_debug(`KERNEL - ${this.process_name} running. PID: ${this.PID}`);
+    this.main(kernel);
   }
 
   public kill(): void {
@@ -24,7 +26,7 @@ export abstract class Process{
     this.on_kill();
   }
 
-  protected abstract main(): void;
+  protected abstract main(kernel: Kernel): void;
 
   protected abstract on_kill: () => void;
 

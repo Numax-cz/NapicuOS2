@@ -5,18 +5,20 @@ import {Type} from "@angular/core";
 import {KernelComponent} from "@Napicu/System/Kernel/components/kernel/kernel.component";
 import {ProcessManager} from "@Napicu/System/Kernel/core/ProcessManager";
 import {NapicuDate} from "napicuformatter";
-import {KernelBaseProcess} from "@Napicu/System/Kernel/core/SysPrograms";
+import {KernelBaseProcessTable} from "@Napicu/System/Kernel/core/SysPrograms";
+import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
 
 export abstract class Kernel{
 
-  protected process_manager: ProcessManager = new ProcessManager();
+  protected process_manager: ProcessManager = new ProcessManager(this);
 
-  protected static time: NapicuDate | null = null;
+  public initialized_kernel_processes: ProcessManagerProcessTable[] = KernelBaseProcessTable;
 
   protected readonly abstract system_name: string;
 
   protected abstract main(): void;
 
+  public time: NapicuDate | null = null;
 
   public init(): void {
     WebManager.navigate_angular_router(PathConfig.SYSTEM_PATH, SpeedControl.calculate_hardware_speed(1000));
@@ -24,13 +26,13 @@ export abstract class Kernel{
     this.main();
   }
 
-  protected init_kernel_processes(): void {
-    for (const process of KernelBaseProcess) {
-      this.process_manager.add(process);
-    }
+  public init_process_table(table: ProcessManagerProcessTable[]): void {
+    this.initialized_kernel_processes.push(...table);
+  }
 
-    for (const process of this.process_manager.get_all_processes()) {
-      if(process.get_is_run_on_kernel_init()) process.run();
+  protected init_kernel_processes(): void {
+    for (const processTable of this.initialized_kernel_processes) {
+      this.process_manager.run(processTable.program_id);
     }
   }
 
@@ -49,5 +51,4 @@ export abstract class Kernel{
   public static set_display_component(component: Type<any>): void {
     KernelComponent.system_display_component = component;
   }
-
 }
