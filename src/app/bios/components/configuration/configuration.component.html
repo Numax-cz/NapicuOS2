@@ -62,14 +62,15 @@
     <div class="BiosBottomTitle">{{get_bios_version}}</div>
   </section>
 
-  <ng-container *ngIf="selected_menu_option_cache !== null">
-    <section class="BiosOptionMenu">
-      <div>
-        <div *ngFor="let i of (options[selected_screen_option].options[selected_option].option | as : BiosOptionElementTypeOptionMenu).options;
-          let index = index" [ngClass]="{BiosSelectedOptionElement: (options[selected_screen_option].options[selected_option].option | as : BiosOptionElementTypeOptionMenu).selectedOption === index}">
-          {{i}}
-        </div>
-      </div>
-    </section>
-  </ng-container>
+  <bios-option-menu
+    *ngIf="active_option_menu"
+    [options]="active_option_menu.get_options()"
+    [selected_option]="active_option_menu.get_selected_option()"
+    [title]="active_option_menu.get_title()"
+    [title_color]="active_option_menu.get_title_color()"
+    [background_color]="active_option_menu.get_background_color()"
+    [row_options]="active_option_menu.is_row_options()"
+    [onChangeValue]="active_option_menu.onChangeValue"
+    (onEsc)="active_option_menu.onEsc?.($event); addEventListener(); active_option_menu = null"
+  ></bios-option-menu>
 </div>

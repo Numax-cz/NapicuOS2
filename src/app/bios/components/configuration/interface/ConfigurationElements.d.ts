@@ -1,6 +1,6 @@
-import * as NapicuUtils from "@Napicu/Utils";
+import {ValueOf} from "@Napicu/Utils/Utils";
 
-export interface biosOptionFunctionReturn<T = NapicuUtils.ValueOf<biosOptionTypeMap>>{
+export interface biosOptionFunctionReturn<T = ValueOf<biosOptionTypeMap>>{
   type: keyof biosOptionTypeMap,
   option: T,
   description: string | null
@@ -29,6 +29,7 @@ export interface BiosOptionElementTypeOptionMenu {
   name: string,
   options: string[]
   selectedOption: number,
+  onChange: (newValue: number) => void
 }
 
 export interface BiosOptionElementTypeNumbersNumberInterface{

@@ -1,0 +1,82 @@
+<div class="Background NapicuFontDosVGA">
+  <!-- Title -->
+  <div class="BiosTitle">NapicuBios EZ Flash 2 BIOS {{get_bios_version()}}</div>
+  <section class="FlashWindow">
+    <!-- Bios Versions -->
+    <div class="BiosGrid50">
+      <div class="Window">
+        <div class="FlashTitle" style="text-align: center">Current ROM</div>
+        <div class="RomInformationContainer">
+          <div>board<span>{{get_bios_rom().board}}</span></div>
+          <div>date<span>{{get_bios_rom().date}}</span></div>
+          <div>ver<span>{{get_bios_rom().version}}</span></div>
+        </div>
+      </div>
+      <div class="Window">
+        <div class="FlashTitle" style="text-align: center">Update ROM</div>
+        <div class="RomInformationContainer">
+          <div>board<span>{{loaded_new_rom_file?.board || "Unknown"}}</span></div>
+          <div>date<span>{{loaded_new_rom_file?.date   || "Unknown"}}</span></div>
+          <div>ver<span>{{loaded_new_rom_file?.version || "Unknown"}}</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Active Path -->
+    <div class="ActivePath">
+      <div>Path:</div>
+      <div class="CyanBackground" style="padding: 2px"><span>{{get_alphabet(selected_drive + 2)}}:</span>
+        <span *ngFor="let i of dirs_history_indexes; let index = index">\{{i.name}}</span></div>
+    </div>
+    <!-- Drives & Paths -->
+    <div class="Drives">
+      <div class="Window" [ngClass]="{SelectedWindow: is_active_drive_selection}">
+        <div *ngFor="let i of get_drives_names(); let index = index" [ngClass]="{SelectedOption: selected_drive === index}" >
+          {{i}}
+        </div>
+      </div>
+      <div class="Window" [ngClass]="{SelectedWindow: !is_active_drive_selection}">
+        <div *ngFor="let i of get_drive_data(); let index = index" [ngClass]="{SelectedOption: selected_dir === index}" >
+          {{i.name}} <span *ngIf="i.is_dir">[DIR]</span>
+        </div>
+      </div>
+    </div>
+    <!-- Note -->
+    <div class="Window">
+      <div class="FlashTitle" style="text-align: left; margin-left: 2%;">Note</div>
+      <div *ngIf="flashing_progress_bar_title">{{flashing_progress_bar_title}}</div>
+      <ng-container *ngIf="!progress_bar">
+        <div class="BiosGrid50">
+          <div class="NoteTexts">
+            <p>[Enter] Select or Load</p>
+            <p>[Up/Down/Home/End] Move</p>
+          </div>
+          <div class="NoteTexts">
+            <p>[Tab] Switch</p>
+            <p>[Esc] Exit</p>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="progress_bar">
+        <div class="ProgressBar">
+          <div class="Line" [ngStyle]="{'width': progress_bar.get_width_percentage() + '%'}"></div>
+        </div>
+      </ng-container>
+
+    </div>
+  </section>
+
+  <bios-option-menu
+    *ngIf="active_option_menu"
+    [options]="active_option_menu.get_options()"
+    [selected_option]="active_option_menu.get_selected_option()"
+    [title]="active_option_menu.get_title()"
+    [title_color]="active_option_menu.get_title_color()"
+    [background_color]="active_option_menu.get_background_color()"
+    [row_options]="active_option_menu.is_row_options()"
+    [esc_emitter_enable]="active_option_menu.get_is_esc_emitter_enable()"
+    [onChangeValue]="active_option_menu.onChangeValue"
+    (onEsc)="active_option_menu.onEsc?.($event); active_option_menu = null"
+  ></bios-option-menu>
+</div>
+

@@ -1,0 +1,92 @@
+.Background{
+  background: blue;
+  color: white;
+  height: 100vh;
+  font-size: 1.67rem;
+}
+
+.BiosTitle{
+  text-align: center;
+  font-size: 2rem !important;;
+  padding: 20px;
+}
+
+.RomInformationContainer{
+  >div{
+    display: grid;
+    grid-template-columns: 30% 70%;
+  }
+  span{
+    color: black;
+    padding: 2px;
+    background-color: #0ff;
+  }
+}
+
+.FlashWindow{
+  width: 100%;
+  max-width: 60%;
+  margin: auto;
+
+  .FlashTitle{
+    color: #f0f;
+    font-size: 2rem !important;
+    margin-bottom: 7px;
+  }
+
+  .Window{
+    margin: 15px;
+    padding: 20px;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    border-left: 4.5px solid white;
+    border-right: 4.5px solid white;
+  }
+
+  .SelectedWindow{
+    border-color: #0ff;
+  }
+
+  .CyanBackground{
+    color: black !important;
+    background-color: #0ff !important;
+  }
+
+  .SelectedOption{
+    background-color: #f0f;
+  }
+
+  .BiosGrid50{
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+
+  .ActivePath{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding: 0 40px;
+  }
+
+  .Drives{
+    display: grid;
+    grid-template-columns: 30% 70%;
+
+  }
+
+  .NoteTexts{
+    p{
+      font-size: 1.35rem !important;;
+      margin: 10px 10px 10px 10%;
+    }
+  }
+}
+
+.ProgressBar{
+  width: 100%;
+  .Line{
+    background-color: gray;
+    height: 30px;
+    background-color: #d3d3d3;
+    background-repeat: repeat;
+  }
+}

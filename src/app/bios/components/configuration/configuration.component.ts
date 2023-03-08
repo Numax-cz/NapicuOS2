@@ -1,18 +1,32 @@
-import * as NapicuConfig from "@Napicu/Config";
-import * as NapicuBios from "@Napicu/Bios";
-import * as NapicuUtils from "@Napicu/Utils";
-import * as NapicuComputer from "@Napicu/VirtualComputer";
 import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {BiosConfigurationOptionsInterface} from "./interface/BiosConfiguration";
-import {BiosClockElement, BiosDateElement, BiosOptionElement} from "./ConfigurationElements";
+import {
+  BiosClockElement,
+  BiosDateElement,
+  BiosOptionElement,
+  BiosOptionEnableDisableElement
+} from "./ConfigurationElements";
 import {
   BiosOptionElementTypeAction,
-  BiosOptionElementTypeInformation, BiosOptionElementTypeNumbers, BiosOptionElementTypeNumbersNumberInterface,
-  BiosOptionElementTypeOptionMenu, biosOptionFunctionReturn, biosOptionTypeMap
+  BiosOptionElementTypeInformation,
+  BiosOptionElementTypeNumbers,
+  BiosOptionElementTypeNumbersNumberInterface,
+  BiosOptionElementTypeOptionMenu,
+  biosOptionFunctionReturn,
+  biosOptionTypeMap
 } from "./interface/ConfigurationElements";
 import {NapicuDate} from "napicuformatter";
-import {DriveBaseFilesAndFoldersStructureInterface} from "../../../computer/interface/NapicuHardware";
-import {GrubBootFileInterface} from "@Napicu/Grub";
+import {Bios} from "../../Bios";
+import {CopyArray} from "../../../utils/CopyArray";
+import {BiosConfig} from "../../../config/bios/Bios";
+import {ValueOf} from "../../../utils/Utils";
+import {InformationInterface} from "@Napicu/Bios/interface/NapicuBiosInformations";
+import {OptionMenu} from "@Napicu/Bios/components/configuration/OptionMenu";
+import {WebManager} from "@Napicu/Utils/WebManager";
+import {PathConfig} from "@Napicu/Config/web/PathConfig";
+import {SpeedControl} from "@Napicu/Bios/scripts/SpeedControl";
+import {Grub} from "@Napicu/Grub/Grub";
+import {KeyBind} from "@Napicu/Utils/KeyBind";
 
 
 @Pipe({ name: 'as', pure: true })
@@ -51,9 +65,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
 
   public static date_cache: biosOptionFunctionReturn<biosOptionTypeMap["numbers"]> | null = null;
 
+  public static last_configuration: InformationInterface;
+
   public static date_is_moved_day: boolean = false;
 
-  public selected_menu_option_cache: number | null = null;
+  public active_option_menu: OptionMenu | null = null;
+
 
   protected readonly options: BiosConfigurationOptionsInterface[] = [
     {
@@ -61,68 +78,112 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       title: "System Overview",
       options: [
 
-        BiosOptionElement("options", {
-          name: "NULL",
-          options: ["TEST", "TES2", "TEST3", "TEST4"],
-          selectedOption: 0
-        }, "NULL"),
-        BiosOptionElement("information", {
-          name: "NULL",
-          value: "NULL"
-        }),        BiosOptionElement("information", {
-          name: "NULL",
-          value: "NULL"
-        }),
-        BiosClockElement("Time"),
-        BiosDateElement("Date")
+        BiosClockElement("System Time", "Change system time"),
+        BiosDateElement("System Date", "Change system date"),
+
+        BiosOptionEnableDisableElement("Network Boot", Bios.get_bios_configuration().network_boot, (newValue: number) =>
+          Bios.get_bios_configuration().network_boot = newValue, "Enable/Disable PXE boot on to LAN"),
+        BiosOptionEnableDisableElement("Wake On LAN", Bios.get_bios_configuration().wake_on_lan, (newValue: number) =>
+          Bios.get_bios_configuration().wake_on_lan = newValue, "Enable/Disable Integrated LAN to wake the system"),
+
+        BiosOptionElement("information", {name: "Processor Type",  value:    Bios.get_cpu().name}),
+        BiosOptionElement("information", {name: "Processor Speed", value: `${Bios.get_cpu().speed}MHz`}),
+        BiosOptionElement("information", {name: "Cache Size",      value: `${Bios.get_cpu().cache}KB`}),
+        BiosOptionElement("information", {name: "Total Memory",    value: `${Bios.get_ram_total_memory()}MB`}),
+        BiosOptionElement("information", {name: "Serial Number",   value:    Bios.get_serial_number()})
       ]
     },
     {
       name: "Advanced",
-      options: []
+      options: [
+        BiosOptionEnableDisableElement("AMD-SVM", Bios.get_bios_configuration().amd_svm, (newValue: number) =>
+          Bios.get_bios_configuration().amd_svm = newValue, "This is AMD virtualization function switch"),
+        BiosOptionEnableDisableElement("AMD-IOMMU", Bios.get_bios_configuration().amd_iommu, (newValue: number) =>
+          Bios.get_bios_configuration().amd_iommu = newValue, "This is AMD virtualization function switch"),
+      ]
     },
     {
       name: "Boot",
       options: [
         BiosOptionElement("options", {
+          name: "Boot Mode",
+          options: ["UEFI", "Legacy"],
+          selectedOption: Bios.get_bios_configuration().boot_mode,
+          onChange: (newValue: number) => Bios.get_bios_configuration().boot_mode = newValue,
+        }, "Set System Boot Mode"),
+
+        BiosOptionEnableDisableElement("Fast Boot", Bios.get_bios_configuration().fast_boot, (newValue: number) =>
+          Bios.get_bios_configuration().fast_boot = newValue, "Enable/Disable Fast Boot"),
+
+        BiosOptionEnableDisableElement("Secure Boot", Bios.get_bios_configuration().secure_boot, (newValue: number) =>
+          Bios.get_bios_configuration().secure_boot = newValue, "Enable/Disable Secure Boot"),
+
+        BiosOptionElement("options", {
           name: "Boot",
           options: this.get_drv_with_os_name(),
-          selectedOption: 0
-        })
+          selectedOption: Bios.get_bios_configuration().selected_drive,
+          onChange: (newValue: number) => Bios.get_bios_configuration().selected_drive = newValue,
+        }, "Set Boot Priority")
       ]
     },
     {
       name: "Tools",
-      options: []
+      options: [
+        BiosOptionElement("action", {
+          name: "NapicuFlash",
+          action: () => this.open_flash_menu()
+        }, "Run the utility to select and update BIOS. This utility supports Fat 12/16/32, NTFS, CD-DISC")
+      ]
     },
     {
       name: "Exit",
       options: [
         BiosOptionElement("action", {
           name: "Load Optimized Defaults",
-          action: () => NapicuBios.Bios.load_default_bios_configuration()
-        }),
+          action: () => Bios.load_default_bios_configuration()
+        }, "Restores/loads the default values for all the setup options"),
         BiosOptionElement("action", {
           name: "Save Changes & Reset",
-          action: () => NapicuBios.Bios.exit_bios_configuration_with_save()
-        }),
+          action: () => Bios.exit_bios_configuration_with_save()
+        }, "Exit Bios and save your changes to CMOS"),
         BiosOptionElement("action", {
           name: "Discard Changes & Exit",
-          action: () => NapicuBios.Bios.exit_bios_configuration_without_save()
-        })
+          action: () => Bios.exit_bios_configuration_without_save()
+        }, "Exit Bios without saving any changes")
       ]
     }
   ];
 
+
+  protected readonly addEventListener = (): void => window.addEventListener("keydown", this.onKeyDownEvent);
+
+  protected readonly removeEventListener = (): void => window.removeEventListener("keydown", this.onKeyDownEvent);
+
   public ngOnInit(): void {
+    ConfigurationComponent.last_configuration = CopyArray(Bios.get_bios_configuration());
+    this.addEventListener();
+
     this.reset_selected_option();
     this.start_clock();
-    window.addEventListener("keydown", this.onKeyDownEvent);
   }
 
   public ngOnDestroy() {
-    window.removeEventListener("keydown", this.onKeyDownEvent);
+    this.removeEventListener();
+
     this.stop_clock();
+  }
+
+  public open_flash_menu = (): void => {
+    let menu = new OptionMenu(["Yes", "No"], null, (value: number | null) => {
+      if(value === 0) WebManager.navigate_angular_router(PathConfig.BIOS_FLASH_PATH, SpeedControl.calculate_hardware_speed(BiosConfig.ENTER_FLASH_MENU_TIME));
+      else this.active_option_menu = null;
+    } ,0);
+
+    menu.set_title("Ez Flash?");
+    menu.set_row_option_layout();
+
+    this.removeEventListener();
+    this.active_option_menu = menu;
   }
 
   public start_clock(): void {
@@ -167,25 +228,23 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   protected onKeyDownEvent = (e: KeyboardEvent) => {
-    if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_RIGHT) this.move_right_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_LEFT) this.move_left_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_UP) this.move_up_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_MOVE_DOWN) this.move_down_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_ON_ENTER) this.on_select_option();
-    else if(e.keyCode === NapicuConfig.Bios.BIOS_CONFIGURATION_ON_ESC) this.on_esc();
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_RIGHT, this.move_right_option);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_LEFT, this.move_left_option);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_UP, this.move_up_option);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_MOVE_DOWN, this.move_down_option);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ENTER, this.on_select_option);
+    KeyBind(e, BiosConfig.BIOS_CONFIGURATION_ON_ESC, this.on_esc);
   }
 
-  protected on_select_option(): void {
+  protected readonly on_select_option = (): void => {
     let option;
-    let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+    let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
-
 
     if(i.type === "options"){
       option = i.option as biosOptionTypeMap["options"];
-      if (this.selected_menu_option_cache === null) this.selected_menu_option_cache = option.selectedOption;
-      else this.selected_menu_option_cache = null;
-
+      this.active_option_menu = new OptionMenu(option.options, this.on_change_value_in_option_menu, null ,option.selectedOption);
+      this.removeEventListener();
 
     }else if (i.type === "action"){
       option = i.option as biosOptionTypeMap["action"];
@@ -200,8 +259,14 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
           ConfigurationComponent.date_is_moved_day = false;
       }
 
-
       this.select_numbers_option(option);
+    }
+  }
+
+  public on_change_value_in_option_menu = (value: number | null): void => {
+    if(value !== null){
+      (this.options[this.selected_screen_option].options[this.selected_option].option as BiosOptionElementTypeOptionMenu).selectedOption = value;
+      (this.options[this.selected_screen_option].options[this.selected_option].option as BiosOptionElementTypeOptionMenu).onChange(value);
     }
   }
 
@@ -209,19 +274,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     if (this.selected_in_numbers_option !== null) this.selected_in_numbers_option = null;
     else {
       this.selected_in_numbers_option = 0;
-      this.numbers_option_cache = NapicuUtils.CopyArray(option.numbers);
+      this.numbers_option_cache = CopyArray(option.numbers);
     }
   }
 
-  protected on_esc(): void {
-    if(this.selected_menu_option_cache !== null){
-      (this.options[this.selected_screen_option].options[this.selected_option].option as
-        biosOptionTypeMap["options"]).selectedOption = this.selected_menu_option_cache;
-      this.selected_menu_option_cache = null;
-      return;
-    }
-
-    let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+  protected readonly on_esc = (): void => {
+    let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
       this.options[this.selected_screen_option].options[this.selected_option];
 
     if(this.numbers_option_cache !== null){
@@ -264,41 +322,36 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
     }
   }
 
-  protected move_right_option(): void {
-    if(this.selected_menu_option_cache == null){
-      if(this.selected_in_numbers_option !== null){
-        ConfigurationComponent.date_is_moved_day = false;
-        let i: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
-        if(this.selected_in_numbers_option + 1 < i.numbers.length) this.selected_in_numbers_option++;
-        return;
-      }
+  protected readonly move_right_option = (): void => {
+    if(this.selected_in_numbers_option !== null){
+      ConfigurationComponent.date_is_moved_day = false;
+      let i: BiosOptionElementTypeNumbers = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["numbers"];
+      if(this.selected_in_numbers_option + 1 < i.numbers.length) this.selected_in_numbers_option++;
+      return;
+    }
 
-      if(this.selected_screen_option + 1 < this.options.length){
-        this.selected_screen_option += 1;
-        this.reset_selected_option();
-      }
+    if(this.selected_screen_option + 1 < this.options.length){
+      this.selected_screen_option += 1;
+      this.reset_selected_option();
     }
   }
 
-  protected move_left_option(): void {
-    if(this.selected_menu_option_cache == null) {
-      if (this.selected_in_numbers_option !== null) {
-        ConfigurationComponent.date_is_moved_day = false;
-        if (this.selected_in_numbers_option > 0) this.selected_in_numbers_option--;
-        return;
-      }
+  protected readonly move_left_option = (): void => {
+    if (this.selected_in_numbers_option !== null) {
+      ConfigurationComponent.date_is_moved_day = false;
+      if (this.selected_in_numbers_option > 0) this.selected_in_numbers_option--;
+      return;
+    }
 
-      if (this.selected_screen_option > 0) {
-        this.selected_screen_option -= 1;
-        this.reset_selected_option();
-      }
+    if (this.selected_screen_option > 0) {
+      this.selected_screen_option -= 1;
+      this.reset_selected_option();
     }
   }
 
-  protected move_up_option(): void {
-    if(this.selected_menu_option_cache == null) {
+  protected readonly move_up_option = (): void =>  {
       if (this.selected_in_numbers_option !== null) {
-        let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
+        let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
           this.options[this.selected_screen_option].options[this.selected_option];
         let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
         let number = numbers.numbers[this.selected_in_numbers_option];
@@ -310,38 +363,29 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
       }
 
       if (this.selected_option > 0) this.check_previous_option();
-    } else {
-      let i = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["options"];
-      if(i.selectedOption  > 0) i.selectedOption--
-    }
   }
 
-  protected move_down_option(): void {
-    if(this.selected_menu_option_cache == null) {
-      if (this.selected_in_numbers_option !== null) {
-        let i: biosOptionFunctionReturn<NapicuUtils.ValueOf<biosOptionTypeMap>> =
-          this.options[this.selected_screen_option].options[this.selected_option];
-        let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
-        let number = numbers.numbers[this.selected_in_numbers_option];
-        if (number.value > number.min) numbers.numbers[this.selected_in_numbers_option].value--;
-        else number.value = number.max;
+  protected readonly move_down_option = (): void => {
+    if (this.selected_in_numbers_option !== null) {
+      let i: biosOptionFunctionReturn<ValueOf<biosOptionTypeMap>> =
+        this.options[this.selected_screen_option].options[this.selected_option];
+      let numbers: BiosOptionElementTypeNumbers = i.option as biosOptionTypeMap["numbers"];
+      let number = numbers.numbers[this.selected_in_numbers_option];
+      if (number.value > number.min) numbers.numbers[this.selected_in_numbers_option].value--;
+      else number.value = number.max;
 
-        if (i.type === "date") this.update_max_days_in_month();
-        return;
-      }
-      if (this.selected_option + 1 < this.options[this.selected_screen_option].options.length) this.check_next_option();
-    } else {
-      let i = this.options[this.selected_screen_option].options[this.selected_option].option as biosOptionTypeMap["options"];
-      if(i.selectedOption + 1 <  i.options.length) i.selectedOption++
+      if (i.type === "date") this.update_max_days_in_month();
+      return;
     }
+    if (this.selected_option + 1 < this.options[this.selected_screen_option].options.length) this.check_next_option();
   }
 
   protected get_drv_with_os_name(): string[] {
     let d: string[] = [];
-    for (const drv of NapicuBios.Bios.get_drv()) {
+    for (const drv of Bios.get_drv()) {
       let i: string | null = null;
-      let grub = NapicuBios.Bios.get_bootable_file(drv);
-      if (grub) i = grub.get_kernel().get_system_name();
+      let bootableFile = Bios.get_bootable_file(drv) as Grub;
+      if (bootableFile) i = bootableFile?.get_kernel()?.get_system_name();
       d.push(i ? `${drv.name} (${i})` : drv.name);
     }
     return d;
@@ -356,7 +400,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy{
   }
 
   get get_bios_version(): string {
-    return NapicuBios.Bios.get_bios_full_version();
+    return Bios.get_bios_full_version();
   }
-
 }

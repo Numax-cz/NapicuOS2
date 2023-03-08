@@ -2,13 +2,15 @@ export interface HardwareCPUInformationInterface{
   name: string;
   speed: number;
   tdp: number;
+  cache: number
 }
 
 export interface HardwareDRVInformationInterface{
   name: string;
+  sys_name?: string;
   speed: number;
   capacity: number;
-  data: DrivePartitionsStructureInterface;
+  partitions: DrivePartitionsStructureDataInterface[]
 }
 
 export interface HardwareBRDInformationInterface{
@@ -33,6 +35,7 @@ export interface HardwareInformationInterface{
   gpu: HardwareGPUInformationInterface;
   drv: HardwareDRVInformationInterface[];
   brd: HardwareBRDInformationInterface;
+  serial_number: string
 }
 
 export interface DriveBaseFileStructureInterface<file_structure = any> {
@@ -56,8 +59,12 @@ export interface DriveDataFilesStructureInterface<file_structure = any> {
   [index: string]: DriveBaseFileStructureInterface<file_structure> | undefined
 }
 
-export interface DrivePartitionsStructureInterface{
-  partitions: { [index: string]: DriveBaseFilesAndFoldersStructureInterface | undefined }
+export type DrivePartitionsStructureDataFlags = "Boot" | "Data" | "System Volume";
+
+export interface DrivePartitionsStructureDataInterface{
+  name?: string,
+  flag?: DrivePartitionsStructureDataFlags,
+  data?: DriveBaseFilesAndFoldersStructureInterface
 }
 
 

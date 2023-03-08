@@ -25,12 +25,12 @@
       "dom"
     ],
     "paths": {
-      "@Napicu/System/Kernel": ["./src/app/system/kernel/NapicuKernel.ts"],
-      "@Napicu/Grub": ["./src/app/system/grub/Grub.ts"],
-      "@Napicu/Bios": ["./src/app/bios/Bios.ts"],
-      "@Napicu/VirtualComputer": ["./src/app/computer/Computer.ts"],
-      "@Napicu/Config": ["./src/app/config/Config.ts"],
-      "@Napicu/Utils": ["./src/app/utils/Utils.ts"]
+      "@Napicu/System/Kernel/*": ["./src/app/kernel/*"],
+      "@Napicu/Grub/*": ["./src/app/kernel/grub/*"],
+      "@Napicu/Bios/*": ["./src/app/bios/*"],
+      "@Napicu/VirtualComputer/*": ["./src/app/computer/*"],
+      "@Napicu/Config/*": ["./src/app/config/*"],
+      "@Napicu/Utils/*": ["./src/app/utils/*"]
     }
   },
   "angularCompilerOptions": {

@@ -1,0 +1,11 @@
+<section class="BiosOptionMenu" [ngStyle]="{'background-color': background_color ? background_color : null }">
+  <div >
+    <div *ngIf="title" class="BiosOptionMenuTitle" [ngStyle]="{'color': title_color ? title_color : null }">{{title}}</div>
+    <div [ngClass]="{BiosFlexOptionMenu: row_options}">
+      <div *ngFor="let i of options;
+            let index = index" [ngClass]="{BiosSelectedOptionElement: selected_option === index, BiosCenteredOptionElement: options.length === 1}">
+        {{i}}
+      </div>
+    </div>
+  </div>
+</section>

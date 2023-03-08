@@ -1,17 +1,19 @@
-import * as NapicuComputer from "@Napicu/VirtualComputer";
-import * as NapicuGrub from "@Napicu/Grub";
-import {Kernel} from "@Napicu/System/Kernel";
+import {TestSystem} from "../../system/TestSystem/system";
+import {Grub} from "@Napicu/Grub/Grub";
+import {HardwareDRVInformationInterface, HardwareInformationInterface} from "../../computer/interface/NapicuHardware";
+import {BiosConfig} from "@Napicu/Config/bios/Bios";
 
 
-
-const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
+const disk_1: HardwareDRVInformationInterface = {
   name: "Samsung SSD 860 EVO 500GB",
   capacity: 500,
   speed: 500,
 
-  data: {
-    partitions: {
-      sda: {
+
+  partitions: [
+    {
+      flag: "Boot",
+      data: {
         files: {},
 
         folders: {
@@ -19,7 +21,7 @@ const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
             //BootFIle
             boot: {
               files: {
-                grub: {data: new NapicuGrub.Grub([])}
+                grub: {data: new Grub([new TestSystem()])}
               },
               folders: {}
             }
@@ -27,38 +29,58 @@ const disk_1: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
           }
         }
       }
+    },
+    {
+      flag: "System Volume",
+      data: {
+        files: {},
+        folders: {}
+      }
     }
-  }
+  ]
+
 }
 
-const disk_2: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
-  name: "Seagate BarraCuda 2.5 500GB",
-  capacity: 500,
-  speed: 10,
+// const disk_2: HardwareDRVInformationInterface = {
+//   name: "Seagate BarraCuda 2.5 500GB",
+//   capacity: 500,
+//   speed: 10,
+//   partitions: []
+// }
 
-  data: {
-    partitions: {}
-  }
-}
-
-const disk_3: NapicuComputer.Hardware.HardwareDRVInformationInterface = {
+const disk_3: HardwareDRVInformationInterface = {
   name: "IBM 3330",
   capacity: 0.100,
   speed: 10,
+  partitions: []
+}
 
-  data: {
-    partitions: {}
-  }
+const disk_4: HardwareDRVInformationInterface = {
+  name: "USB-BIOS",
+  capacity: 1,
+  speed: 200,
+  partitions: [
+    {
+      flag: "System Volume",
+      data: {
+        files: {
+          "P8H66-CFT3": {data: BiosConfig.BIOS_NEW_ROM_FILE}
+        },
+        folders: {}
+      }
+    }
+  ]
 }
 
 export namespace Computer{
-  export const HARDWARE: NapicuComputer.Hardware.HardwareInformationInterface = {
+  export const HARDWARE: HardwareInformationInterface = {
     cpu: {
-      name: "CPU",
+      name: "AMD Celeron (tm) II B45 Processor @ 3.0 GHz (64bit)",
       tdp: 0,
-      speed: 3000
+      speed: 3000,
+      cache: 8192
     },
-    drv: [disk_1, disk_2, disk_3],
+    drv: [disk_1, disk_3, disk_4],
     gpu: {
       name: "GPU",
       speed: 1000
@@ -70,7 +92,8 @@ export namespace Computer{
     brd: {
       name: "Board",
       speed: 100
-    }
+    },
+    serial_number: "PICO32KJA490KD23J13FD41J6"
   };
 }
 
