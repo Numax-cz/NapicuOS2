@@ -4,6 +4,6 @@ import {Component} from '@angular/core';
   selector: 'app-system',
   templateUrl: './system.component.html',
 })
-export class SystemComponent {
+export class TestSystemComponent {
 
 }
