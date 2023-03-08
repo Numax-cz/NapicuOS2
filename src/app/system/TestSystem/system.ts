@@ -1,8 +1,8 @@
 import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
-import {SystemComponent} from "./components/system/system.component";
 import {TestProgram} from "./programs/program";
 import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
 import {SystemBaseProcessProgramsID} from "./programs/SysPrograms";
+import {TestSystemComponent} from "./components/system/system.component";
 
 export class TestSystem extends Kernel{
   protected readonly system_name: string = "system";
@@ -17,7 +17,7 @@ export class TestSystem extends Kernel{
     this.process_manager.run(SystemBaseProcessProgramsID.TestProgram);
 
 
-    Kernel.set_display_component(SystemComponent);
+    Kernel.set_display_component(TestSystemComponent);
   }
 
 }
