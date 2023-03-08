@@ -7,11 +7,13 @@ import {BiosModule} from "./bios/bios.module";
 import {GrubModule} from "./kernel/grub/grub.module";
 import {KernelModule} from "./kernel/kernel.module";
 import {TestSystemComponent} from './system/TestSystem/components/system/system.component';
+import {SystemComponent} from "./system/NapicuOS/components/system/system.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     TestSystemComponent,
+    SystemComponent
 
   ],
   imports: [
