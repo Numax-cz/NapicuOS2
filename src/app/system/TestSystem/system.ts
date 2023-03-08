@@ -8,9 +8,8 @@ export class TestSystem extends Kernel{
   protected readonly system_name: string = "system";
 
   public readonly initialized_system_process_table: ProcessManagerProcessTable[] = [
-    {process: new TestProgram(), program_id: SystemBaseProcessProgramsID.TestProgram }
+    { process: new TestProgram(), program_id: SystemBaseProcessProgramsID.TestProgram },
   ]
-
 
   protected main(): void {
     this.init_process_table(this.initialized_system_process_table);

@@ -7,6 +7,7 @@ import {ProcessManager} from "@Napicu/System/Kernel/core/ProcessManager";
 import {NapicuDate} from "napicuformatter";
 import {KernelBaseProcessTable} from "@Napicu/System/Kernel/core/SysPrograms";
 import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
+import {Console} from "@Napicu/Utils/Console";
 
 export abstract class Kernel{
 
@@ -27,7 +28,20 @@ export abstract class Kernel{
   }
 
   public init_process_table(table: ProcessManagerProcessTable[]): void {
+    this.check_duplicates_table_processes(table);
     this.initialized_kernel_processes.push(...table);
+  }
+
+  protected check_duplicates_table_processes(table: ProcessManagerProcessTable[]): boolean {
+    let obj: number[] = [];
+    for (let i = 0; i < table.length; i++) {
+      if (obj[table[i].program_id]){
+        Console.print_error_debug(`Duplicate program_id: ${table[i].program_id}`);
+        return false;
+      }
+      obj[table[i].program_id] = 1;
+    }
+    return true;
   }
 
   protected init_kernel_processes(): void {
