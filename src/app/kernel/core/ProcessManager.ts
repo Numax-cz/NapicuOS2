@@ -11,16 +11,19 @@ export class ProcessManager{
   constructor(kernel: Kernel) {
     this.kernel = kernel
   }
-  //
-  // public add(process: Process): void {
-  //   this.processes.push(process);
-  // }
 
   public run(program_id: number): void {
     let id: ProcessManagerProcessTable | undefined = this.kernel.initialized_kernel_processes.find((element: ProcessManagerProcessTable) => element.program_id == program_id);
     if(id){
       this.processes[this.processes.push(id.process) - 1].run(this.kernel, this.processes.length - 1);
     } else Console.print_error_debug(`Process with program id ${program_id} does not exist`);
+  }
+
+  public get_running_process_class<T>(): T | null{
+    for(const process of this.get_running_process()){
+      if(process instanceof T) return process as T;
+    }
+    return null;
   }
 
   public kill_all_processes(): void {
@@ -47,7 +50,4 @@ export class ProcessManager{
     }
     return null;
   }
-
-
-
 }
