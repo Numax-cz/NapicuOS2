@@ -1,3 +1,3 @@
 export const enum SystemBaseProcessProgramsID  {
-  TestProgram = 1
+  DisplayManager = 1
 }
