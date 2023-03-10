@@ -20,7 +20,7 @@ export class ProcessManager{
     } else Console.print_error_debug(`Process with program id ${program_id} does not exist`);
   }
 
-  public get_running_process_class<T>(ctor: { new (): T }): T | null {
+  public get_running_process_class<T extends Process>(ctor: { new (): T }): T | null {
     for (const process of this.get_running_process()) {
       if (process instanceof ctor) {
         return process as T;
