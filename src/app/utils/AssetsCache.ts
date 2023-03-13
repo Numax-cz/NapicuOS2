@@ -1,8 +1,4 @@
-
-
-
-
-class AssetsCache{
+export class AssetsCache{
 
   public static preload_audio(src: string): void {
 
