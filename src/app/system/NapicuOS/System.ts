@@ -1,6 +1,6 @@
 import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
-import {DisplayManager} from "./programs/DisplayManager";
+import {DisplayManager} from "./programs/DisplayManager/DisplayManager";
 import {SystemBaseProcessProgramsID} from "./programs/SysPrograms";
 import {SystemComponent} from "./components/system/system.component";
 
