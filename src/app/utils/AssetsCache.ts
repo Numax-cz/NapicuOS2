@@ -17,27 +17,3 @@ class AssetsCache{
     });
   }
 }
-
-
-export class ImageCache<T>{
-
-  public declare readonly table: {[index: string]: T};
-
-  constructor(table: {[index: string]: T})  {
-    this.table = table;
-  }
-
-  public preload(): void {
-     const values: T[] = Object.values<T>(this.table);
-
-     for(const value of values) {
-        if(typeof value === "string") AssetsCache.preload_image(value);
-     }
-  }
-
-  public get(src: T): T[] | null {
-    return Object.values(this.table) || null;
-  }
-}
-
-
