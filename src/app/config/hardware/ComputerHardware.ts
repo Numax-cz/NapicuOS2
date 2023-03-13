@@ -1,7 +1,7 @@
-import {TestSystem} from "../../system/TestSystem/system";
 import {Grub} from "@Napicu/Grub/Grub";
 import {HardwareDRVInformationInterface, HardwareInformationInterface} from "../../computer/interface/NapicuHardware";
 import {BiosConfig} from "@Napicu/Config/bios/Bios";
+import {NapicuOS} from "../../system/NapicuOS/System";
 
 
 const disk_1: HardwareDRVInformationInterface = {
@@ -21,7 +21,7 @@ const disk_1: HardwareDRVInformationInterface = {
             //BootFIle
             boot: {
               files: {
-                grub: {data: new Grub([new TestSystem()])}
+                grub: {data: new Grub([new NapicuOS()])}
               },
               folders: {}
             }
