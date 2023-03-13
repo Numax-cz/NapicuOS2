@@ -3,21 +3,19 @@ import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Proces
 import {DisplayManager} from "./programs/DisplayManager/DisplayManager";
 import {SystemBaseProcessProgramsID} from "./programs/SysPrograms";
 import {SystemComponent} from "./components/system/system.component";
-import {ImageCache} from "@Napicu/Utils/AssetsCache";
 import {SYSTEM_IMAGES} from "./config/Assets";
+import {AssetsCache} from "@Napicu/Utils/AssetsCache";
 
 
 export class NapicuOS extends Kernel{
   protected readonly system_name: string = "NapicuOS";
 
-  protected declare images_assets: ImageCache<SYSTEM_IMAGES>;
 
   public readonly initialized_system_process_table: ProcessManagerProcessTable[] = [
     {process: new DisplayManager(), program_id: SystemBaseProcessProgramsID.DisplayManager}
   ]
 
   protected main(): void {
-    this.images_assets = new ImageCache<SYSTEM_IMAGES>(SYSTEM_IMAGES);
 
 
 
@@ -26,6 +24,15 @@ export class NapicuOS extends Kernel{
     this.run_display_manager();
 
     Kernel.set_display_component(SystemComponent);
+  }
+
+
+  //TODO PROMISE
+  public preload_assets(): void {
+    let images: SYSTEM_IMAGES[] = Object.values<SYSTEM_IMAGES>(SYSTEM_IMAGES);
+
+    //TODO PROMISE
+    for(const src of images) AssetsCache.preload_image(src);
   }
 
 
