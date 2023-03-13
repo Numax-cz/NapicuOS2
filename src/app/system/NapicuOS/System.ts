@@ -15,8 +15,19 @@ export class NapicuOS extends Kernel{
   protected main(): void {
     this.init_process_table(this.initialized_system_process_table);
 
+    this.run_display_manager();
 
     Kernel.set_display_component(SystemComponent);
+  }
+
+
+  protected run_display_manager(): void {
+    this.process_manager.run(SystemBaseProcessProgramsID.DisplayManager);
+
+    const display_manager_process: DisplayManager | null = this.process_manager.get_running_process_class<DisplayManager>(DisplayManager);
+    if(display_manager_process){
+      display_manager_process.set_display();
+    }
   }
 
 }

@@ -4,7 +4,7 @@ import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 @Component({
   selector: 'app-system',
   templateUrl: './system.component.html',
-  styleUrls: ['./system.component.scss']
+  styleUrls: ['../../styles/system/Core.scss']
 })
 export class SystemComponent {
 
