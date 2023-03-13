@@ -1,6 +1,6 @@
 import {Process} from "@Napicu/System/Kernel/core/Process";
-import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 import {Type} from "@angular/core";
+import {NapicuOS} from "../../System";
 
 export class DisplayManager extends Process {
 
@@ -9,7 +9,7 @@ export class DisplayManager extends Process {
   protected application_components: Type<any>[] = [];
 
 
-  protected main(kernel: Kernel): void {
+  protected main(kernel: NapicuOS): void {
 
   }
 
