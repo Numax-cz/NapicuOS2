@@ -5,10 +5,15 @@ import {SystemBaseProcessProgramsID} from "./programs/SysPrograms";
 import {SystemComponent} from "./components/system/system.component";
 import {SYSTEM_IMAGES} from "./config/Assets";
 import {AssetsCache} from "@Napicu/Utils/AssetsCache";
+import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurator";
+import {NAPICU_OS_DEFAULT_SYSTEM_CONFIG, NapicuOSConfig} from "./config/System";
 
 
 export class NapicuOS extends Kernel{
   protected readonly system_name: string = "NapicuOS";
+
+  public system_config: CookiesConfigurator<typeof NAPICU_OS_DEFAULT_SYSTEM_CONFIG> =
+    new CookiesConfigurator<typeof NAPICU_OS_DEFAULT_SYSTEM_CONFIG>(NapicuOSConfig.COOKIES_NAME, NAPICU_OS_DEFAULT_SYSTEM_CONFIG)
 
 
   public readonly initialized_system_process_table: ProcessManagerProcessTable[] = [
