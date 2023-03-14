@@ -8,6 +8,7 @@ import {NapicuDate} from "napicuformatter";
 import {KernelBaseProcessTable} from "@Napicu/System/Kernel/core/SysPrograms";
 import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
 import {Console} from "@Napicu/Utils/Console";
+import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurator";
 
 export abstract class Kernel{
 
@@ -17,12 +18,17 @@ export abstract class Kernel{
 
   protected readonly abstract system_name: string;
 
+  public declare abstract system_config: CookiesConfigurator<unknown>;
+
   protected abstract main(): void;
 
   public time: NapicuDate | null = null;
 
   public init(): void {
     WebManager.navigate_angular_router(PathConfig.SYSTEM_PATH, SpeedControl.calculate_hardware_speed(1000));
+
+    this.system_config.try_load_config_from_cookies();
+
     this.init_kernel_processes();
     this.main();
   }
