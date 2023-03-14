@@ -1,0 +1,3 @@
+export const NAPICU_OS_DEFAULT_SYSTEM_CONFIG = {
+
+}
