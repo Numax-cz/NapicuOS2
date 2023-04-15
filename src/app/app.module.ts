@@ -7,6 +7,7 @@ import {BiosModule} from "./bios/bios.module";
 import {GrubModule} from "./kernel/grub/grub.module";
 import {KernelModule} from "./kernel/kernel.module";
 import {TestSystemComponent} from './system/TestSystem/components/system/system.component';
+import { WasmModule } from './wasm/wasm.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {TestSystemComponent} from './system/TestSystem/components/system/system.
     //NapicuModule
     BiosModule,
     GrubModule,
-    KernelModule
+    KernelModule,
+    WasmModule
 
   ],
   providers: [],

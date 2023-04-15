@@ -6,29 +6,30 @@
     "start": "ng serve --configuration=production",
     "dev": "ng serve --configuration=development",
     "build": "ng build --build-optimizer --extract-licenses --output-hashing none --optimization true",
+    "wasm": "node scripts/compile-wasm.js && node scripts/wasm-cache-busting.js",
     "buildDev": "ng build --configuration=development --build-optimizer --extract-licenses --output-hashing none"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^15.2.3",
-    "@angular/common": "^15.2.3",
-    "@angular/compiler": "^15.2.3",
-    "@angular/core": "^15.2.3",
-    "@angular/forms": "^15.2.3",
-    "@angular/platform-browser": "^15.2.3",
-    "@angular/platform-browser-dynamic": "^15.2.3",
-    "@angular/router": "^15.2.3",
+    "@angular/animations": "15.2.7",
+    "@angular/common": "15.2.7",
+    "@angular/compiler": "15.2.7",
+    "@angular/core": "15.2.7",
+    "@angular/forms": "15.2.7",
+    "@angular/platform-browser": "15.2.7",
+    "@angular/platform-browser-dynamic": "15.2.7",
+    "@angular/router": "15.2.7",
     "napicuformatter": "^1.14.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.5.0",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^15.2.4",
-    "@angular/cli": "~15.2.4",
-    "@angular/compiler-cli": "^15.2.3",
+    "@angular-devkit/build-angular": "15.2.6",
+    "@angular/cli": "15.2.6",
+    "@angular/compiler-cli": "15.2.7",
     "@types/jasmine": "~4.3.1",
-    "jasmine-core": "~4.6.0",
+    "jasmine-core": "4.6.0",
     "karma": "~6.4.1",
     "karma-chrome-launcher": "~3.1.1",
     "karma-coverage": "~2.2.0",
@@ -37,3 +38,4 @@
     "typescript": "4.9.5"
   }
 }
+
