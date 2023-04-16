@@ -1,7 +1,6 @@
 import {PathConfig} from "@Napicu/Config/web/PathConfig";
 import {SpeedControl} from "@Napicu/Bios/scripts/SpeedControl";
 import {WebManager} from "@Napicu/Utils/WebManager";
-import {Type} from "@angular/core";
 import {KernelComponent} from "@Napicu/System/Kernel/components/kernel/kernel.component";
 import {ProcessManager} from "@Napicu/System/Kernel/core/ProcessManager";
 import {NapicuDate} from "napicuformatter";
@@ -9,7 +8,7 @@ import {KernelBaseProcessTable} from "@Napicu/System/Kernel/core/SysPrograms";
 import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
 import {Console} from "@Napicu/Utils/Console";
 import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurator";
-import {SystemCookiesKernelDataInterface} from "@Napicu/System/Kernel/interface/Kernel";
+import {SystemCookiesKernelDataInterface, TypeKernelComponent} from "@Napicu/System/Kernel/interface/Kernel";
 
 export abstract class Kernel{
 
@@ -69,7 +68,7 @@ export abstract class Kernel{
 
   }
 
-  public static set_display_component(component: Type<any>): void {
+  public static set_display_component(component: TypeKernelComponent<any>): void {
     KernelComponent.system_display_component = component;
   }
 }

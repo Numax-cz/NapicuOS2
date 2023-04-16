@@ -1,4 +1,6 @@
-import {Component, Type} from '@angular/core';
+import {Component} from '@angular/core';
+import {TypeKernelComponent} from "@Napicu/System/Kernel/interface/Kernel";
+
 
 @Component({
   selector: 'kernel-system-ui',
@@ -6,9 +8,9 @@ import {Component, Type} from '@angular/core';
   styleUrls: ['./kernel.component.scss']
 })
 export class KernelComponent {
-  public static system_display_component: Type<any> | null = null;
+  public static system_display_component: TypeKernelComponent<any> | null = null;
 
-  get get_system_display_component(): Type<any> | null {
+  get get_system_display_component(): TypeKernelComponent<any> | null {
     return KernelComponent.system_display_component;
   }
 }
