@@ -9,6 +9,7 @@ import {KernelBaseProcessTable} from "@Napicu/System/Kernel/core/SysPrograms";
 import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
 import {Console} from "@Napicu/Utils/Console";
 import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurator";
+import {SystemCookiesKernelDataInterface} from "@Napicu/System/Kernel/interface/Kernel";
 
 export abstract class Kernel{
 
@@ -18,7 +19,7 @@ export abstract class Kernel{
 
   protected readonly abstract system_name: string;
 
-  public declare abstract system_config: CookiesConfigurator<unknown>;
+  public declare abstract system_config: CookiesConfigurator<SystemCookiesKernelDataInterface<unknown>>;
 
   protected abstract main(): void;
 
