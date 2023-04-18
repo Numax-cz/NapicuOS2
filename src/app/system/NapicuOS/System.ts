@@ -2,7 +2,6 @@ import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
 import {DisplayManager} from "./programs/DisplayManager/DisplayManager";
 import {SystemBaseProcessProgramsID} from "./programs/SysPrograms";
-import {SystemComponent} from "./components/system/system.component";
 import {SYSTEM_IMAGES} from "./config/Assets";
 import {AssetsCache} from "@Napicu/Utils/AssetsCache";
 import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurator";
@@ -30,7 +29,6 @@ export class NapicuOS extends Kernel{
 
     this.run_display_manager();
 
-    Kernel.set_display_component(SystemComponent);
   }
 
 
