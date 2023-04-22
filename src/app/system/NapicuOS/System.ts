@@ -40,6 +40,10 @@ export class NapicuOS extends Kernel{
     for(const src of images) AssetsCache.preload_image(src);
   }
 
+  public get_system_images(): typeof SYSTEM_IMAGES {
+    return SYSTEM_IMAGES;
+  }
+
 
   protected run_display_manager(): void {
     this.process_manager.run(SystemBaseProcessProgramsID.DisplayManager);
