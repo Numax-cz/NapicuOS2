@@ -5,7 +5,6 @@ import {SystemComponent} from "../../components/system/system.component";
 import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 
 export class DisplayManager extends Process {
-
   protected process_name: string = "DisplayManager";
 
   protected application_components: Type<any>[] = [];
@@ -17,11 +16,15 @@ export class DisplayManager extends Process {
   }
 
   protected on_kill = (): void => {
-  }
 
+  }
 
   public set_display(): void {
     SystemComponent.set_wallpaper(this.kernel.get_system_images().default_wallpaper);
+    this.update_display_component();
+  }
+
+  protected update_display_component(): void {
     Kernel.set_display_component(SystemComponent);
   }
 }

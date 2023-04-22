@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {KernelCoreGUIComponent} from "@Napicu/System/Kernel/core/gui/Gui";
 
 @Component({
@@ -6,18 +6,8 @@ import {KernelCoreGUIComponent} from "@Napicu/System/Kernel/core/gui/Gui";
   templateUrl: './system.component.html',
   styleUrls: ['../../styles/system/Core.scss']
 })
-export class SystemComponent extends KernelCoreGUIComponent implements OnInit{
-
-  public wallpaper: string | null = null;
-
-  public get_display_component() {
-
+export class SystemComponent extends KernelCoreGUIComponent {
+  public get_wallpaper(): string  {
+    return SystemComponent.get_wallpaper() || "";
   }
-
-  ngOnInit() {
-    this.wallpaper = SystemComponent.get_wallpaper();
-
-  }
-
-
 }
