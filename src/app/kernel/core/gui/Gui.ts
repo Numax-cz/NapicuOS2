@@ -1,7 +1,7 @@
 export abstract class KernelCoreGUIComponent {
   private static wallpaper: string | null = null
 
-  public static set_wallpaper(src: string): void {
+  public static set_wallpaper(src: string | null): void {
     this.wallpaper = src;
   }
 
