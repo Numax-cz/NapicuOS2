@@ -9,20 +9,24 @@ import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Proces
 import {Console} from "@Napicu/Utils/Console";
 import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurator";
 import {SystemCookiesKernelDataInterface, TypeKernelComponent} from "@Napicu/System/Kernel/interface/Kernel";
+import {UsersManager} from "@Napicu/System/Kernel/core/UsersManager";
 
 export abstract class Kernel{
+  protected readonly abstract system_name: string;
 
   protected process_manager: ProcessManager = new ProcessManager(this);
 
-  public initialized_kernel_processes: ProcessManagerProcessTable[] = KernelBaseProcessTable;
+  protected user_manager: UsersManager = new UsersManager();
 
-  protected readonly abstract system_name: string;
+
+  public time: NapicuDate | null = null;
+
+  public initialized_kernel_processes: ProcessManagerProcessTable[] = KernelBaseProcessTable;
 
   public declare abstract system_config: CookiesConfigurator<SystemCookiesKernelDataInterface<unknown>>;
 
-  protected abstract main(): void;
 
-  public time: NapicuDate | null = null;
+  protected abstract main(): void;
 
   public init(): void {
     WebManager.navigate_angular_router(PathConfig.SYSTEM_PATH, SpeedControl.calculate_hardware_speed(1000));
@@ -66,6 +70,10 @@ export abstract class Kernel{
 
   public get_partition(name: string): void { //TODO NoVoid
 
+  }
+
+  public get_users_manager(): UsersManager {
+    return this.user_manager;
   }
 
   public static set_display_component(component: TypeKernelComponent<any>): void {
