@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {GrubConfig} from "../../../../config/system/GrubConfig";
+import {GrubConfig} from "@Napicu/Config/system/Grub";
 
 @Component({
   selector: 'grub-menu',
