@@ -2,7 +2,6 @@ import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 import {TestProgram} from "./programs/program";
 import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
 import {SystemBaseProcessProgramsID} from "./programs/SysPrograms";
-import {TestSystemComponent} from "./components/system/system.component";
 import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurator";
 import {SystemCookiesKernelDataInterface} from "@Napicu/System/Kernel/interface/Kernel";
 import {TestSystemConfigInterface} from "./interface/config";
@@ -24,6 +23,6 @@ export class TestSystem extends Kernel{
     this.process_manager.run(SystemBaseProcessProgramsID.TestProgram);
 
 
-    Kernel.set_display_component(TestSystemComponent);
+    //Kernel.set_display_component(TestSystemComponent);
   }
 }

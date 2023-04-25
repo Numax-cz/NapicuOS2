@@ -10,6 +10,9 @@ import {Console} from "@Napicu/Utils/Console";
 import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurator";
 import {SystemCookiesKernelDataInterface, TypeKernelComponent} from "@Napicu/System/Kernel/interface/Kernel";
 import {UsersManager} from "@Napicu/System/Kernel/core/UsersManager";
+import {TerminalComponent} from "@Napicu/System/Kernel/components/terminal/terminal.component";
+import {Terminal} from "@Napicu/System/Kernel/core/Terminal";
+import {KernelConfig} from "@Napicu/Config/system/Kernel";
 
 export abstract class Kernel{
   protected readonly abstract system_name: string;
@@ -31,9 +34,13 @@ export abstract class Kernel{
   public init(): void {
     WebManager.navigate_angular_router(PathConfig.SYSTEM_PATH, SpeedControl.calculate_hardware_speed(1000));
 
+    this.init_terminal();
+
     this.system_config.try_load_config_from_cookies();
 
     this.init_kernel_processes();
+
+
     this.main();
   }
 
@@ -55,9 +62,19 @@ export abstract class Kernel{
   }
 
   protected init_kernel_processes(): void {
+    TerminalComponent.terminal?.println("Starting Kernel processes")
     for (const processTable of this.initialized_kernel_processes) {
       this.process_manager.run(processTable.program_id);
     }
+  }
+
+  protected init_terminal(): void {
+    Kernel.set_display_component(TerminalComponent);
+    TerminalComponent.terminal = new Terminal();
+
+    TerminalComponent.terminal.println(`Starting ${KernelConfig.KERNEL_VERSION_COMPANY_NAME} - ${KernelConfig.KERNEL_VERSION}`);
+
+
   }
 
   public get_system_name(): string{
