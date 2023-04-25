@@ -45,8 +45,8 @@
                   "with": "src/app/config/system/Grub.prod.ts"
                 },
                 {
-                  "replace": "src/app/config/system/System.ts",
-                  "with": "src/app/config/system/System.prod.ts"
+                  "replace": "src/app/config/system/Kernel.ts",
+                  "with": "src/app/config/system/Kernel.prod.ts"
                 },
                 {
                   "replace": "src/app/config/web/Web.ts",
