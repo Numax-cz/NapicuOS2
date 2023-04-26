@@ -75,7 +75,7 @@ export class TestSystem extends Kernel {
     new CookiesConfigurator<SystemCookiesKernelDataInterface<any>>("config", {data: {}});
 
   public readonly initialized_system_process_table: ProcessManagerProcessTable[] = [
-    { process: new TestProgram(), program_id: 1 },
+    { process: TestProgram, program_id: 1 },
   ]
   
   protected main(): void {

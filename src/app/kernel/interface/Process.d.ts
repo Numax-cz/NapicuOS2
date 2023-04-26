@@ -1,3 +1,5 @@
 import {Process} from "@Napicu/System/Kernel/core/Process";
 
-export declare type ProcessManagerProcessTable = {process: Process, program_id: number};
+export type ProcessClass = new() => Process;
+
+export declare type ProcessManagerProcessTable = {process: ProcessClass, program_id: number};
