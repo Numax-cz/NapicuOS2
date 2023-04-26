@@ -32,16 +32,15 @@ export abstract class Kernel{
   protected abstract main(): void;
 
   public init(): void {
-    WebManager.navigate_angular_router(PathConfig.SYSTEM_PATH, SpeedControl.calculate_hardware_speed(1000));
+    WebManager.navigate_angular_router_promise(PathConfig.SYSTEM_PATH, SpeedControl.calculate_hardware_speed(1000)).then(r => {
+      this.init_terminal();
 
-    this.init_terminal();
+      this.system_config.try_load_config_from_cookies();
 
-    this.system_config.try_load_config_from_cookies();
+      this.init_kernel_processes();
 
-    this.init_kernel_processes();
-
-
-    this.main();
+      this.main();
+    })
   }
 
   public init_process_table(table: ProcessManagerProcessTable[]): void {
@@ -71,6 +70,7 @@ export abstract class Kernel{
   protected init_terminal(): void {
     Kernel.set_display_component(TerminalComponent);
     TerminalComponent.terminal = new Terminal();
+    TerminalComponent.kernel = this;
 
     TerminalComponent.terminal.println(`Starting ${KernelConfig.KERNEL_VERSION_COMPANY_NAME} - ${KernelConfig.KERNEL_VERSION}`);
 

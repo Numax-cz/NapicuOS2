@@ -35,4 +35,20 @@ export class WebManager{
       } else Console.print_error("web router does not exist");
     }, time_out);
   }
+
+  public static navigate_angular_router_promise(path: string, time_out: number = 0): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      setTimeout(() => {
+        if(this.angular_router){
+          this.angular_router.navigate([path]).then(r => resolve(r), e => {
+            Console.print_error("web navigating error");
+            reject(e);
+          });
+        } else {
+          Console.print_error("web router does not exist");
+          reject(false);
+        }
+      }, time_out);
+    });
+  }
 }
