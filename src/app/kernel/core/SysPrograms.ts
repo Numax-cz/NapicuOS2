@@ -6,4 +6,4 @@ export const enum KernelBaseProcessProgramsID  {
   Time = 0
 }
 
-export const KernelBaseProcessTable: ProcessManagerProcessTable[] = [{process: new Time(), program_id: KernelBaseProcessProgramsID.Time}];
+export const KernelBaseProcessTable: ProcessManagerProcessTable[] = [{process: Time, program_id: KernelBaseProcessProgramsID.Time}];
