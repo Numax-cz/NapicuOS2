@@ -6,17 +6,13 @@ import {Console} from "@Napicu/Utils/Console";
 export class ProcessManager{
   protected processes: Process[] = [];
 
-  protected declare kernel: Kernel
 
-  constructor(kernel: Kernel) {
-    this.kernel = kernel
-  }
 
-  public run(program_id: number): void {
-    let id: ProcessManagerProcessTable | undefined = this.kernel.initialized_kernel_processes.find((element: ProcessManagerProcessTable) => element.program_id == program_id);
+  public run(program_id: number, kernel: Kernel): void {
+    let id: ProcessManagerProcessTable | undefined = kernel.initialized_kernel_processes.find((element: ProcessManagerProcessTable) => element.program_id == program_id);
     if(id){
       let process: Process = new id.process();
-      this.processes[this.processes.push(process) - 1].run(this.kernel, this.processes.length - 1);
+      this.processes[this.processes.push(process) - 1].run(kernel, this.processes.length - 1);
     } else Console.print_error_debug(`Process with program id ${program_id} does not exist`);
   }
 

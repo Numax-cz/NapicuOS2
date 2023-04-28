@@ -20,7 +20,7 @@ export class TestSystem extends Kernel{
   protected main(): void {
     this.init_process_table(this.initialized_system_process_table);
 
-    this.process_manager.run(SystemBaseProcessProgramsID.TestProgram);
+    this.run_command(SystemBaseProcessProgramsID.TestProgram);
 
 
     //Kernel.set_display_component(TestSystemComponent);

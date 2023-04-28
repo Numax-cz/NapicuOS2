@@ -13,13 +13,16 @@ import {UsersManager} from "@Napicu/System/Kernel/core/UsersManager";
 import {TerminalComponent} from "@Napicu/System/Kernel/components/terminal/terminal.component";
 import {Terminal} from "@Napicu/System/Kernel/core/Terminal";
 import {KernelConfig} from "@Napicu/Config/system/Kernel";
+import {CommandManager} from "@Napicu/System/Kernel/core/CommandManager";
 
 export abstract class Kernel{
   protected readonly abstract system_name: string;
 
-  protected process_manager: ProcessManager = new ProcessManager(this);
+  private process_manager: ProcessManager = new ProcessManager(); //TODO
 
-  protected user_manager: UsersManager = new UsersManager();
+  private user_manager: UsersManager = new UsersManager();
+
+  private command_manager: CommandManager = new CommandManager();
 
 
   public time: NapicuDate | null = null;
@@ -43,6 +46,10 @@ export abstract class Kernel{
     })
   }
 
+  public run_command(program_id: number): void {
+    this.process_manager.run(program_id, this);
+  }
+
   public init_process_table(table: ProcessManagerProcessTable[]): void {
     this.check_duplicates_table_processes(table);
     this.initialized_kernel_processes.push(...table);
@@ -63,7 +70,7 @@ export abstract class Kernel{
   protected init_kernel_processes(): void {
     TerminalComponent.terminal?.println("Starting Kernel processes")
     for (const processTable of this.initialized_kernel_processes) {
-      this.process_manager.run(processTable.program_id);
+      this.process_manager.run(processTable.program_id, this);
     }
   }
 
