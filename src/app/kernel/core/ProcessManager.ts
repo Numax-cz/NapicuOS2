@@ -1,6 +1,6 @@
 import {Process} from "@Napicu/System/Kernel/core/Process";
 import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
-import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
+import {ProcessManagerTable} from "@Napicu/System/Kernel/interface/Process";
 import {Console} from "@Napicu/Utils/Console";
 
 export class ProcessManager{
@@ -9,7 +9,7 @@ export class ProcessManager{
 
 
   public run(program_id: number, kernel: Kernel): void {
-    let id: ProcessManagerProcessTable | undefined = kernel.initialized_kernel_processes.find((element: ProcessManagerProcessTable) => element.program_id == program_id);
+    let id: ProcessManagerTable | undefined = kernel.initialized_kernel_processes.find((element: ProcessManagerTable) => element.program_id == program_id);
     if(id){
       let process: Process = new id.process();
       this.processes[this.processes.push(process) - 1].run(kernel, this.processes.length - 1);

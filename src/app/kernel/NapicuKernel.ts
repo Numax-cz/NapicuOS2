@@ -5,7 +5,7 @@ import {KernelComponent} from "@Napicu/System/Kernel/components/kernel/kernel.co
 import {ProcessManager} from "@Napicu/System/Kernel/core/ProcessManager";
 import {NapicuDate} from "napicuformatter";
 import {KernelBaseProcessTable} from "@Napicu/System/Kernel/core/SysPrograms";
-import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
+import {ProcessManagerTable} from "@Napicu/System/Kernel/interface/Process";
 import {Console} from "@Napicu/Utils/Console";
 import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurator";
 import {SystemCookiesKernelDataInterface, TypeKernelComponent} from "@Napicu/System/Kernel/interface/Kernel";
@@ -14,20 +14,27 @@ import {TerminalComponent} from "@Napicu/System/Kernel/components/terminal/termi
 import {Terminal} from "@Napicu/System/Kernel/core/Terminal";
 import {KernelConfig} from "@Napicu/Config/system/Kernel";
 import {CommandManager} from "@Napicu/System/Kernel/core/CommandManager";
+import {CommandManagerTable} from "@Napicu/System/Kernel/interface/CommandManager";
+import {KernelBaseCommandTable} from "@Napicu/System/Kernel/core/commands/SysCommands";
 
 export abstract class Kernel{
   protected readonly abstract system_name: string;
 
-  private process_manager: ProcessManager = new ProcessManager(); //TODO
+  private process_manager: ProcessManager = new ProcessManager();
 
   private user_manager: UsersManager = new UsersManager();
 
   private command_manager: CommandManager = new CommandManager();
 
 
+  public initialized_kernel_processes: ProcessManagerTable[] = KernelBaseProcessTable;
+
+  public initialized_kernel_commands: CommandManagerTable[] = KernelBaseCommandTable;
+
+
   public time: NapicuDate | null = null;
 
-  public initialized_kernel_processes: ProcessManagerProcessTable[] = KernelBaseProcessTable;
+
 
   public declare abstract system_config: CookiesConfigurator<SystemCookiesKernelDataInterface<unknown>>;
 
@@ -50,12 +57,17 @@ export abstract class Kernel{
     this.process_manager.run(program_id, this);
   }
 
-  public init_process_table(table: ProcessManagerProcessTable[]): void {
-    this.check_duplicates_table_processes(table);
+  public init_process_table(table: ProcessManagerTable[]): void {
     this.initialized_kernel_processes.push(...table);
+    this.check_duplicates_table_processes(this.initialized_kernel_processes);
   }
 
-  protected check_duplicates_table_processes(table: ProcessManagerProcessTable[]): boolean {
+  public init_commands_table(table: CommandManagerTable[]): void {
+    this.initialized_kernel_commands.push(...table);
+    this.check_duplicates_table_commands(this.initialized_kernel_commands);
+  }
+
+  protected check_duplicates_table_processes(table: ProcessManagerTable[]): boolean {
     let obj: number[] = [];
     for (let i = 0; i < table.length; i++) {
       if (obj[table[i].program_id]){
@@ -63,6 +75,18 @@ export abstract class Kernel{
         return false;
       }
       obj[table[i].program_id] = 1;
+    }
+    return true;
+  }
+
+  protected check_duplicates_table_commands(table: CommandManagerTable[]): boolean {
+    let obj: string[] = [];
+    for(let i = 0; i < table.length; i++) {
+      if (obj.indexOf(table[i].call) != -1){
+        Console.print_error_debug(`Duplicate command: ${table[i].call}`);
+        return false;
+      }
+      obj.push(table[i].call);
     }
     return true;
   }

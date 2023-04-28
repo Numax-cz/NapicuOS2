@@ -1,7 +1,7 @@
-import {CommandManagerTableInterface} from "@Napicu/System/Kernel/interface/CommandManager";
+import {CommandManagerTable} from "@Napicu/System/Kernel/interface/CommandManager";
 
 export class CommandManager {
-  protected initialized_commands: CommandManagerTableInterface[] = [];
+  protected initialized_commands: CommandManagerTable[] = [];
 
 
 
