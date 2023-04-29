@@ -1,8 +1,11 @@
-export abstract class Command {
-  protected abstract on_run(): void;
-  
+import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 
-  public run(): void {
-    this.on_run();
+export abstract class Command {
+
+  protected abstract on_run(kernel: Kernel): void;
+
+
+  public run(kernel: Kernel): void {
+    this.on_run(kernel);
   }
 }

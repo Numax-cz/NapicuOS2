@@ -53,8 +53,17 @@ export abstract class Kernel{
     })
   }
 
-  public run_command(program_id: number): void {
+  public run_process(program_id: number): void {
     this.process_manager.run(program_id, this);
+  }
+
+  public run_command(call: string): void {
+    for(const command of this.initialized_kernel_commands) {
+      if(command.call === call) {
+        new command.command().run(this);
+        break;
+      }
+    }
   }
 
   public init_process_table(table: ProcessManagerTable[]): void {

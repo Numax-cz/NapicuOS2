@@ -24,7 +24,7 @@ export class TestSystem extends Kernel{
   protected main(): void {
     this.init_process_table(this.initialized_system_process_table);
     this.init_commands_table(this.initialized_system_command_table);
-    this.run_command(SystemBaseProcessProgramsID.TestProgram);
+    this.run_process(SystemBaseProcessProgramsID.TestProgram);
 
 
     //Kernel.set_display_component(TestSystemComponent);
