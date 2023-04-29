@@ -11,26 +11,26 @@ export abstract class Process{
 
   protected run_on_run_kernel: boolean = false;
 
+  constructor(private kernel: Kernel) {
 
-  public run(kernel: Kernel, pid: number): void {
+  }
+
+
+  public run(pid: number): void {
     this.PID = pid;
     Console.print_information_debug(`KERNEL - ${this.process_name} running. PID: ${this.PID}`);
-    this.main(kernel);
+    this.main();
   }
 
   public kill(): void {
-    this.PID = -1;
-
-
-
+    Console.print_information_debug(`KERNEL - ${this.process_name} killed. PID: ${this.PID}`);
     this.on_kill();
+    this.kernel.get_process_manager().kill_by_pid(this.get_pid());
   }
 
-  protected abstract main(kernel: Kernel): void;
+  protected abstract main(): void;
 
   protected abstract on_kill: () => void;
-
-
 
 
   public get_pid(): number {

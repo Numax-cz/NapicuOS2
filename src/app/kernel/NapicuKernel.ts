@@ -53,6 +53,10 @@ export abstract class Kernel{
     })
   }
 
+  public get_process_manager(): ProcessManager {
+    return this.process_manager;
+  }
+
   public run_process(program_id: number): void {
     this.process_manager.run(program_id, this);
   }

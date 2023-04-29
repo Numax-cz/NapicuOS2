@@ -2,10 +2,9 @@ import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 
 export abstract class Command {
 
-  protected abstract main(kernel: Kernel, args: string[]): void;
+  protected abstract main(kernel: Kernel, args: string[]): Promise<boolean>; //TODO NO boolean
 
-
-  public run(kernel: Kernel, args: string[]): void {
-    this.main(kernel, args);
+  public async run(kernel: Kernel, args: string[]): Promise<boolean> { //TODO NO boolean
+    return await this.main(kernel, args);
   }
 }

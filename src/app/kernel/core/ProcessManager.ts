@@ -11,8 +11,8 @@ export class ProcessManager{
   public run(program_id: number, kernel: Kernel): void {
     let id: ProcessManagerTable | undefined = kernel.get_initialized_kernel_processes().find((element: ProcessManagerTable) => element.program_id == program_id);
     if(id){
-      let process: Process = new id.process();
-      this.processes[this.processes.push(process) - 1].run(kernel, this.processes.length - 1);
+      let process: Process = new id.process(kernel);
+      this.processes[this.processes.push(process) - 1].run(this.processes.length - 1);
     } else Console.print_error_debug(`Process with program id ${program_id} does not exist`);
   }
 
@@ -26,8 +26,16 @@ export class ProcessManager{
   }
 
   public kill_all_processes(): void {
-    for(const process of this.processes) {
-      process.kill();
+    for(let i = 0; i < this.processes.length; i++) {
+      this.processes.slice(i, 1);
+    }
+  }
+
+  public kill_by_pid(pid: number): void {
+    for(let i = 0; i < this.processes.length; i++) {
+      if(this.processes[i].get_pid() === pid) {
+        this.processes.slice(i, 1);
+      }
     }
   }
 
