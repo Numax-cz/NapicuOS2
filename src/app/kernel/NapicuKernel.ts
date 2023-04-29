@@ -15,6 +15,7 @@ import {Terminal} from "@Napicu/System/Kernel/core/Terminal";
 import {KernelConfig} from "@Napicu/Config/system/Kernel";
 import {CommandManagerTable} from "@Napicu/System/Kernel/interface/CommandManager";
 import {KernelBaseCommandTable} from "@Napicu/System/Kernel/core/commands/SysCommands";
+import {KernelDefaultConfig} from "@Napicu/System/Kernel/config/config";
 
 export abstract class Kernel{
   protected readonly abstract system_name: string;
@@ -36,19 +37,26 @@ export abstract class Kernel{
 
   public declare abstract system_config: CookiesConfigurator<SystemCookiesKernelDataInterface<unknown>>;
 
-
   protected abstract main(): void;
 
   public init(): void {
     WebManager.navigate_angular_router_promise(PathConfig.SYSTEM_PATH, SpeedControl.calculate_hardware_speed(1000)).then(r => {
       this.init_terminal();
 
-      this.system_config.try_load_config_from_cookies();
+      this.init_config();
 
       this.init_kernel_processes();
 
       this.main();
     })
+  }
+
+  public init_config(): void {
+    this.system_config.try_load_config_from_cookies();
+    if(!this.system_config.get_config().kernel) {
+      this.system_config.get_config().kernel = KernelDefaultConfig;
+      this.system_config.save_config();
+    }
   }
 
   public get_process_manager(): ProcessManager {
