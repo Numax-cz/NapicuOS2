@@ -1,8 +1,8 @@
 import {CommandManagerTable} from "@Napicu/System/Kernel/interface/CommandManager";
-import {EchoCommand} from "@Napicu/System/Kernel/core/commands/Echo";
+import {DebugCommand} from "@Napicu/System/Kernel/core/commands/Debug";
 
 export const enum KernelBaseCommandsCalls  {
-  echo = "echo"
+  echo = "debug"
 }
 
-export const KernelBaseCommandTable: CommandManagerTable[] = [{command: EchoCommand, call: KernelBaseCommandsCalls.echo}];
+export const KernelBaseCommandTable: CommandManagerTable[] = [{command: DebugCommand, call: KernelBaseCommandsCalls.echo}];
