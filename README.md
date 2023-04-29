@@ -116,6 +116,7 @@ import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurato
 import {SystemCookiesKernelDataInterface} from "@Napicu/System/Kernel/interface/Kernel";
 import {TestProgram} from "./programs/program";
 import {ProcessManagerProcessTable} from "@Napicu/System/Kernel/interface/Process";
+import {HelloWorldCommand} from "./commands/HelloWorld"
 
 export class TestSystem extends Kernel{
   protected readonly system_name: string = "system";
