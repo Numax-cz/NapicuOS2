@@ -27,9 +27,9 @@ export abstract class Kernel{
   private command_manager: CommandManager = new CommandManager();
 
 
-  public initialized_kernel_processes: ProcessManagerTable[] = KernelBaseProcessTable;
+  private initialized_kernel_processes: ProcessManagerTable[] = KernelBaseProcessTable;
 
-  public initialized_kernel_commands: CommandManagerTable[] = KernelBaseCommandTable;
+  private initialized_kernel_commands: CommandManagerTable[] = KernelBaseCommandTable;
 
 
   public time: NapicuDate | null = null;
@@ -57,10 +57,10 @@ export abstract class Kernel{
     this.process_manager.run(program_id, this);
   }
 
-  public run_command(call: string): void {
+  public run_command(call: string, args: string[] = []): void {
     for(const command of this.initialized_kernel_commands) {
       if(command.call === call) {
-        new command.command().run(this);
+        new command.command().run(this, args);
         break;
       }
     }
@@ -135,5 +135,13 @@ export abstract class Kernel{
 
   public static set_display_component(component: TypeKernelComponent<any>): void {
     KernelComponent.system_display_component = component;
+  }
+
+  public get_initialized_kernel_processes(): ProcessManagerTable[] {
+    return this.initialized_kernel_processes;
+  }
+
+  public get_initialized_kernel_commands(): CommandManagerTable[] {
+    return this.initialized_kernel_commands;
   }
 }

@@ -9,7 +9,7 @@ export class ProcessManager{
 
 
   public run(program_id: number, kernel: Kernel): void {
-    let id: ProcessManagerTable | undefined = kernel.initialized_kernel_processes.find((element: ProcessManagerTable) => element.program_id == program_id);
+    let id: ProcessManagerTable | undefined = kernel.get_initialized_kernel_processes().find((element: ProcessManagerTable) => element.program_id == program_id);
     if(id){
       let process: Process = new id.process();
       this.processes[this.processes.push(process) - 1].run(kernel, this.processes.length - 1);
