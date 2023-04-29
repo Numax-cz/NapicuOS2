@@ -13,7 +13,6 @@ import {UsersManager} from "@Napicu/System/Kernel/core/UsersManager";
 import {TerminalComponent} from "@Napicu/System/Kernel/components/terminal/terminal.component";
 import {Terminal} from "@Napicu/System/Kernel/core/Terminal";
 import {KernelConfig} from "@Napicu/Config/system/Kernel";
-import {CommandManager} from "@Napicu/System/Kernel/core/CommandManager";
 import {CommandManagerTable} from "@Napicu/System/Kernel/interface/CommandManager";
 import {KernelBaseCommandTable} from "@Napicu/System/Kernel/core/commands/SysCommands";
 
@@ -24,7 +23,6 @@ export abstract class Kernel{
 
   private user_manager: UsersManager = new UsersManager();
 
-  private command_manager: CommandManager = new CommandManager();
 
 
   private initialized_kernel_processes: ProcessManagerTable[] = KernelBaseProcessTable;
