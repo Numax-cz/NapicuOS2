@@ -1,4 +1,12 @@
-<div class="Terminal" *ngFor="let line of get_lines()">
-  {{line}}
-</div>
-<div>root@{{get_os_name()}}</div>
+<div
+  #InputValue
+  (keydown.enter)="on_enter($event)"
+  accept="txt"
+  autocapitalize="off"
+  autocomplete="off"
+  autocorrect="off"
+  class="inputLine inputMargin single-line"
+  contenteditable="true"
+  id="inputLineID"
+  spellcheck="false"
+></div>
