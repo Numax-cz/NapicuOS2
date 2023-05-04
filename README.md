@@ -150,3 +150,18 @@ protected main(): void {
   this.run_command("helloworld");
 }
 ```
+### Checking the existence of a command
+1. Import `CommandsExceptionsCodes`:
+```typescript
+import {CommandsExceptionsCodes} from "@Napicu/System/Kernel/interface/CommandExceptions";
+```
+Example: 
+```typescript
+protected main(): void {
+  this.run_command("hello_world").then((code: number) => {
+    if(code == CommandsExceptionsCodes.command_not_found) {
+      console.log("Command does not exist!");
+    }
+  });
+}
+```
