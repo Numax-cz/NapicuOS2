@@ -7,7 +7,7 @@ import {SystemCookiesKernelDataInterface} from "@Napicu/System/Kernel/interface/
 import {TestSystemConfigInterface} from "./interface/config";
 import {TestSystemDefaultConfig} from "./config/config";
 import {CommandManagerTable} from "@Napicu/System/Kernel/interface/CommandManager";
-import {CommandsExceptionsCodes} from "@Napicu/System/Kernel/interface/CommandExceptions";
+import {CommandsResolveCodes} from "@Napicu/System/Kernel/interface/CommandResolve";
 
 export class TestSystem extends Kernel{
   protected readonly system_name: string = "system";
@@ -29,7 +29,7 @@ export class TestSystem extends Kernel{
 
     this.run_process(SystemBaseProcessProgramsID.TestProgram);
     this.run_command("echoe").then((code: number) => {
-      if(code === CommandsExceptionsCodes.command_not_found) {
+      if(code === CommandsResolveCodes.command_not_found) {
         console.log("Command does not exist!");
       }
     });

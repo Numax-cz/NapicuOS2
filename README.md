@@ -151,9 +151,9 @@ protected main(): void {
 }
 ```
 ### Checking the existence of a command
-1. Import `CommandsExceptionsCodes`:
+1. Import `CommandsResolveCodes`:
 ```typescript
-import {CommandsExceptionsCodes} from "@Napicu/System/Kernel/interface/CommandExceptions";
+import {CommandsResolveCodes} from "@Napicu/System/Kernel/interface/CommandResolve";
 ```
 Example: 
 ```typescript

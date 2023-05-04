@@ -16,7 +16,7 @@ import {KernelConfig} from "@Napicu/Config/system/Kernel";
 import {KernelBaseCommandTable} from "@Napicu/System/Kernel/core/commands/SysCommands";
 import {KernelDefaultConfig} from "@Napicu/System/Kernel/config/config";
 import {CommandManagerTable, CommandResolve,} from "@Napicu/System/Kernel/interface/CommandManager";
-import {CommandsExceptionsCodes} from "@Napicu/System/Kernel/interface/CommandExceptions";
+import {CommandsResolveCodes} from "@Napicu/System/Kernel/interface/CommandResolve";
 
 export abstract class Kernel{
   protected readonly abstract system_name: string;
@@ -75,7 +75,7 @@ export abstract class Kernel{
           resolve(new command.command().run(this, args));
         } else {
           Console.print_error_debug(`Command "${call}" does not exist!`);
-          resolve(CommandsExceptionsCodes.command_not_found);
+          resolve(CommandsResolveCodes.command_not_found);
         }
       }
     })
