@@ -12,7 +12,6 @@ import {TestSystemComponent} from './system/TestSystem/components/system/system.
   declarations: [
     AppComponent,
     TestSystemComponent,
-
   ],
   imports: [
     BrowserModule,

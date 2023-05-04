@@ -4,7 +4,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {KernelComponent} from "./components/kernel/kernel.component";
 import {IsRunningGuard} from "@Napicu/VirtualComputer/guards/is-running-guard.service";
 import {PathConfig} from "@Napicu/Config/web/PathConfig";
-import {TerminalComponent} from "@Napicu/System/Kernel/components/terminal/terminal.component";
+import {ConsoleComponent} from "@Napicu/System/Kernel/components/console/console.component";
+import {TerminalComponent} from './components/terminal/terminal.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     KernelComponent,
+    ConsoleComponent,
     TerminalComponent
   ],
   imports: [RouterModule.forRoot(routes), NgComponentOutlet, NgForOf, NgClass, NgIf],
