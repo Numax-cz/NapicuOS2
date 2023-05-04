@@ -28,11 +28,11 @@ export class TestSystem extends Kernel{
 
 
     this.run_process(SystemBaseProcessProgramsID.TestProgram);
-    this.run_command("echoe").then((code: number) => {
-      if(code === CommandsResolveCodes.command_not_found) {
+    this.run_command("echoe").then(() =>{}, (code: number) => {
+      if(code == CommandsResolveCodes.command_not_found) {
         console.log("Command does not exist!");
       }
-    });
+    })
     //Kernel.set_display_component(TestSystemComponent);
   }
 }

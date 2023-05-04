@@ -158,8 +158,8 @@ import {CommandsResolveCodes} from "@Napicu/System/Kernel/interface/CommandResol
 Example: 
 ```typescript
 protected main(): void {
-  this.run_command("hello_world").then((code: number) => {
-    if(code == CommandsExceptionsCodes.command_not_found) {
+  this.run_command("hello_world").then((code: number) => {}, (code: number) => {
+    if(code == CommandsResolveCodes.command_not_found) {
       console.log("Command does not exist!");
     }
   });

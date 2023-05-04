@@ -69,13 +69,13 @@ export abstract class Kernel{
   }
 
   public run_command(call: string, args: string[] = []): CommandResolve {
-    return new Promise<number>((resolve) => {
+    return new Promise<number>((resolve, reject) => {
       for(const command of this.initialized_kernel_commands) {
         if (command.call === call) {
           resolve(new command.command().run(this, args));
         } else {
           Console.print_error_debug(`Command "${call}" does not exist!`);
-          resolve(CommandsResolveCodes.command_not_found);
+          reject(CommandsResolveCodes.command_not_found);
         }
       }
     })
