@@ -13,9 +13,10 @@ import {UsersManager} from "@Napicu/System/Kernel/core/UsersManager";
 import {TerminalComponent} from "@Napicu/System/Kernel/components/terminal/terminal.component";
 import {Terminal} from "@Napicu/System/Kernel/core/Terminal";
 import {KernelConfig} from "@Napicu/Config/system/Kernel";
-import {CommandManagerTable} from "@Napicu/System/Kernel/interface/CommandManager";
 import {KernelBaseCommandTable} from "@Napicu/System/Kernel/core/commands/SysCommands";
 import {KernelDefaultConfig} from "@Napicu/System/Kernel/config/config";
+import {CommandManagerTable, CommandResolve,} from "@Napicu/System/Kernel/interface/CommandManager";
+import {CommandsExceptionsCodes} from "@Napicu/System/Kernel/interface/CommandExceptions";
 
 export abstract class Kernel{
   protected readonly abstract system_name: string;
@@ -67,13 +68,17 @@ export abstract class Kernel{
     this.process_manager.run(program_id, this);
   }
 
-  public run_command(call: string, args: string[] = []): void {
-    for(const command of this.initialized_kernel_commands) {
-      if(command.call === call) {
-        new command.command().run(this, args);
-        break;
+  public run_command(call: string, args: string[] = []): CommandResolve {
+    return new Promise<number>((resolve) => {
+      for(const command of this.initialized_kernel_commands) {
+        if (command.call === call) {
+          resolve(new command.command().run(this, args));
+        } else {
+          Console.print_error_debug(`Command "${call}" does not exist!`);
+          resolve(CommandsExceptionsCodes.command_not_found);
+        }
       }
-    }
+    })
   }
 
   public init_process_table(table: ProcessManagerTable[]): void {
