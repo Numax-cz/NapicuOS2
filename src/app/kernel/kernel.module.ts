@@ -5,7 +5,7 @@ import {KernelComponent} from "./components/kernel/kernel.component";
 import {IsRunningGuard} from "@Napicu/VirtualComputer/guards/is-running-guard.service";
 import {PathConfig} from "@Napicu/Config/web/PathConfig";
 import {ConsoleComponent} from "@Napicu/System/Kernel/components/console/console.component";
-import {TerminalComponent} from './components/terminal/terminal.component';
+import {TerminalComponent} from '@Napicu/System/Kernel/components/terminal_input/terminal.component';
 
 
 const routes: Routes = [
