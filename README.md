@@ -99,12 +99,14 @@ protected main(): void {
 ```typescript
 import {Command} from "@Napicu/System/Kernel/core/Command";
 import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
+import {CommandsResolveCodes} from "@Napicu/System/Kernel/interface/CommandResolve";
+import {CommandResolve} from "@Napicu/System/Kernel/core/CommandResolve";
 
 export class HelloWorldCommand extends Command {
-  protected main(kernel: Kernel, args: string[]): Promise<number> {
+  protected main(kernel: Kernel, args: string[]): CommandPromise {
     return new Promise<number>((resolve, reject) => {
       console.log("Hello World");
-      resolve(1);
+      resolve(new CommandResolve({code: CommandsResolveCodes.success}));
     });
   }
 }
