@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {Terminal} from "@Napicu/System/Kernel/core/Terminal";
+import {KernelConsole} from "@Napicu/System/Kernel/core/KernelConsole";
 import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 
 
@@ -9,7 +9,7 @@ import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
   styleUrls: ['./console.component.scss']
 })
 export class ConsoleComponent implements OnDestroy{
-  public static terminal: Terminal | null = null;
+  public static terminal: KernelConsole | null = null;
   public static kernel: Kernel | null = null;
 
   ngOnDestroy() {
@@ -27,6 +27,10 @@ export class ConsoleComponent implements OnDestroy{
 
   public get_kernel(): Kernel | null {
     return ConsoleComponent.kernel;
+  }
+
+  public get_terminal(): KernelConsole | null {
+    return ConsoleComponent.terminal;
   }
 
 }

@@ -11,7 +11,7 @@ import {CookiesConfigurator} from "@Napicu/System/Kernel/core/CookiesConfigurato
 import {SystemCookiesKernelDataInterface, TypeKernelComponent} from "@Napicu/System/Kernel/interface/Kernel";
 import {UsersManager} from "@Napicu/System/Kernel/core/UsersManager";
 import {ConsoleComponent} from "@Napicu/System/Kernel/components/console/console.component";
-import {Terminal} from "@Napicu/System/Kernel/core/Terminal";
+import {KernelConsole} from "@Napicu/System/Kernel/core/KernelConsole";
 import {KernelConfig} from "@Napicu/Config/system/Kernel";
 import {KernelBaseCommandTable} from "@Napicu/System/Kernel/core/commands/SysCommands";
 import {KernelDefaultConfig} from "@Napicu/System/Kernel/config/config";
@@ -73,13 +73,13 @@ export abstract class Kernel{
     return new Promise<CommandResolve>((resolve: (value: CommandResolve | PromiseLike<CommandResolve>) => void, reject: (reason: CommandResolve) => void) => {
       for(const command of this.initialized_kernel_commands) {
         Console.print_information_debug(`Run command "${call}" with args: [${args}]`);
-        if (command.call === call) {
+        if (command.call == call) {
           resolve(new command.command().run(this, args));
-        } else {
-          Console.print_error_debug(`Command "${call}" does not exist!`);
-          reject(new CommandResolve({code: CommandsResolveCodes.command_not_found, message: `${call}: command not found`}));
+          return;
         }
       }
+      Console.print_error_debug(`Command "${call}" does not exist!`);
+      reject(new CommandResolve({code: CommandsResolveCodes.command_not_found, message: `${call}: command not found`}));
     })
   }
 
@@ -126,7 +126,7 @@ export abstract class Kernel{
 
   protected init_terminal(): void {
     Kernel.set_display_component(ConsoleComponent);
-    ConsoleComponent.terminal = new Terminal();
+    ConsoleComponent.terminal = new KernelConsole();
     ConsoleComponent.kernel = this;
 
     ConsoleComponent.terminal.println(`Starting ${KernelConfig.KERNEL_VERSION_COMPANY_NAME} - ${KernelConfig.KERNEL_VERSION}`);

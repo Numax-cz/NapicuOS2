@@ -1,4 +1,4 @@
-export class Terminal{
+export class KernelConsole {
   private lines: string[] = [];
 
   public get_lines(): string[] {

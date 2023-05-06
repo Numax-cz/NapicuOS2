@@ -1,4 +1,4 @@
 <div class="Terminal" *ngFor="let line of get_lines()">
   {{line}}
 </div>
-<app-terminal [kernel]="get_kernel()"></app-terminal>
+<app-terminal [kernel]="get_kernel()" [output]="get_terminal()"></app-terminal>

@@ -2,8 +2,10 @@
  * Converts all words into an array
  * @param value
  */
-export function convert_string_to_array(value: string): string[] {
-  return value.split(' ');
+export function convert_command_string_to_array(value: string): string[] {
+  const regex = /"[^"]*"|\S+/g;
+  const matches = value.match(regex) ?? [];
+  return matches.map(match => match.replace(/"/g, ''));
 }
 
 /**
