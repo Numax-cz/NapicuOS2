@@ -151,15 +151,16 @@ protected main(): void {
 }
 ```
 ### Checking the existence of a command
-1. Import `CommandsResolveCodes`:
+1. Import `CommandsResolveCodes` and `CommandResolve`:
 ```typescript
 import {CommandsResolveCodes} from "@Napicu/System/Kernel/interface/CommandResolve";
+import {CommandResolve} from "@Napicu/System/Kernel/core/CommandResolve";
 ```
 Example: 
 ```typescript
 protected main(): void {
-  this.run_command("hello_world").then((code: number) => {}, (code: number) => {
-    if(code == CommandsResolveCodes.command_not_found) {
+  this.run_command("hello_world").then((value: CommandResolve) => {}, (value: CommandResolve) => {
+    if(value.code == CommandsResolveCodes.command_not_found) {
       console.log("Command does not exist!");
     }
   });

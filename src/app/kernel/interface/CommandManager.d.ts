@@ -1,6 +1,7 @@
 import {Command} from "@Napicu/System/Kernel/core/Command";
+import {CommandResolve} from "@Napicu/System/Kernel/core/CommandResolve";
 
-export type CommandResolve = Promise<number>;
+export type CommandPromise = Promise<CommandResolve>;
 
 
 
