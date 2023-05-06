@@ -16,30 +16,29 @@ export class TerminalComponent {
 
   @ViewChild('InputValue') public declare inputValue: ElementRef<HTMLElement>;
 
-
   public on_enter(event: Event): void {
     const element: HTMLElement = event.target as HTMLElement;
     const input: string[] = convert_command_string_to_array(element.innerText);
 
     if(input[0].length) {
       this.kernel?.run_command(input[0], input.slice(1)).then((resolve: CommandResolve) => {
-        if(this.output) {
-          if(resolve.message) this.output.println(resolve.message);
-        }
+        this.print_output(resolve);
       }, (reject: CommandResolve) => {
+        this.print_output(reject);
       })
     }
-
-
 
     this.clear_input(element);
     event.preventDefault();
   }
 
+  protected print_output(resolve: CommandResolve) {
+    if(this.output) {
+      if(resolve.message) this.output.println(resolve.message);
+    }
+  }
 
   protected clear_input(element: HTMLElement): void {
     element.innerText = '';
   }
-
-
 }
