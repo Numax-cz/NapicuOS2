@@ -5,7 +5,7 @@ import {CommandResolve} from "@Napicu/System/Kernel/core/CommandResolve";
 import {KernelConsole} from "@Napicu/System/Kernel/core/KernelConsole";
 
 @Component({
-  selector: 'app-terminal',
+  selector: 'app-terminal-input',
   templateUrl: './terminal.component.html',
   styleUrls: ['./terminal.component.scss']
 })
