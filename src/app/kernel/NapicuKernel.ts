@@ -47,19 +47,29 @@ export abstract class Kernel{
 
       this.init_config();
 
+      this.init_users();
+
       this.init_kernel_processes();
 
       this.main();
     })
   }
 
-  public init_config(): void {
+  private init_config(): void {
     this.system_config.try_load_config_from_cookies();
     if(!this.system_config.get_config().kernel) {
       this.system_config.get_config().kernel = KernelDefaultConfig;
       this.system_config.save_config();
     }
   }
+
+  private init_users(): void {
+    let users = this.system_config.get_config()?.kernel?.users;
+    Console.print_information_debug(`KERNEL - adding users: [${users?.map((user) => user.name)}]`);
+    this.user_manager.set_users(users);
+  }
+
+
 
   public get_process_manager(): ProcessManager {
     return this.process_manager;
@@ -139,7 +149,6 @@ export abstract class Kernel{
   }
 
   public creat_new_partition(name: string): void { //TODO NoVoid
-
   }
 
   public get_partition(name: string): void { //TODO NoVoid

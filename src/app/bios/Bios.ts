@@ -183,6 +183,10 @@ export class Bios  {
     return VirtualComputer.get_hardware().drv[this.biosConfiguration.selected_drive];
   }
 
+  public static get_selected_drv_index(): number {
+    return this.biosConfiguration.selected_drive;
+  }
+
   public static get_bios_full_version(): string {
     return `${this.get_bios_version()} ${this.get_bios_version_company_name()} ${this.get_bios_version_date()}`;
   }
