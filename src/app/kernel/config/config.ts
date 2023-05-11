@@ -4,5 +4,5 @@ export const KernelDefaultConfig: KernelCookiesDataInterface = {
   users: [
     {name: "root", password: null}
   ],
-  active_user: -1
+  active_user: 0
 }

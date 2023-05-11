@@ -18,6 +18,7 @@ import {KernelDefaultConfig} from "@Napicu/System/Kernel/config/config";
 import {CommandManagerTable, CommandPromise,} from "@Napicu/System/Kernel/interface/CommandManager";
 import {CommandsResolveCodes} from "@Napicu/System/Kernel/interface/CommandResolve";
 import {CommandResolve} from "@Napicu/System/Kernel/core/CommandResolve";
+import {KernelException} from "@Napicu/System/Kernel/core/exceptions/exceptions";
 
 export abstract class Kernel{
   protected readonly abstract system_name: string;
@@ -47,7 +48,13 @@ export abstract class Kernel{
 
       this.init_config();
 
-      this.init_users();
+      try {
+        this.init_users();
+      } catch (e: unknown)  {
+        this.println((e as KernelException).message);
+        return;
+      }
+      Console.print_information_debug(`Default user set to: ${this.get_users_manager().get_active_user().get_username()}`);
 
       this.init_kernel_processes();
 
@@ -67,6 +74,10 @@ export abstract class Kernel{
     let users = this.system_config.get_config()?.kernel?.users;
     Console.print_information_debug(`KERNEL - adding users: [${users?.map((user) => user.name)}]`);
     this.user_manager.set_users(users);
+
+    if (this.user_manager.set_active_user(this.system_config.get_config()?.kernel?.active_user ?? -1) == -1) {
+      throw new KernelException("Error - No user available");
+    }
   }
 
 
@@ -138,10 +149,11 @@ export abstract class Kernel{
     Kernel.set_display_component(ConsoleComponent);
     ConsoleComponent.terminal = new KernelConsole();
     ConsoleComponent.kernel = this;
-
     ConsoleComponent.terminal.println(`Starting ${KernelConfig.KERNEL_VERSION_COMPANY_NAME} - ${KernelConfig.KERNEL_VERSION}`);
+  }
 
-
+  private println(value: string): void {
+    if(ConsoleComponent.terminal) ConsoleComponent.terminal.println(value);
   }
 
   public get_system_name(): string{
