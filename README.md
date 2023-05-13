@@ -92,7 +92,7 @@ protected main(): void {
   this.process_manager.run(1);
 }
 ```
-### Get process by class
+### Get running process by class
 ```typescript
 protected main(): void {
   let p: TestProgram | null = this.get_process_manager().get_running_process_class<TestProgram>(TestProgram);
