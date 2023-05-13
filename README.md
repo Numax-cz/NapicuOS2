@@ -92,6 +92,15 @@ protected main(): void {
   this.process_manager.run(1);
 }
 ```
+### Get process by class
+```typescript
+protected main(): void {
+  let p: TestProgram | null = this.get_process_manager().get_running_process_class<TestProgram>(TestProgram);
+  if(p) {
+    // Do something...
+  }
+}
+```
 
 # How to creat a new system command?
 1. Create a new folder for processes example: `src/app/system/TestSystem/commands`
