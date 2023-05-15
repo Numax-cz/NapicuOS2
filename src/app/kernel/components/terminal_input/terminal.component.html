@@ -1,12 +1,14 @@
-<div
-  #InputValue
-  (keydown.enter)="on_enter($event)"
-  accept="txt"
-  autocapitalize="off"
-  autocomplete="off"
-  autocorrect="off"
-  class="input"
-  contenteditable="true"
-  id="inputLineID"
-  spellcheck="false"
-></div>
+<div class="InputContainer">
+  <div class="SystemInformation">{{get_system_information_in()}}</div>
+  <div
+    #InputValue
+    (keydown.enter)="on_enter($event)"
+    accept="txt"
+    autocapitalize="off"
+    autocomplete="off"
+    autocorrect="off"
+    class="input"
+    contenteditable="true"
+    spellcheck="false"
+  ></div>
+</div>

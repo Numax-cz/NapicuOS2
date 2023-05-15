@@ -18,7 +18,7 @@ export class TerminalComponent {
 
   public on_enter(event: Event): void {
     const element: HTMLElement = event.target as HTMLElement;
-    this.output?.println(`${this.kernel?.get_users_manager().get_active_user().get_username()}@${this.kernel?.get_computer_name()} ${element.innerText}`);
+    this.output?.println(`${this.get_system_information_in()} ${element.innerText}`);
 
     const input: string[] = convert_command_string_to_array(element.innerText);
     if(input[0].length) {
@@ -38,6 +38,10 @@ export class TerminalComponent {
       if(resolve.message) this.output.println(resolve.message);
       this.output?.println("");
     }
+  }
+
+  public get_system_information_in(): string{
+    return `${this.kernel?.get_users_manager().get_active_user().get_username()}@${this.kernel?.get_computer_name()}:${this.output?.get_working_directory()}$`;
   }
 
   protected clear_input(element: HTMLElement): void {

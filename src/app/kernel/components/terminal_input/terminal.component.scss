@@ -1,3 +1,13 @@
-.input{
-  outline: none;
+.InputContainer{
+  display: flex;
+  font-size: 1rem;
+
+  .SystemInformation{
+    margin-right: 10px;
+  }
+
+  .input{
+    outline: none;
+    width: 100%;
+  }
 }
