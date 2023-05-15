@@ -1,6 +1,10 @@
 import {UserInterface} from "@Napicu/System/Kernel/interface/UsersManager";
 import {User} from "@Napicu/System/Kernel/core/User";
 import {UserValidator} from "@Napicu/System/Kernel/core/Validators";
+import {check_string_match_ignore_case} from "@Napicu/Utils/String";
+import {KernelDefaultRootUser} from "@Napicu/System/Kernel/config/config";
+import {KernelExceptionsCodes} from "@Napicu/System/Kernel/config/exceptions";
+import {KernelException} from "@Napicu/System/Kernel/core/exceptions/exceptions";
 
 export class UsersManager {
   private users: User[] = [];
@@ -18,7 +22,14 @@ export class UsersManager {
   }
 
   public delete_user(username: string): void {
-    //TODO
+    for (let i = 0; i < this.users.length; i++){
+      const nm: string = this.users[i].get_username();
+      if(check_string_match_ignore_case(nm, username) && nm !== KernelDefaultRootUser.username) {
+        this.users.splice(i, 1);
+        return;
+      }
+    }
+    throw new KernelException(KernelExceptionsCodes.USER_NOT_EXISTS, "User doesn't exist");
   }
 
   public set_active_user(index: number): number {

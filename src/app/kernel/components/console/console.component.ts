@@ -21,8 +21,12 @@ export class ConsoleComponent implements OnDestroy{
     return ConsoleComponent.terminal?.get_lines() || [];
   }
 
-  public get_os_name(): string {
+  public get_system_name(): string {
     return ConsoleComponent.kernel?.get_system_name() || "";
+  }
+
+  public get_username(): string {
+    return ConsoleComponent.kernel?.get_users_manager().get_active_user().get_username() || "";
   }
 
   public get_kernel(): Kernel | null {

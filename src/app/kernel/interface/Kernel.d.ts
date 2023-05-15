@@ -11,6 +11,7 @@ export declare interface TypeKernelComponent<T> extends KernelCoreGUIComponent{
 
 
 export interface KernelCookiesDataInterface {
+  computer_name: string
   users: UserInterface[],
   active_user: number
 }

@@ -18,8 +18,9 @@ export class TerminalComponent {
 
   public on_enter(event: Event): void {
     const element: HTMLElement = event.target as HTMLElement;
-    const input: string[] = convert_command_string_to_array(element.innerText);
+    this.output?.println(`${this.kernel?.get_users_manager().get_active_user().get_username()}@${this.kernel?.get_computer_name()} ${element.innerText}`);
 
+    const input: string[] = convert_command_string_to_array(element.innerText);
     if(input[0].length) {
       this.kernel?.run_command(input[0], input.slice(1)).then((resolve: CommandResolve) => {
         this.print_output(resolve);
@@ -35,6 +36,7 @@ export class TerminalComponent {
   protected print_output(resolve: CommandResolve) {
     if(this.output) {
       if(resolve.message) this.output.println(resolve.message);
+      this.output?.println("");
     }
   }
 

@@ -159,6 +159,10 @@ export abstract class Kernel{
     return this.system_name;
   }
 
+  public get_computer_name(): string | null{
+    return this.system_config.get_config()?.kernel?.computer_name || null;
+  }
+
   public creat_new_partition(name: string): void { //TODO NoVoid
   }
 

@@ -11,6 +11,7 @@ export const enum KernelExceptionsCodes {
 
   //USERS
   NO_USER_AVAILABLE = 3021,
-  USER_ALREADY_EXISTS = 3031
+  USER_ALREADY_EXISTS = 3031,
+  USER_NOT_EXISTS = 3032,
 
 }

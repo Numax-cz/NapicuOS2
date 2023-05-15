@@ -1,3 +1,10 @@
+
+$font_size: 1.25rem;
+
 .Terminal{
   padding: 2px 2px;
+  pre{
+    font-size: $font_size;
+    min-height: $font_size;
+  }
 }
