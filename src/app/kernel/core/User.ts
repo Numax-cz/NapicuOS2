@@ -5,7 +5,7 @@ export class User {
   private password: string | null = null;
 
   constructor(data: UserInterface) {
-    this.username = data.name;
+    this.username = data.username;
     this.password = data.password;
   }
 

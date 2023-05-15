@@ -8,7 +8,12 @@ export class UsersManager {
   private active_user: number = -1;
 
   public add_user(user: UserInterface): void {
-    //TODO check validation
+    try {
+      UserValidator.check_new_user(user, this.users);
+    } catch (e)  {
+      throw e;
+    }
+
     this.users.push(new User(user));
   }
 

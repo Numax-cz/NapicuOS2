@@ -73,7 +73,7 @@ export abstract class Kernel{
 
   private init_users(): void {
     let users = this.system_config.get_config()?.kernel?.users;
-    Console.print_information_debug(`KERNEL - adding users: [${users?.map((user) => user.name)}]`);
+    Console.print_information_debug(`KERNEL - adding users: [${users?.map((user) => user.username)}]`);
     this.user_manager.set_users(users);
 
     if (this.user_manager.set_active_user(this.system_config.get_config()?.kernel?.active_user ?? -1) == -1) {
