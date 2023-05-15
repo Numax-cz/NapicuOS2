@@ -19,6 +19,7 @@ import {CommandManagerTable, CommandPromise,} from "@Napicu/System/Kernel/interf
 import {CommandsResolveCodes} from "@Napicu/System/Kernel/interface/CommandResolve";
 import {CommandResolve} from "@Napicu/System/Kernel/core/CommandResolve";
 import {KernelException} from "@Napicu/System/Kernel/core/exceptions/exceptions";
+import {KernelExceptionsCodes} from "@Napicu/System/Kernel/config/exceptions";
 
 export abstract class Kernel{
   protected readonly abstract system_name: string;
@@ -76,11 +77,9 @@ export abstract class Kernel{
     this.user_manager.set_users(users);
 
     if (this.user_manager.set_active_user(this.system_config.get_config()?.kernel?.active_user ?? -1) == -1) {
-      throw new KernelException("Error - No user available");
+      throw new KernelException(KernelExceptionsCodes.NO_USER_AVAILABLE, "No user available");
     }
   }
-
-
 
   public get_process_manager(): ProcessManager {
     return this.process_manager;
