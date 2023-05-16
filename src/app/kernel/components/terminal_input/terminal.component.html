@@ -1,14 +1,14 @@
-<div class="InputContainer">
+<div class="InputContainer" *ngIf="!this.running_command">
   <div class="SystemInformation">{{get_system_information_in()}}</div>
   <div
     #InputValue
-    (keydown.enter)="on_enter($event)"
     accept="txt"
     autocapitalize="off"
     autocomplete="off"
     autocorrect="off"
     class="input"
     contenteditable="true"
+    (keydown)="on_keydown($event)"
     spellcheck="false"
   ></div>
 </div>

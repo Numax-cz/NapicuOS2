@@ -89,12 +89,12 @@ export abstract class Kernel{
     this.process_manager.run(program_id, this);
   }
 
-  public run_command(call: string, args: string[] = []): CommandPromise {
+  public run_command(call: string, args: string[] = [], console?: KernelConsole): CommandPromise {
     return new Promise<CommandResolve>((resolve: (value: CommandResolve | PromiseLike<CommandResolve>) => void, reject: (reason: CommandResolve) => void) => {
-      for(const command of this.initialized_kernel_commands) {
-        Console.print_information_debug(`Run command "${call}" with args: [${args}]`);
+      for (const command of this.initialized_kernel_commands) {
         if (command.call == call) {
-          resolve(new command.command().run(this, args));
+          Console.print_information_debug(`Run command "${call}" with args: [${args}]`);
+          resolve(new command.command(console).run(this, args));
           return;
         }
       }

@@ -14,29 +14,42 @@ export class TerminalComponent {
 
   @Input() public output: KernelConsole | null = null;
 
+  public running_command: boolean = false;
+
   @ViewChild('InputValue') public declare inputValue: ElementRef<HTMLElement>;
 
-  public on_enter(event: Event): void {
-    const element: HTMLElement = event.target as HTMLElement;
-    this.output?.println(`${this.get_system_information_in()} ${element.innerText}`);
-
-    const input: string[] = convert_command_string_to_array(element.innerText);
-    if(input[0].length) {
-      this.kernel?.run_command(input[0], input.slice(1)).then((resolve: CommandResolve) => {
-        this.print_output(resolve);
-      }, (reject: CommandResolve) => {
-        this.print_output(reject);
-      })
+  public on_keydown(event: KeyboardEvent): void {
+    if(this.running_command) {
+      event.preventDefault();
+      return;
     }
 
-    this.clear_input(element);
-    event.preventDefault();
+    if(event.keyCode == 13) {
+      event.preventDefault()
+      const element: HTMLElement = event.target as HTMLElement;
+      this.output?.println(`${this.get_system_information_in()} ${element.innerText}`);
+
+      const input: string[] = convert_command_string_to_array(element.innerText);
+      if (input[0]?.length) {
+        this.running_command = true;
+        this.kernel?.run_command(input[0], input.slice(1), this.output || undefined).then((resolve: CommandResolve) => {
+          this.print_output(resolve);
+          this.clear_input(element);
+
+        }, (reject: CommandResolve) => {
+          this.print_output(reject);
+          this.clear_input(element);
+
+        })
+      }
+    }
   }
 
   protected print_output(resolve: CommandResolve) {
     if(this.output) {
       if(resolve.message) this.output.println(resolve.message);
       this.output?.println("");
+      this.running_command = false;
     }
   }
 

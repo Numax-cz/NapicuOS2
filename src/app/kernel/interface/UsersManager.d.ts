@@ -1,4 +1,7 @@
+
+
 export interface UserInterface {
   username: string,
-  password: string | null
+  password: string | null,
+  is_root: boolean
 }
