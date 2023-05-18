@@ -12,15 +12,13 @@ export class UserAddCommand extends Command {
       if(!args.length) {
         resolve(this.help_command());
       } else {
+        let is_root = false;
 
-        let is_root: boolean = false;
-
-        if(args.indexOf("-r") > -1) {
-          if(!kernel.get_users_manager().get_active_user().is_root_user()) {
+        this.get_param(args, "-r", () => {
+          if(!this.is_root(kernel)) {
             reject(new CommandResolve({code: CommandsResolveCodes.no_permission, message: "You don't have permission to create a root user."}));
-          }
-
-        }
+          } else is_root = true
+        });
 
         try {
           kernel.get_users_manager().add_user({username: args[0], password: null, is_root: is_root});
