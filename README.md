@@ -113,7 +113,7 @@ import {CommandResolve} from "@Napicu/System/Kernel/core/CommandResolve";
 
 export class HelloWorldCommand extends Command {
   protected main(kernel: Kernel, args: string[]): CommandPromise {
-    return new Promise<number>((resolve, reject) => {
+    return new Promise<CommandResolve>((resolve, reject) => {
       console.log("Hello World");
       resolve(new CommandResolve({code: CommandsResolveCodes.success}));
     });
@@ -177,3 +177,23 @@ protected main(): void {
   });
 }
 ```
+### Get command parameters 
+```typescript
+export class HelloWorldCommand extends Command {
+  protected main(kernel: Kernel, args: string[]): CommandPromise {
+    return new Promise<CommandResolve>((resolve, reject) => {
+        
+      console.log(args) //Example: ["-a"]
+        
+      this.get_param(args, "-a", () => {
+        resolve(new CommandResolve({code: CommandsResolveCodes.success, message: "Hello World #1"}));
+      });
+      
+      console.log(args) //Example: [] - Now the 'args' array does not contain '-a'.
+      
+      resolve(new CommandResolve({code: CommandsResolveCodes.success, message: "Hello World #2"}));
+    });
+  }
+}
+```
+Now when you add `-a` to the command, you get a different output.
