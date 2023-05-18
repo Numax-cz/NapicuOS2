@@ -8,6 +8,7 @@ export class ClearCommand extends Command {
   protected main(kernel: Kernel, args: string[]): CommandPromise {
     return new Promise<CommandResolve>((resolve, reject) => {
       this.get_console()?.clear_lines();
+      resolve(new CommandResolve());
     });
   }
 }
