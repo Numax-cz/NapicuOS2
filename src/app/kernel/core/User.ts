@@ -11,6 +11,10 @@ export class User {
     this.is_root = data.is_root;
   }
 
+  public auth_password(password: string): boolean {
+    return this.password === password;
+  }
+
   public get_username(): string {
     return this.username;
   }

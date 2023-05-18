@@ -44,7 +44,7 @@ export function check_string_match(str: string, str2: string): boolean {
  */
 export function check_string_min_max_length(str: string, min: number, max: number): KernelExceptionsCodes {
   console.log(str);
-  if(str.length <= min) return KernelExceptionsCodes.STRING_SHORT;
+  if(str.length < min) return KernelExceptionsCodes.STRING_SHORT;
   if(str.length >= max) return KernelExceptionsCodes.STRING_LONG;
   return KernelExceptionsCodes.OK;
 }

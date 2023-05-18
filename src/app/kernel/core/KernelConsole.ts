@@ -3,6 +3,8 @@ export class KernelConsole {
 
   private working_directory: string = "/";
 
+  public auth: boolean = false;
+
   public clear_lines(): void {
     this.lines = [];
   }
