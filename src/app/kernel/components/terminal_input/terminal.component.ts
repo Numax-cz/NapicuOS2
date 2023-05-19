@@ -12,9 +12,10 @@ import {KernelConsole} from "@Napicu/System/Kernel/core/KernelConsole";
 export class TerminalComponent {
   @Input() public kernel: Kernel | null = null;
 
-  @Input() public output: KernelConsole | null = null;
+  @Input() public output: KernelConsole | null = null; //TODO move
 
   public running_command: boolean = false;
+
 
   @ViewChild('InputValue') public declare inputValue: ElementRef<HTMLElement>;
 
@@ -24,10 +25,13 @@ export class TerminalComponent {
       return;
     }
 
+    const element: HTMLElement = event.target as HTMLElement;
+
     if(event.keyCode == 13) {
       event.preventDefault()
-      const element: HTMLElement = event.target as HTMLElement;
       this.output?.println(`${this.get_system_information_in()} ${element.innerText}`);
+
+      this.output?.get_command_history().add(element.innerText);
 
       const input: string[] = convert_command_string_to_array(element.innerText);
       if (input[0]?.length) {
@@ -35,14 +39,20 @@ export class TerminalComponent {
         this.kernel?.run_command(input[0], input.slice(1), this.output || undefined).then((resolve: CommandResolve) => {
           this.print_output(resolve);
           this.clear_input(element);
-
         }, (reject: CommandResolve) => {
           this.print_output(reject);
           this.clear_input(element);
-
         })
       }
+    } else if(event.keyCode == 38 || event.keyCode == 40) {
+      if(event.keyCode == 38) this.output?.get_command_history().move_up();
+      else if(event.keyCode == 40) this.output?.get_command_history().move_down();
+
+      element.innerText = this.output?.get_command_history().get_selected() || element.innerText;
+      return;
     }
+
+    this.output?.get_command_history().reset();
   }
 
   protected print_output(resolve: CommandResolve) {

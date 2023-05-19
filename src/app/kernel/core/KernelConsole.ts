@@ -1,7 +1,11 @@
+import {History} from "@Napicu/Utils/History";
+
 export class KernelConsole {
   private lines: string[] = [];
 
   private working_directory: string = "/";
+
+  private command_history: History<string> = new History<string>();
 
   public auth: boolean = false;
 
@@ -27,6 +31,9 @@ export class KernelConsole {
   }
 
 
+  public get_command_history(): History<string> {
+    return this.command_history;
+  }
 
   public get_working_directory(): string {
      return this.working_directory;
