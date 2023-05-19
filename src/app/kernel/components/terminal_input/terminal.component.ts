@@ -28,7 +28,7 @@ export class TerminalComponent {
     const element: HTMLElement = event.target as HTMLElement;
 
     if(event.keyCode == 13) {
-      event.preventDefault()
+      event.preventDefault();
       this.output?.println(`${this.get_system_information_in()} ${element.innerText}`);
 
       this.output?.get_command_history().add(element.innerText);
@@ -45,6 +45,7 @@ export class TerminalComponent {
         })
       }
     } else if(event.keyCode == 38 || event.keyCode == 40) {
+      event.preventDefault();
       if(event.keyCode == 38) this.output?.get_command_history().move_up();
       else if(event.keyCode == 40) this.output?.get_command_history().move_down();
 
