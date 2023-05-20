@@ -1,6 +1,7 @@
 import {Kernel} from "@Napicu/System/Kernel/NapicuKernel";
 import {CommandPromise} from "@Napicu/System/Kernel/interface/CommandManager";
 import {KernelConsole} from "@Napicu/System/Kernel/core/KernelConsole";
+import {check_string_match} from "@Napicu/Utils/String";
 
 export abstract class Command {
   private declare readonly console: KernelConsole | undefined;
@@ -16,10 +17,12 @@ export abstract class Command {
   }
 
   protected get_param(args: string[], par: string, callback: () => void): void {
-    let ind = args.indexOf("-r");
-    if(ind > -1) {
-      args.splice(ind, 1);
-      callback();
+    for(let i = 0; i < args.length; i++) {
+      if(check_string_match(args[i], par)) {
+        args.splice(i, 1);
+        callback();
+        return;
+      }
     }
   }
 
