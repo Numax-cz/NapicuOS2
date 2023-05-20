@@ -5,6 +5,7 @@ import {UserAddCommand} from "@Napicu/System/Kernel/core/commands/UserAdd";
 import {UserdelCommand} from "@Napicu/System/Kernel/core/commands/Userdel";
 import {SudoCommand} from "@Napicu/System/Kernel/core/commands/Sudo";
 import {ClearCommand} from "@Napicu/System/Kernel/core/commands/Clear";
+import {PasswdCommand} from "@Napicu/System/Kernel/core/commands/Passwd";
 
 export const enum KernelBaseCommandsCalls  {
   debug = "debug",
@@ -12,7 +13,8 @@ export const enum KernelBaseCommandsCalls  {
   useradd = "useradd",
   userdel = "userdel",
   sudo = "sudo",
-  clear = "clear"
+  clear = "clear",
+  passwd = "passwd"
 }
 
 export const KernelBaseCommandTable: CommandManagerTable[] = [
@@ -22,4 +24,5 @@ export const KernelBaseCommandTable: CommandManagerTable[] = [
   {command: UserdelCommand, call: KernelBaseCommandsCalls.userdel},
   {command: ClearCommand, call: KernelBaseCommandsCalls.clear},
   {command: SudoCommand, call: KernelBaseCommandsCalls.sudo},
+  {command: PasswdCommand, call: KernelBaseCommandsCalls.passwd},
 ];
