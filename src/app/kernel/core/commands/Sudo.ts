@@ -24,7 +24,7 @@ export class SudoCommand extends Command {
         } while (attempt < SudoCommand.max_password_attempt && !this.get_console()?.auth);
       }
 
-      resolve(kernel.run_command(args[0], args.splice(1), this.get_console()).then((c) => c));
+      resolve(kernel.run_command(args[0], args.splice(1), this.get_console()).then((c) => c).finally(() => {this.get_console()!.auth = false}));
     });
   }
 
