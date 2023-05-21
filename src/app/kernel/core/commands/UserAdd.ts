@@ -22,6 +22,7 @@ export class UserAddCommand extends Command {
 
         try {
           kernel.get_users_manager().add_user({username: args[0], password: null, is_root: is_root});
+          resolve(new CommandResolve());
         } catch (e) {
           const error = e as KernelException;
           reject(new CommandResolve({code: error.code, message: error.message}));
